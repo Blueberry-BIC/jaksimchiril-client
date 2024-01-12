@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">BIC Application</string>
+    <string name="home_btn">HOME</string>
+    <string name="mychall_btn">CHALL</string>
+    <string name="mystack_btn">STACK</string>
+    <string name="mypage_btn">MYPAGE</string>
+    <string name="stack">스택</string>
+    <string name="mypage">마이페이지</string>
+    <string name="mystack">내 스택</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="mychall">인증</string>
+</resources>
