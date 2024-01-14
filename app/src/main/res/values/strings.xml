@@ -9,4 +9,5 @@
     <string name="mystack">내 스택</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="mychall">인증</string>
+    <string name="newchall_header">챌린지 개설</string>
 </resources>
