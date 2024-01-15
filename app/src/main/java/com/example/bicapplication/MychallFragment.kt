@@ -1,20 +1,27 @@
 package com.example.bicapplication
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import com.example.bicapplication.certify.CameraCertifyActivity
+import com.example.bicapplication.certify.CertifyStatusActivity
+import com.example.bicapplication.certify.GithubCertifyActivity
+import com.example.bicapplication.databinding.FragmentMychallBinding
 
 class MychallFragment : Fragment() {
+    lateinit var binding:FragmentMychallBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mychall, container, false)
+    ): View {
+        binding=FragmentMychallBinding.inflate(inflater)
+
+
+        return binding.root
     }
 
     companion object {
