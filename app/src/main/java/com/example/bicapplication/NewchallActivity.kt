@@ -14,6 +14,6 @@ class NewchallActivity : AppCompatActivity() {
 
         val categoryItems = resources.getStringArray(R.array.category_items)
         val arrayAdapter = ArrayAdapter(this, R.layout.dropdown_category_item, categoryItems)
-        binding.categoryAutocomepletetextview.setAdapter(arrayAdapter)
+        binding.autocomepletetextviewNewchallCategory.setAdapter(arrayAdapter)
     }
 }
