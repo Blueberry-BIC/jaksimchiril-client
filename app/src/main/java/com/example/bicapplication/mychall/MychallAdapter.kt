@@ -1,0 +1,49 @@
+package com.example.bicapplication.mychall
+
+import android.annotation.SuppressLint
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.BaseAdapter
+import android.widget.TextView
+import com.example.bicapplication.R
+
+
+class MychallAdapter(
+    private var context: Context?,
+    private var ChallengeList: Array<Challenge>?
+) : BaseAdapter() {
+
+    //뷰들을 어떻게 보여줄지, 레이아웃 어떻게 나타낼지 설정 코드
+    @SuppressLint("ViewHolder", "InflateParams", "MissingInflatedId")
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
+        var view:View?= null
+
+        //convertView : 메모리를 위해 new 대신 재사용하는 뷰
+        if (convertView == null) {
+            view = LayoutInflater.from(context).inflate(R.layout.item_challenge, null)
+        } else {
+            view = convertView
+        }
+
+        val item = ChallengeList?.get(position)
+        view?.findViewById<TextView>(R.id.nameTextView)?.text = item?.name
+        view?.findViewById<TextView>(R.id.contentsTextView)?.text = item?.contents
+
+        return view
+    }
+
+    override fun getItem(position: Int): Any {
+        return position
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getCount(): Int {
+        return ChallengeList!!.size
+    }
+
+}
