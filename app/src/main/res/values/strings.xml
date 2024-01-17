@@ -7,6 +7,29 @@
     <string name="stack">스택</string>
     <string name="mypage">마이페이지</string>
     <string name="mystack">내 스택</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="mychall">인증</string>
+
+    <string name="chall_daterange">챌린지 기간</string>
+    <string name="chall_category">카테고리</string>
+    <string name="chall_choose_open">공개 여부</string>
+    <string name="chall_grouppwd">비밀번호</string>
+    <string name="chall_desc">챌린지 소개</string>
+    <string name="chall_name">챌린지 이름</string>
+    <string name="deposit">예치금</string>
+    <string name="exit">취소하기</string>
+    <string name="participate">참가하기</string>
+    <string name="backbtn_desciption">뒤로가기</string>
+
+    <string name="newchall_header">챌린지 개설</string>
+    <string name="newchall_category_hint">카테고리를 선택하세요</string>
+    <string name="newchall_open">공개</string>
+    <string name="newchall_private">비공개</string>
+    <string name="newchall_info">챌린지 정보</string>
+    <string name="newchall_klay">KLAY</string>
+    <string name="newchall_desc_limit">챌린지 소개(100자 이내)</string>
+    <string name="newchall_upload_image">이미지 업로드</string>
+    <string name="participate_participate">챌린지 참가</string>
+    <string name="participate_walletaddr">송금할 지갑 주소</string>
+    <string name="finished_chall_description">종료된 챌린지입니다.</string>
+    <string name="participate_count">참가자 수</string>
 </resources>
