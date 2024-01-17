@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="category">
+        카테고리
+    </string>
+    <string-array name="category_items">
+        <item>코딩 스킬 향상</item>
+        <item>시사/교양</item>
+        <item>신체 단련</item>
+        <item>생활</item>
+    </string-array>
+</resources>
