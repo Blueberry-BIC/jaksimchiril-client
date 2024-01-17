@@ -11,14 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth="match_parent">
+        app:layout_constraintWidth="match_parent"
+        android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:layout_margin="35dp"
             android:layout_centerVertical="true"
             android:text="챌린지 참가" />
     </RelativeLayout>
@@ -83,16 +83,6 @@
         app:layout_constraintTop_toBottomOf="@+id/participate_wallet_layout">
 
         <Button
-            android:id="@+id/participatebtn"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="참가하기"/>
-
-        <Button
             android:id="@+id/exitbtn"
             android:layout_width="100dp"
             android:layout_height="50dp"
@@ -100,8 +90,18 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:text="취소하기"
-            android:layout_toEndOf="@id/participatebtn"/>
+            android:text="취소하기"/>
+
+        <Button
+            android:id="@+id/participatebtn"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="참가하기"
+            android:layout_toEndOf="@id/exitbtn"/>
 
 
     </RelativeLayout>
