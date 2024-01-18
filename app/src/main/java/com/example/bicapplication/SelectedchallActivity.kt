@@ -11,5 +11,11 @@ class SelectedchallActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySelectedchallBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.apply {
+            btnSelectedBack.setOnClickListener {
+                finish()
+            }
+        }
     }
 }

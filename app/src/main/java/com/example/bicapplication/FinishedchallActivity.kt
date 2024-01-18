@@ -10,5 +10,11 @@ class FinishedchallActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityFinishedchallBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.apply {
+            btnFinishedBack.setOnClickListener {
+                finish()
+            }
+        }
     }
 }
