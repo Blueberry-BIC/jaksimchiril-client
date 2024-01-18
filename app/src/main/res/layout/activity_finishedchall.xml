@@ -202,10 +202,23 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/chall_participatebtn"
+            android:id="@+id/btn_finished_certifystatus"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            android:text="@string/participate"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/certify_status"/>
+
+        <Button
+            android:id="@+id/btn_finished_rewards"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/finished_view_rewards"
+            android:layout_toEndOf="@id/btn_finished_certifystatus"/>
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

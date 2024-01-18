@@ -37,5 +37,6 @@
     <string name="finished_chall_description">종료된 챌린지입니다.</string>
     <string name="participate_count">참가자 수</string>
     <string name="myhistory">챌린지 히스토리</string>
-
+    <string name="certify_status">인증 현황</string>
+    <string name="finished_view_rewards">상금 보기</string>
 </resources>
