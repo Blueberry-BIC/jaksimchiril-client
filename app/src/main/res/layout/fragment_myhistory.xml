@@ -4,10 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MystackFragment">
+    tools:context=".MyhistoryFragment">
 
     <RelativeLayout
-        android:id="@+id/mystack_header"
+        android:id="@+id/myhistory_header"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:padding="10dp"
@@ -15,42 +15,39 @@
         app:layout_constraintWidth="match_parent">
 
         <TextView
-            android:id="@+id/mystack"
+            android:id="@+id/myhistory"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:gravity="center"
             android:autoSizeTextType="uniform"
             android:textStyle="bold"
-            android:text="@string/mystack" />
+            android:text="@string/myhistory" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/bar_graph"
+        android:id="@+id/stack_category"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:padding="10dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/mystack_header"
+        app:layout_constraintTop_toBottomOf="@id/myhistory_header"
         app:layout_constraintWidth="match_parent">
 
         <TextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_centerHorizontal="true"
-            android:autoSizeTextType="uniform"
-            android:text="2024.01" />
-
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/chart_week"
+            android:id="@+id/stack_name"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:layout_below="@+id/date"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp" />
-
+            android:layout_height="20dp"
+            android:autoSizeTextType="uniform"
+            android:textStyle="bold"
+            android:text="@string/stack" />
     </RelativeLayout>
 
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/home_recyclerview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/stack_category"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
