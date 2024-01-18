@@ -6,13 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.bicapplication.certify.CertifyData
-import com.example.bicapplication.certify.CertifyStatusActivity
-import com.example.bicapplication.certify.CertifyStatusAdapter
 import com.example.bicapplication.databinding.FragmentMychallBinding
 
 class MychallFragment : Fragment() {
-    lateinit var binding:FragmentMychallBinding
+    lateinit var binding: FragmentMychallBinding
     private var adapter: MychallAdapter? = null
     private var ChallengeList: Array<Challenge>? = null
 
@@ -25,11 +22,11 @@ class MychallFragment : Fragment() {
 
         // 그리드뷰 만들어주기위한 작업 //////////////////////////////
         ChallengeList = arrayOf(
-            Challenge("챌린지1","내용1"),
-            Challenge("챌린지2","내용2"),
-            Challenge("챌린지3","내용3"),
-            Challenge("챌린지4","내용4"),
-            Challenge("챌린지5","내용5")
+            Challenge("코딩스택","챌린지1","인증방식1", "참여자수: 2", "만료기간: 0월 0일 00시 00분"),
+            Challenge("코딩스택","챌린지1","인증방식1", "참여자수: 2", "만료기간: 0월 0일 00시 00분"),
+            Challenge("코딩스택","챌린지1","인증방식1", "참여자수: 2", "만료기간: 0월 0일 00시 00분"),
+            Challenge("코딩스택","챌린지1","인증방식1", "참여자수: 2", "만료기간: 0월 0일 00시 00분"),
+            Challenge("코딩스택","챌린지1","인증방식1", "참여자수: 2", "만료기간: 0월 0일 00시 00분"),
         )
         adapter = MychallAdapter(activity, ChallengeList)
 

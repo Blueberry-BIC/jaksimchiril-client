@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mychall.MychallFragment" >
+    tools:context=".mychall.MychallFragment">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,20 +14,21 @@
         <GridView
             android:id="@+id/gridView"
             android:layout_width="0dp"
-            android:layout_height="500dp"
+            android:layout_height="1000dp"
+            android:layout_margin="20dp"
+
+
+            android:horizontalSpacing="20dp"
             android:numColumns="2"
+            android:verticalSpacing="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"
-
-
-            />
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </androidx.core.widget.NestedScrollView>

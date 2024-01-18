@@ -28,8 +28,11 @@ class MychallAdapter(
         }
 
         val item = ChallengeList?.get(position)
-        view?.findViewById<TextView>(R.id.nameTextView)?.text = item?.name
-        view?.findViewById<TextView>(R.id.contentsTextView)?.text = item?.contents
+        view?.findViewById<TextView>(R.id.stackTextView)?.text = item?.stack  //스택
+        view?.findViewById<TextView>(R.id.nameTextView)?.text = item?.title  //제목
+        view?.findViewById<TextView>(R.id.contentsTextView)?.text = item?.certifyMethod  //인증방식
+        view?.findViewById<TextView>(R.id.numberTextView)?.text = item?.number //참여자수
+        view?.findViewById<TextView>(R.id.periodTextView)?.text = item?.period //만료기간
 
         return view
     }
