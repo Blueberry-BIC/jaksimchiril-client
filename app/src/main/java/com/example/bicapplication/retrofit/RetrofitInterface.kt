@@ -3,6 +3,7 @@ package com.example.bicapplication.retrofit
 import com.example.bicapplication.klaytn.AuthData
 import com.example.bicapplication.klaytn.PrepareRespData
 import com.example.bicapplication.klaytn.ResultRespData
+import com.example.bicapplication.responseObject.ActionQuiz
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -51,4 +52,12 @@ interface RetrofitInterface {
 
 
     // 민우 method
+
+    //액션퀴즈 랜덤으로 하나 가져오기 요청
+    @GET("action")
+    fun requestAction(): Call<ActionQuiz>
+
+
+
+
 }
