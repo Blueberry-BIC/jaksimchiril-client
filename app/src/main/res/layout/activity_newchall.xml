@@ -21,263 +21,344 @@
             android:layout_alignParentBottom="true"
             android:layout_centerVertical="true"
             android:text="@string/newchall_header" />
-   </RelativeLayout>
+    </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/linearlayout_newchall_info"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/relativelayout_newchall_header"
-        android:paddingTop="20dp"
-        android:paddingEnd="20dp"
-        android:paddingStart="20dp">
+        app:layout_constraintBottom_toTopOf="@+id/newchall_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
+            android:id="@+id/linearlayout_newchall_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginBottom="20dp">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/relativelayout_newchall_header"
+            android:paddingTop="20dp"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="@string/newchall_info" />
-
-            <GridLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:columnCount="3"
-                android:rowCount="5"
-                android:layout_gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="0"
-                    android:layout_row="0"
-                    android:text="@string/chall_daterange"
-                    android:layout_margin="5dp"
-                    android:gravity="center"
-                    android:layout_gravity="center"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="0"
-                    android:layout_row="1"
-                    android:layout_margin="5dp"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:text="@string/chall_category" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="0"
-                    android:layout_row="2"
-                    android:layout_margin="5dp"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:text="@string/chall_choose_open" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="0"
-                    android:layout_row="3"
-                    android:layout_margin="5dp"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:text="@string/chall_grouppwd" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="0"
-                    android:layout_row="4"
-                    android:layout_margin="5dp"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:text="@string/deposit" />
-
-                <TextView
-                    android:id="@+id/textview_newchall_daterange"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="0"
-                    android:layout_column="1"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="@string/chall_daterange" />
-
-                <ImageButton
-                    android:id="@+id/imgbtn_newchall_daterange"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_row="0"
-                    android:layout_column="2"
-                    android:layout_gravity="center"
-                    android:layout_margin="5dp"
-                    android:background="@android:color/transparent"
-                    android:gravity="center"
-                    app:srcCompat="@drawable/calendar"
-                    tools:ignore="TouchTargetSizeCheck"
-                    android:contentDescription="@string/chall_daterange"/>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                    android:hint="@string/newchall_category_hint"
-                    android:layout_column="1"
-                    android:layout_row="1"
-                    android:layout_columnSpan="2"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_gravity="fill_horizontal">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/autocomepletetextview_newchall_category"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="none"
-                        android:textSize="14sp"
-                        tools:ignore="TouchTargetSizeCheck" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <RadioGroup
-                    android:id="@+id/ratiogroup_newchall_choose_open"
-                    android:layout_width="278dp"
-                    android:layout_height="wrap_content"
-                    android:layout_row="2"
-                    android:layout_column="1"
-                    android:layout_columnSpan="2"
-                    android:layout_gravity="fill_horizontal"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/radiobtn_newchall_open"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:text="@string/newchall_open" />
-
-                    <RadioButton
-                        android:id="@+id/radiobtn_newchall_private"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="@string/newchall_private" />
-                </RadioGroup>
-
-                <EditText
-                    android:id="@+id/edittext_newchall_grouppwd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="3"
-                    android:layout_column="1"
-                    android:layout_columnSpan="2"
-                    android:layout_gravity="fill_horizontal"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:clickable="false"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:hint="@string/chall_grouppwd"
-                    android:inputType="textPassword"
-                    android:textSize="14sp"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-                <EditText
-                    android:id="@+id/edittext_newchall_deposit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="4"
-                    android:layout_column="1"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:clickable="false"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:hint="@string/deposit"
-                    android:inputType="number"
-                    android:textSize="14sp"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-                <TextView
-                    android:id="@+id/textview_newchall_deposit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_row="4"
-                    android:layout_column="2"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="@string/newchall_klay" />
-
-            </GridLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="@string/chall_desc" />
-
-            <EditText
-                android:id="@+id/editextmultiLine_newchall_desc"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:gravity="start|top"
-                android:hint="@string/newchall_desc_limit"
-                android:inputType="textMultiLine"
-                android:maxLength="100"
-                android:textSize="14sp"
-                tools:ignore="TouchTargetSizeCheck" />
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/newchall_info" />
+
+                <GridLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:columnCount="3"
+                    android:rowCount="7"
+                    android:layout_gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_row="0"
+                        android:text="@string/chall_name"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_row="1"
+                        android:text="@string/chall_daterange"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_row="2"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:text="@string/chall_category" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_row="3"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:text="@string/chall_auth_method" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_row="4"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:text="@string/chall_choose_open" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_row="5"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:text="@string/chall_grouppwd" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_row="6"
+                        android:layout_margin="5dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:text="@string/deposit" />
+
+                    <EditText
+                        android:id="@+id/edittext_newchall_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="0"
+                        android:layout_column="1"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill_horizontal"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:clickable="false"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="@string/chall_name"
+                        android:textSize="14sp"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <TextView
+                        android:id="@+id/textview_newchall_daterange"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="1"
+                        android:layout_column="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/chall_daterange" />
+
+                    <ImageButton
+                        android:id="@+id/imgbtn_newchall_daterange"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_row="1"
+                        android:layout_column="2"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:background="@android:color/transparent"
+                        android:gravity="center"
+                        app:srcCompat="@drawable/calendar"
+                        tools:ignore="TouchTargetSizeCheck"
+                        android:contentDescription="@string/chall_daterange"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:hint="@string/newchall_category_hint"
+                        android:layout_column="1"
+                        android:layout_row="2"
+                        android:layout_columnSpan="2"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_gravity="fill_horizontal">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/autocomepletetextview_newchall_category"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:textSize="14sp"
+                            tools:ignore="TouchTargetSizeCheck" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <RadioGroup
+                        android:id="@+id/radiogroup_newchall_auth_method"
+                        android:layout_width="278dp"
+                        android:layout_height="wrap_content"
+                        android:layout_row="3"
+                        android:layout_column="1"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill_horizontal"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radiobtn_newchall_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:text="@string/auth_image" />
+
+                        <RadioButton
+                            android:id="@+id/radiobtn_newchall_github"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:text="@string/auth_github" />
+
+                        <RadioButton
+                            android:id="@+id/radiobtn_newchall_action"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/auth_action" />
+                    </RadioGroup>
+
+                    <RadioGroup
+                        android:id="@+id/radiogroup_newchall_choose_open"
+                        android:layout_width="278dp"
+                        android:layout_height="wrap_content"
+                        android:layout_row="4"
+                        android:layout_column="1"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill_horizontal"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radiobtn_newchall_open"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="10dp"
+                            android:text="@string/newchall_open" />
+
+                        <RadioButton
+                            android:id="@+id/radiobtn_newchall_private"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/newchall_private" />
+                    </RadioGroup>
+
+                    <EditText
+                        android:id="@+id/edittext_newchall_grouppwd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="5"
+                        android:layout_column="1"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill_horizontal"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:clickable="false"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="@string/chall_grouppwd"
+                        android:inputType="textPassword"
+                        android:textSize="14sp"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <EditText
+                        android:id="@+id/edittext_newchall_deposit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="6"
+                        android:layout_column="1"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:clickable="false"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:hint="@string/deposit"
+                        android:inputType="number"
+                        android:textSize="14sp"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <TextView
+                        android:id="@+id/textview_newchall_deposit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_row="6"
+                        android:layout_column="2"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/newchall_klay" />
+
+                </GridLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/chall_desc" />
+
+                <EditText
+                    android:id="@+id/editextmultiLine_newchall_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:hint="@string/newchall_desc_limit"
+                    android:inputType="textMultiLine"
+                    android:maxLength="100"
+                    android:textSize="14sp"
+                    tools:ignore="TouchTargetSizeCheck" />
 
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp">
+
+                <ImageView
+                    android:id="@+id/imageview_newchall_uploadimg"
+                    android:layout_width="160dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/bic_logo" />
+
+                <Button
+                    android:id="@+id/btn_newchall_uploadimg"
+                    android:layout_width="220dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="@string/newchall_upload_image"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="20dp">
-
-            <ImageView
-                android:id="@+id/imageview_newchall_uploadimg"
-                android:layout_width="160dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:src="@drawable/bic_logo" />
-
-            <Button
-                android:id="@+id/btn_newchall_uploadimg"
-                android:layout_width="220dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/newchall_upload_image"
-                tools:ignore="TouchTargetSizeCheck" />
-        </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
     <RelativeLayout
+        android:id="@id/newchall_btn"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:gravity="center"
