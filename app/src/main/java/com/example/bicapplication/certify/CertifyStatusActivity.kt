@@ -1,5 +1,6 @@
 package com.example.bicapplication.certify
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bicapplication.R
@@ -25,9 +26,15 @@ class CertifyStatusActivity : AppCompatActivity() {
             CertifyData("ee",R.drawable.bic_logo)
         )
 
+        //인증하기 버튼 클릭시 -> 액션, 깃허브, 이미지 인증 3개중 한개 페이지 이동
+        binding.certifyButton.setOnClickListener {
+            val intent = Intent(this, ActionCertifyActivity::class.java)
+            startActivity(intent)
+        }
+
+
+
         adapter = CertifyStatusAdapter(this, certifyDataList)
         binding.gridView.adapter = adapter
     }
-
-
 }

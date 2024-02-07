@@ -2,12 +2,16 @@ package com.example.bicapplication.mychall
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import com.example.bicapplication.R
+import com.example.bicapplication.certify.ActionCertifyActivity
+import com.example.bicapplication.certify.CertifyStatusActivity
 
 
 class MychallAdapter(
@@ -33,6 +37,14 @@ class MychallAdapter(
         view?.findViewById<TextView>(R.id.contentsTextView)?.text = item?.certifyMethod  //인증방식
         view?.findViewById<TextView>(R.id.numberTextView)?.text = item?.number //참여자수
         view?.findViewById<TextView>(R.id.periodTextView)?.text = item?.period //만료기간
+
+        //그리드뷰의 챌린지뷰 하나 클릭시 인증페이지 이동
+        view?.setOnClickListener {
+            val intent = Intent(context, CertifyStatusActivity::class.java)
+            context?.startActivity(intent)
+        }
+
+
 
         return view
     }
