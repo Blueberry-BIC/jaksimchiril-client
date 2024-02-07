@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.webkit.URLUtil
+import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -20,11 +21,14 @@ import java.net.URLEncoder
 
 class Connect2KlaytnActivity : AppCompatActivity() {
     private lateinit var binding:ActivityConnect2KlaytnBinding
+
+    val retrofitInterface = RetrofitInterface.create("https://api.kaikas.io/api/v1/k/")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityConnect2KlaytnBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        connect2kaikas()
+
         binding.webviewConnect2klaytn.settings.apply {
             setSupportMultipleWindows(true)
             javaScriptEnabled = true
@@ -34,18 +38,18 @@ class Connect2KlaytnActivity : AppCompatActivity() {
             setSupportZoom(false)
             domStorageEnabled = true
         }
+        connect2kaikas()
 
     }
 
     private fun connect2kaikas() {
-        val reqAuth = AuthData("auth", AuthData.Bapp("BIC"))
-        val retrofitInterface = RetrofitInterface.create("https://api.kaikas.io/api/v1/k/")
+        val reqAuth = AuthData("auth", AuthData.Bapp("BIC"), AuthData.CallBack("http://bic/main", "http://bic/main"))
         var request_key = ""
 
         //prepare - request - result
         //retrofit 객체 만들어서 method 사용
         retrofitInterface.requestAuth(reqAuth).enqueue(object : Callback<PrepareRespData> {
-            override fun onResponse(call: Call<PrepareRespData>, response: Response<PrepareRespData>){
+            override fun onResponse(call: Call<PrepareRespData>, response: Response<PrepareRespData>) {
                 //통신 성공했을 때
                 if(response.isSuccessful){
                     request_key = response.body()?.request_key.toString()
@@ -58,7 +62,7 @@ class Connect2KlaytnActivity : AppCompatActivity() {
             }
             //통신 실패했을 때
             override fun onFailure(call: Call<PrepareRespData>, t: Throwable) {
-                Log.d("AUTH", "fail ${t}")
+                Log.d("AUTH", "fail with ${t}")
             }
 
         })
@@ -67,23 +71,38 @@ class Connect2KlaytnActivity : AppCompatActivity() {
     //deeplink to kaikas app
     private fun request(reqkey:String) {
         try {
-            /*val encoded_key = "request_key="+URLEncoder.encode(reqkey, "UTF-8")
-            val url = "kaikas://wallet/api?"
-            initViews()
-            Log.d("REQUEST", "success to initviews")
-            binding.webviewConnect2klaytn.postUrl(url, encoded_key.toByteArray())*/
-            //val uri = Uri.parse("kaikas://wallet/api?request_key=${reqkey}")
             val url = "https://app.kaikas.io/a/${reqkey}"
             initViews()
             binding.webviewConnect2klaytn.loadUrl(url)
             Log.d("REQUEST", "success to url")
-            //startActivity(Intent(Intent.ACTION_VIEW, uri))
         } catch (e:Exception){
             Log.d("REQUEST", "fail to request. ${e}")
         }
     }
 
+    private fun resultAuth(reqkey: String, iface: RetrofitInterface) {
+        var walletaddr = ""
+        //retrofit 객체 만들어서 method 사용
+        iface.requestResult(reqkey).enqueue(object:Callback<AuthResultData>{
+            override fun onResponse(call: Call<AuthResultData>, response: Response<AuthResultData>) {
+                if (response.isSuccessful){
+                    walletaddr = response.body()?.result?.klaytn_address.toString()
+                    Log.d("RESULT", "success to take wallet addr: ${walletaddr}")
+                }
+            }
+
+            override fun onFailure(call: Call<AuthResultData>, t: Throwable) {
+                Log.d("RESULT", "fail to take wallet address")
+            }
+        })
+    }
+
     private fun initViews(){
+        binding.webviewConnect2klaytn.webChromeClient = object : WebChromeClient(){
+            override fun onCloseWindow(window: WebView?) {
+                Log.d("CLOSEVIEW", "close webview")
+            }
+        }
         binding.webviewConnect2klaytn.webViewClient = object : WebViewClient(){
             override fun shouldOverrideUrlLoading(view: WebView, url:String): Boolean {
                 url?.let {
@@ -92,7 +111,7 @@ class Connect2KlaytnActivity : AppCompatActivity() {
                         val uri = try {
                             Uri.parse(url)
                         } catch (e:Exception){
-                            Log.d("MAKE URI", "EXCETION ${e}")
+                            Log.d("MAKE URI", "EXCEPTION ${e}")
                             return false
                         }
                         Log.d("MAKE URI", "make ${uri}")

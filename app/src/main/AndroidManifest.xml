@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <queries>
-        <package android:name="io.klutch.wallet"/>
+        <package android:name="io.klutch.wallet" />
     </queries>
 
     <application
@@ -104,6 +104,17 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="bic"
+                    android:pathPrefix="/main"/>
+            </intent-filter>
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

@@ -1,6 +1,7 @@
 package com.example.bicapplication.retrofit
 
 import com.example.bicapplication.klaytn.AuthData
+import com.example.bicapplication.klaytn.AuthResultData
 import com.example.bicapplication.klaytn.PrepareRespData
 import com.example.bicapplication.klaytn.ResultRespData
 import com.google.gson.Gson
@@ -38,7 +39,7 @@ interface RetrofitInterface {
     @GET("result/{request_key}")
     fun requestResult(
         @Path("request_key") request_key:String
-    ) : Call<ResultRespData>
+    ) : Call<AuthResultData>
 
 
     // 유경 method
