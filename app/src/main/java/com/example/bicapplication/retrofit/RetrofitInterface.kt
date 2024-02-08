@@ -45,6 +45,7 @@ interface RetrofitInterface {
         @Path("request_key") request_key:String
     ) : Call<ResultRespData>
 
+
     // challInfo update method
     @FormUrlEncoded
     @PUT("chall")
@@ -79,10 +80,8 @@ interface RetrofitInterface {
     ) : Call<UserData>
 
     // get challInfo method
-    @GET("chall/{challId}")
-    fun getChallInfo(
-        @Path("challId") challId: Int
-    ) : Call<ChallData>
+    @GET("activated_chall")
+    fun getActivatedChallInfo() : Call<ArrayList<ChallData>>
 
     // set challInfo method
     @POST("chall")

@@ -16,6 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import kotlin.concurrent.thread
 import androidx.core.util.Pair
+import com.example.bicapplication.retrofit.ChallDBManager
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
@@ -23,6 +24,7 @@ class NewchallActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewchallBinding
     var challdata = ChallData.getDefault()
     val retrofitInterface = RetrofitInterface.create("http://10.0.2.2:8081/")
+    val challDbManager = ChallDBManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +47,7 @@ class NewchallActivity : AppCompatActivity() {
                 val intent = Intent(this@NewchallActivity, MainActivity::class.java)
                 startActivity(intent)
             }
+            // 챌린지 공개여부 선택
             radiogroupNewchallChooseOpen.setOnCheckedChangeListener { _, checkedid ->
                 when (checkedid) {
                     R.id.radiobtn_newchall_open -> {
@@ -55,6 +58,7 @@ class NewchallActivity : AppCompatActivity() {
                     }
                 }
             }
+            // 챌린지 인증방식 선택
             radiogroupNewchallAuthMethod.setOnCheckedChangeListener { _, checkedid ->
                 when (checkedid) {
                     R.id.radiobtn_newchall_image -> {
@@ -68,10 +72,12 @@ class NewchallActivity : AppCompatActivity() {
                     }
                 }
             }
+            // 챌린지 카테고리 선택
             autocomepletetextviewNewchallCategory.setOnItemClickListener { parent, view, position, id ->
                 var item = autocomepletetextviewNewchallCategory.text.toString()
                 challdata.category = item
             }
+            // 챌린지 기간 선택
             imgbtnNewchallDaterange.setOnClickListener {
                 val dateRangePicker = MaterialDatePicker.Builder.dateRangePicker()
                     .setTitleText("챌린지 기간을 선택해주세요")
@@ -92,7 +98,7 @@ class NewchallActivity : AppCompatActivity() {
                         val end = dateFormat.parse(challdata.enddate).time
 
                         challdata.totalDays = (end - start) / (24 * 60 * 60 * 1000) + 1
-                        textviewNewchallDaterange.setText(dateRangePicker.headerText)
+                        textviewNewchallDaterange.text = dateRangePicker.headerText
                     }
                 })
             }
@@ -109,7 +115,8 @@ class NewchallActivity : AppCompatActivity() {
                 }
 
                 // DB에 입력한 내용 저장
-                saveChallInfo()
+//                saveChallInfo()
+                challDbManager.postChallInfo(challdata)
 
                 val intent = Intent(this@NewchallActivity, MainActivity::class.java)
                 startActivity(intent)
@@ -121,7 +128,6 @@ class NewchallActivity : AppCompatActivity() {
 
     // DB에 챌린지 관련 정보 저장
     private fun saveChallInfo() {
-//        val retrofitInterface = RetrofitInterface.create("http://10.0.2.2:8081/")
 
         retrofitInterface.postChallInfo(challdata).enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
