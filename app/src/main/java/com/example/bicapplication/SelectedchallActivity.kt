@@ -3,6 +3,7 @@ package com.example.bicapplication
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.bicapplication.databinding.ActivitySelectedchallBinding
+import com.example.bicapplication.datamodel.ChallData
 
 class SelectedchallActivity : AppCompatActivity() {
 
@@ -18,4 +19,9 @@ class SelectedchallActivity : AppCompatActivity() {
             }
         }
     }
+
+    companion object {
+        var challData: ChallData? = null
+    }
+
 }
