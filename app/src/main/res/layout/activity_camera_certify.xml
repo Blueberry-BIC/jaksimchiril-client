@@ -20,14 +20,26 @@ tools:context=".certify.CameraCertifyActivity">
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/camera"
+        android:id="@+id/cameraButton"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:text="camera"
+        android:text="다시찍기"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.176"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.085" />
+        app:layout_constraintVertical_bias="0.163" />
+
+    <Button
+        android:id="@+id/completeButton"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:text="완료하기"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.819"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.163" />
 </androidx.constraintlayout.widget.ConstraintLayout>

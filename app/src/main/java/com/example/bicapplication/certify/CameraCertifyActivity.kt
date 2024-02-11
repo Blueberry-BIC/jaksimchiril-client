@@ -1,29 +1,18 @@
 package com.example.bicapplication.certify
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import com.example.bicapplication.R
 import android.Manifest
-import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.net.Uri
-import android.os.Build
+import android.os.Bundle
 import android.provider.MediaStore
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.bicapplication.databinding.ActivityCameraCertifyBinding
-import com.example.bicapplication.databinding.ActivityMainBinding
-import java.io.FileOutputStream
-import java.text.SimpleDateFormat
 
 //이미지인증을 수행하는 액티비티
 class CameraCertifyActivity : AppCompatActivity() {
@@ -32,17 +21,25 @@ class CameraCertifyActivity : AppCompatActivity() {
     private val camera_mode = 98
 
     private lateinit var binding: ActivityCameraCertifyBinding
-
     private lateinit var bitmap:Bitmap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraCertifyBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // 카메라
-        binding.camera.setOnClickListener {
+        callCamera()
+        // 다시찍기 버튼 클릭시
+        binding.cameraButton.setOnClickListener {
             callCamera()
+        }
+        // 완료하기 버튼 클릭시
+        binding.completeButton.setOnClickListener {
+            //bitmap 사진 데이터를 담아서 인증현황 액티비티로 이동
+            val intent = Intent(this, CertifyStatusActivity::class.java)
+            intent.putExtra("사진", bitmap)
+            intent.putExtra("이미지인증방문", true)
+            startActivity(intent)
+            finish()
         }
     }
 
@@ -90,7 +87,7 @@ class CameraCertifyActivity : AppCompatActivity() {
 
     // 카메라 촬영 - 권한 처리
     private fun callCamera(){
-        if(checkPermission(camera, camera_mode) ){
+        if(checkPermission(camera, camera_mode) ){  //권한체크
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             activityResult.launch(intent)
         }
