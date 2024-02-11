@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import java.util.*
 
 data class ChallData(
-    @SerializedName("challid") var challId : String? = null,
+    @SerializedName("challId") var challId : String? = null,
     @SerializedName("challName") var challName : String,
     @SerializedName("startdate") var startdate : String,
     @SerializedName("enddate") var enddate : String,
