@@ -1,7 +1,11 @@
 package com.example.bicapplication.retrofit
 
+import android.annotation.SuppressLint
 import android.util.Log
 import com.example.bicapplication.datamodel.ChallData
+import kotlinx.coroutines.*
+import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -11,33 +15,59 @@ class ChallDBManager (private val baseurl: String = "http://10.0.2.2:8081/") {
 
     // 진행중인 챌린지 정보 가져오기
     // is_progress가 0이면 시작 전인 챌린지, 1이면 진행중인 챌린지
+    // getActivedChallInfo는 안 쓰임
+    @SuppressLint("SuspiciousIndentation")
     fun getActivedChallInfo(is_progress: Int): ArrayList<ChallData> {
-        var challdata: ArrayList<ChallData> = ArrayList()
+        var challDataArray: ArrayList<ChallData> = ArrayList()
 
-        retrofitInterface.getActivatedChallInfo().enqueue(object : Callback<ArrayList<ChallData>> {
+        retrofitInterface.getActivatedChallInfo().enqueue(object : Callback<ArrayList<Any>> {
             override fun onResponse(
-                call: Call<ArrayList<ChallData>>,
-                response: Response<ArrayList<ChallData>>
+                call: Call<ArrayList<Any>>,
+                response: Response<ArrayList<Any>>
             ) {
                 if (response.isSuccessful) {
                     Log.d("CHALL", "success getActivatedChall1 ${response.body()}")
-                    challdata = response.body()!!
-                }
-                else {
+
+                    val challArray = JSONArray(response.body())
+                    Log.d("CHALL", "challdata length: ${challArray.length()}")
+
+                    for (i in 0 until challArray.length()) {
+                        var data = challArray.getJSONObject(i)
+                        Log.d("CHALL", "data ${i}: ${data}")
+
+                        var challData = ChallData.getDefault()
+                        challData.challId = data.getString("_id")
+                        challData.challName = data.getString("chall_name")
+                        challData.challDesc = data.getString("chall_desc")
+                        challData.startdate = data.getString("start_date").substring(0, 10)
+                        challData.enddate = data.getString("end_date").substring(0, 10)
+                        challData.authMethod = data.getInt("auth_method")
+                        challData.isPublic = data.getBoolean("is_public")
+                        challData.category = data.getString("category")
+                        challData.passwd = data.getInt("passwd")
+                        challData.userNum = data.getInt("user_num")
+                        challData.totalDays = data.getLong("total_days")
+
+                        challDataArray.add(challData)
+                    }
+
+                } else {
                     Log.d("CHALL", "success getActivatedChall2 ${response.errorBody()}")
                 }
 
             }
 
-            override fun onFailure(call: Call<ArrayList<ChallData>>, t: Throwable) {
+            override fun onFailure(call: Call<ArrayList<Any>>, t: Throwable) {
                 Log.d("CHALL", "fail getActivatedChall ${t}")
             }
         })
 
-        return challdata
+
+        Log.d("CHALL", "final challArray: ${challDataArray}")
+        return challDataArray
     }
 
-    // 진행중인 챌린지 정보 가져오기
+    // 완료된 챌린지 정보 가져오기
     fun getCompletedChallInfo() {
 
     }

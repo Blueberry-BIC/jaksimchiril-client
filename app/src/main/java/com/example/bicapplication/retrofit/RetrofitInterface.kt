@@ -82,7 +82,7 @@ interface RetrofitInterface {
 
     // get challInfo method
     @GET("activated_chall")
-    fun getActivatedChallInfo() : Call<ArrayList<ChallData>>
+    fun getActivatedChallInfo() : Call<ArrayList<Any>>
 
     // set challInfo method
     @POST("chall")
