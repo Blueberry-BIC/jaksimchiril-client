@@ -13,9 +13,11 @@
     <string name="logout_text">로그아웃</string>
     <string name="Withdrawal_text">회원탈퇴</string>
     <string name="mystack">내 스택</string>
-    <string name="mychall">인증</string>
+    <string name="mychall">내 챌린지</string>
+    <string name="chall_status">챌린지 현황</string>
     <string name="chall_daterange">챌린지 기간</string>
     <string name="chall_category">카테고리</string>
+    <string name="chall_auth_method">인증방식</string>
     <string name="chall_choose_open">공개 여부</string>
     <string name="chall_grouppwd">비밀번호</string>
     <string name="chall_desc">챌린지 소개</string>
@@ -26,6 +28,9 @@
     <string name="backbtn_desciption">뒤로가기</string>
     <string name="newchall_header">챌린지 개설</string>
     <string name="newchall_category_hint">카테고리를 선택하세요</string>
+    <string name="auth_github">깃허브</string>
+    <string name="auth_image">이미지</string>
+    <string name="auth_action">액션</string>
     <string name="newchall_open">공개</string>
     <string name="newchall_private">비공개</string>
     <string name="newchall_info">챌린지 정보</string>

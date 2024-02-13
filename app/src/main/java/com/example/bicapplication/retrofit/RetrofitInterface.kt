@@ -1,15 +1,19 @@
 package com.example.bicapplication.retrofit
 
+import com.example.bicapplication.datamodel.ChallData
+import com.example.bicapplication.datamodel.UserData
 import com.example.bicapplication.klaytn.AuthData
 import com.example.bicapplication.klaytn.AuthResultData
 import com.example.bicapplication.klaytn.PrepareRespData
 import com.example.bicapplication.klaytn.ResultRespData
 import com.example.bicapplication.responseObject.ActionQuiz
+import com.example.bicapplication.responseObject.BooleanResponse
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.*
 
 interface RetrofitInterface {
@@ -21,6 +25,7 @@ interface RetrofitInterface {
 
             return Retrofit.Builder()
                 .baseUrl(baseURL)
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(RetrofitInterface::class.java)
@@ -43,22 +48,63 @@ interface RetrofitInterface {
     ) : Call<AuthResultData>
 
 
+    // challInfo update method
+    @FormUrlEncoded
+    @PUT("chall")
+    fun putChallInfo(
+//        @Body chall: ChallData
+        @Field("challName") challName: String,
+        @Field("challDesc") challDesc: String,
+        @Field("isPublic") isPublic: Boolean,
+        @Field("category") category: String,
+        @Field("passwd") passwd: Int
+    ) : Call<ChallData>
+
+    @DELETE("chall/{challId}")
+    fun deleteChallInfo(
+        @Path("challId") challId: Int
+    ) : Call<ChallData>
+
     // 유경 method
 
 
+    // save userInfo method
+    @POST("user/{userId}")
+    fun setUserInfo(
+        @Body user: UserData
+    ) : Call<UserData>
 
+    // edit(update) userInfo method
+    @FormUrlEncoded
+    @PUT("user/edit/{userId}")
+    fun editUserInfo(
+        @Field("prizeMoney") prizeMoney: Int
+    ) : Call<UserData>
 
+    // get challInfo method
+    @GET("activated_chall")
+    fun getActivatedChallInfo() : Call<ArrayList<Any>>
 
+    // set challInfo method
+    @POST("chall")
+    fun postChallInfo(
+        @Body challData: ChallData
+    ) : Call<String>
 
-
+    // get userInfo method
+    @GET("user/{userId}")
+    fun getUserInfo(
+        @Path("userId") userId: Int
+    ) : Call<UserData>
 
     // 민우 method
 
     //액션퀴즈 랜덤으로 하나 가져오기 요청
     @GET("action")
-    fun requestAction(): Call<ActionQuiz>
+    fun getAction(): Call<ActionQuiz>
 
-
-
+    //깃허브 기간내 나의 커밋여부 가져오기 요청
+    @GET("github/{githubId}")
+    fun getIsCommitted(@Path("githubId") githubId:String): Call<BooleanResponse>
 
 }
