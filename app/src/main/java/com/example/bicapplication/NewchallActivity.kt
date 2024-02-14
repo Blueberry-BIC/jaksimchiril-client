@@ -107,6 +107,7 @@ class NewchallActivity : AppCompatActivity() {
             btnNewchallParticipate.setOnClickListener {
                 challdata.challName = edittextNewchallName.text.toString()
                 challdata.challDesc = editextmultiLineNewchallDesc.text.toString()
+                challdata.money = edittextNewchallDeposit.text.toString().toInt()
 
                 if (challdata.isPublic == true) {
                     challdata.passwd = 0

@@ -56,8 +56,10 @@ class HomeFragment : Fragment() {
                         challData.isPublic = data.getBoolean("is_public")
                         challData.category = data.getString("category")
                         challData.passwd = data.getInt("passwd")
+                        challData.money = data.getInt("money")
                         challData.userNum = data.getInt("user_num")
                         challData.totalDays = data.getLong("total_days")
+                        challData.isProgress = data.getInt("is_progress")
 
                         challDataArray.add(challData)
                     }
