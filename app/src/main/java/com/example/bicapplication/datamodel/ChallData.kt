@@ -13,14 +13,16 @@ data class ChallData(
     @SerializedName("isPublic") var isPublic : Boolean,
     @SerializedName("category") var category : String,
     @SerializedName("passwd") var passwd : Int = 0,
+    @SerializedName("money") var money : Int = 0,
     @SerializedName("userNum") var userNum : Int = 0,
     @SerializedName("userList") var userList : List<Int>? = null,
     @SerializedName("totalDays") var totalDays : Long,
-    @SerializedName("isSuccess") var isSuccess : List<Int>? = null
+    @SerializedName("isSuccess") var isSuccess : List<Int>? = null,
+    @SerializedName("isProgress") var isProgress : Int = 0
 ) {
     companion object : DataModelCreateInterface<ChallData> {
         override fun getDefault(): ChallData
-            = ChallData("", "", "", "", 1, "", true, "", 0, 0, null, 0,null)
+            = ChallData("", "", "", "", 1, "", true, "", 0, 0, 0, null, 0,null, 0)
 
     }
 }
