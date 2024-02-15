@@ -25,14 +25,10 @@ class LoginActivity : AppCompatActivity() {
             imagebtnKaikasLogin.setOnClickListener {
                 val intent = Intent(this@LoginActivity, Connect2KlaytnActivity::class.java) ///MainActivity
                 startActivity(intent)  //Connect2KlaytnActivity
-                finish()
+                //finish()
             }
         }
     }
-
-
-
-
 
 
 }
