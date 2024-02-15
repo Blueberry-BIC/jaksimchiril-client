@@ -1,11 +1,9 @@
 package com.example.bicapplication.retrofit
 
-import com.example.bicapplication.datamodel.ChallData
-import com.example.bicapplication.datamodel.UserData
+import com.example.bicapplication.datamodel.*
 import com.example.bicapplication.klaytn.AuthData
 import com.example.bicapplication.klaytn.AuthResultData
 import com.example.bicapplication.klaytn.PrepareRespData
-import com.example.bicapplication.klaytn.ResultRespData
 import com.example.bicapplication.responseObject.ActionQuiz
 import com.example.bicapplication.responseObject.BooleanResponse
 import com.google.gson.Gson
@@ -31,6 +29,38 @@ interface RetrofitInterface {
                 .create(RetrofitInterface::class.java)
         }
     }
+
+    //수빈 method
+
+    //admin wallet address method
+    @GET("admin_wallet")
+    fun getAdminWalletAddr(): Call<AdminWalletData>
+
+    //challenge info 받아오기
+    /*@GET("challenge/{challId}")
+    fun getSelectedChallInfo(
+        @Path("challId") challId: String
+    ) : Call<OneChallData>*/
+
+    @GET("challenge/{challId}")
+    fun getOneChallInfo(
+        @Path("challId") challId: String
+    ): Call<DepositData>
+
+
+    //activated_chall patch
+    @PATCH("challenge/{challId}")
+    fun patchActivatedChall(
+        @Path("challId") challId: String,
+        @Body userId: IntData
+    ) : Call<StringData>
+
+    //user patch
+    @PATCH("user/{userId}")
+    fun patchUser(
+        @Path("userId") userId: String,
+        @Body challId: StringData
+    ) : Call<StringData>
 
     //kaikas method
     //kaikas prepare-Auth step method
