@@ -18,6 +18,7 @@ import kotlin.concurrent.thread
 import androidx.core.util.Pair
 import com.example.bicapplication.retrofit.ChallDBManager
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.Calendar
 
 class NewchallActivity : AppCompatActivity() {
@@ -32,6 +33,10 @@ class NewchallActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initLayout()
+
+//        val todayDate: LocalDate = LocalDate.now()
+//        Log.d("DATE", todayDate.toString())
+
     }
 
     private fun initLayout() {
@@ -99,6 +104,9 @@ class NewchallActivity : AppCompatActivity() {
 
                         challdata.totalDays = (end - start) / (24 * 60 * 60 * 1000) + 1
                         textviewNewchallDaterange.text = dateRangePicker.headerText
+
+                        val todayDate: LocalDate = LocalDate.now()
+
                     }
                 })
             }

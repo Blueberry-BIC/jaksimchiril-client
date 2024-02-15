@@ -17,6 +17,8 @@ import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.time.LocalDate
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -42,26 +44,35 @@ class HomeFragment : Fragment() {
             ) {
                 if (response.isSuccessful) {
                     val challArray = JSONArray(response.body())
+                    val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+                    val todayDate = LocalDate.now().toString()
+                    val today = dateFormat.parse(todayDate)
 
                     for (i in 0 until challArray.length()) {
                         var data = challArray.getJSONObject(i)
 
-                        var challData = ChallData.getDefault()
-                        challData.challId = data.getString("_id")
-                        challData.challName = data.getString("chall_name")
-                        challData.challDesc = data.getString("chall_desc")
-                        challData.startdate = data.getString("start_date").substring(0, 10)
-                        challData.enddate = data.getString("end_date").substring(0, 10)
-                        challData.authMethod = data.getInt("auth_method")
-                        challData.isPublic = data.getBoolean("is_public")
-                        challData.category = data.getString("category")
-                        challData.passwd = data.getInt("passwd")
-                        challData.money = data.getInt("money")
-                        challData.userNum = data.getInt("user_num")
-                        challData.totalDays = data.getLong("total_days")
-                        challData.isProgress = data.getInt("is_progress")
+                        val startDate = data.getString("start_date").substring(0, 10)
+                        val start = dateFormat.parse(startDate)
 
-                        challDataArray.add(challData)
+                        // 오늘 날짜 기준으로 시작 전인 챌린지 목록만 나타내기
+                        if (today.before(start)) {
+                            var challData = ChallData.getDefault()
+                            challData.challId = data.getString("_id")
+                            challData.challName = data.getString("chall_name")
+                            challData.challDesc = data.getString("chall_desc")
+                            challData.startdate = data.getString("start_date").substring(0, 10)
+                            challData.enddate = data.getString("end_date").substring(0, 10)
+                            challData.authMethod = data.getInt("auth_method")
+                            challData.isPublic = data.getBoolean("is_public")
+                            challData.category = data.getString("category")
+                            challData.passwd = data.getInt("passwd")
+                            challData.money = data.getInt("money")
+                            challData.userNum = data.getInt("user_num")
+                            challData.totalDays = data.getLong("total_days")
+                            challData.isProgress = data.getInt("is_progress")
+
+                            challDataArray.add(challData)
+                        }
                     }
 
                     adapter = ChallListAdapter(challDataArray) {
