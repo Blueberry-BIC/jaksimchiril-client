@@ -34,7 +34,7 @@ class CertifyStatusActivity : AppCompatActivity() {
 
         //인증하기 버튼 클릭시 -> 액션, 깃허브, 이미지 인증 3개중 한개 페이지 이동
         binding.certifyButton.setOnClickListener {
-            val intent = Intent(this, ActionCertifyActivity::class.java)  //ActionCertifyActivity  //GithubCertifyActivity  //CameraCertifyActivity
+            val intent = Intent(this, CameraCertifyActivity::class.java)  //ActionCertifyActivity  //GithubCertifyActivity  //CameraCertifyActivity
             startActivity(intent)
             finish()
         }

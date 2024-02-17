@@ -6,6 +6,7 @@ import com.example.bicapplication.klaytn.AuthResultData
 import com.example.bicapplication.klaytn.PrepareRespData
 import com.example.bicapplication.responseObject.ActionQuiz
 import com.example.bicapplication.responseObject.BooleanResponse
+import com.example.bicapplication.responseObject.UserPostResponse
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -136,5 +137,10 @@ interface RetrofitInterface {
     //깃허브 기간내 나의 커밋여부 가져오기 요청
     @GET("github/{githubId}")
     fun getIsCommitted(@Path("githubId") githubId:String): Call<BooleanResponse>
+
+    //신규 유저 등록 요청
+    @POST("user/add")
+    fun postUser(@Body users: UserData): Call<UserPostResponse>
+
 
 }

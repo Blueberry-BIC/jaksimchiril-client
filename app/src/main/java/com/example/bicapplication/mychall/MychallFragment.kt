@@ -86,12 +86,14 @@ class MychallFragment : Fragment() {
         })
 
 
-        /* 인증현황페이지 테스트 위한 작업
-        binding.button.setOnClickListener {
+        /*
+        //인증현황페이지 테스트 위한 작업
+        binding.mychall.setOnClickListener {
             val intent = Intent(activity, CertifyStatusActivity::class.java)
             startActivity(intent)
         }
          */
+
         return binding.root
     }
 
