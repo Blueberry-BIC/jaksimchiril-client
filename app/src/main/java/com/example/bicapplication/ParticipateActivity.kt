@@ -26,7 +26,7 @@ class ParticipateActivity : AppCompatActivity() {
     private val model: LiveDataViewModel by viewModels()
     private val userid = "65b537f388bb8423ff6e0f8d" // 지금은 임의 설정 -> 추후 usermanager를 통해 받을 수 있도록 수정 필요
 
-    val retrofitInterface = RetrofitInterface.create("http://192.168.136.1:8081/")
+    val retrofitInterface = RetrofitInterface.create("http://10.0.2.2:8081/")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityParticipateBinding.inflate(layoutInflater)
