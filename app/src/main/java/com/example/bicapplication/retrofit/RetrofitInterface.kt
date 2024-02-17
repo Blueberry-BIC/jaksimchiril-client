@@ -2,8 +2,8 @@ package com.example.bicapplication.retrofit
 
 import com.example.bicapplication.datamodel.*
 import com.example.bicapplication.klaytn.AuthData
-import com.example.bicapplication.klaytn.AuthResultData
 import com.example.bicapplication.klaytn.PrepareRespData
+import com.example.bicapplication.klaytn.ResultRespData
 import com.example.bicapplication.responseObject.ActionQuiz
 import com.example.bicapplication.responseObject.BooleanResponse
 import com.example.bicapplication.responseObject.UserPostResponse
@@ -43,22 +43,25 @@ interface RetrofitInterface {
         @Path("challId") challId: String
     ) : Call<OneChallData>*/
 
-    @GET("challenge/{challId}")
-    fun getOneChallInfo(
-        @Path("challId") challId: String
-    ): Call<DepositData>
+
+    //참가하기
+    @PUT("participate/{challId}")
+    fun putUserList(
+        @Path("challId") challId: String,
+        @Body challData: ChallData
+    ): Call<StringData>
 
 
-    //activated_chall patch
+    /*//activated_chall patch
     @PATCH("challenge/{challId}")
     fun patchActivatedChall(
         @Path("challId") challId: String,
         @Body userId: IntData
-    ) : Call<StringData>
+    ) : Call<StringData>*/
 
     //user patch
-    @PATCH("user/{userId}")
-    fun patchUser(
+    @PATCH("participate/{userId}")
+    fun patchProgressChall(
         @Path("userId") userId: String,
         @Body challId: StringData
     ) : Call<StringData>
@@ -76,7 +79,7 @@ interface RetrofitInterface {
     @GET("result/{request_key}")
     fun requestResult(
         @Path("request_key") request_key:String
-    ) : Call<AuthResultData>
+    ) : Call<ResultRespData>
 
 
     // challInfo update method
