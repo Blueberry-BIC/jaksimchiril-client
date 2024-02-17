@@ -37,12 +37,6 @@ interface RetrofitInterface {
     @GET("admin_wallet")
     fun getAdminWalletAddr(): Call<AdminWalletData>
 
-    //challenge info 받아오기
-    /*@GET("challenge/{challId}")
-    fun getSelectedChallInfo(
-        @Path("challId") challId: String
-    ) : Call<OneChallData>*/
-
 
     //참가하기
     @PUT("participate/{challId}")
@@ -51,13 +45,6 @@ interface RetrofitInterface {
         @Body challData: ChallData
     ): Call<StringData>
 
-
-    /*//activated_chall patch
-    @PATCH("challenge/{challId}")
-    fun patchActivatedChall(
-        @Path("challId") challId: String,
-        @Body userId: IntData
-    ) : Call<StringData>*/
 
     //user patch
     @PATCH("participate/{userId}")

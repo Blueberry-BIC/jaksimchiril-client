@@ -145,31 +145,6 @@ class ParticipateActivity : AppCompatActivity() {
         })
     }
 
-    /*private fun participate(){
-        retrofitInterface.patchActivatedChall(cha, useridforchall).enqueue(object: Callback<StringData>{
-            override fun onResponse(call: Call<StringData>, response: Response<StringData>) {
-                if (response.isSuccessful){
-                    Log.d("PARTICIPATE", "success patch activatedchall: ${response.body()}")
-                }
-            }
-
-            override fun onFailure(call: Call<StringData>, t: Throwable) {
-                Log.d("PARTICIPATE", "fail with ${t}")
-            }
-        })
-
-        retrofitInterface.patchUser(userid.stringData, challid).enqueue(object: Callback<StringData>{
-            override fun onResponse(call: Call<StringData>, response: Response<StringData>) {
-                if (response.isSuccessful){
-                    Log.d("PARTICIPATE", "success patch user: ${response.body()}")
-                }
-            }
-            override fun onFailure(call: Call<StringData>, t: Throwable) {
-                Log.d("PARTICIPATE", "fail with ${t}")
-            }
-        })
-    }*/
-
     companion object {
         var challData: ChallData? = null
     }
