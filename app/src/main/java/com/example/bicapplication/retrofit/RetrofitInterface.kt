@@ -1,7 +1,6 @@
 package com.example.bicapplication.retrofit
 
-import com.example.bicapplication.datamodel.ChallData
-import com.example.bicapplication.datamodel.UserData
+import com.example.bicapplication.datamodel.*
 import com.example.bicapplication.klaytn.AuthData
 import com.example.bicapplication.klaytn.PrepareRespData
 import com.example.bicapplication.klaytn.ResultRespData
@@ -31,6 +30,28 @@ interface RetrofitInterface {
                 .create(RetrofitInterface::class.java)
         }
     }
+
+    //수빈 method
+
+    //admin wallet address method
+    @GET("admin_wallet")
+    fun getAdminWalletAddr(): Call<AdminWalletData>
+
+
+    //참가하기
+    @PUT("participate/{challId}")
+    fun putUserList(
+        @Path("challId") challId: String,
+        @Body challData: ChallData
+    ): Call<StringData>
+
+
+    //user patch
+    @PATCH("participate/{userId}")
+    fun patchProgressChall(
+        @Path("userId") userId: String,
+        @Body challId: StringData
+    ) : Call<StringData>
 
     //kaikas method
     //kaikas prepare-Auth step method

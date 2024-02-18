@@ -15,7 +15,7 @@ data class ChallData(
     @SerializedName("passwd") var passwd : Int = 0,
     @SerializedName("money") var money : Int = 0,
     @SerializedName("userNum") var userNum : Int = 0,
-    @SerializedName("userList") var userList : List<Int>? = null,
+    @SerializedName("userList") var userList : MutableList<String>? = null,
     @SerializedName("totalDays") var totalDays : Long,
     @SerializedName("isSuccess") var isSuccess : List<Int>? = null,
     @SerializedName("isProgress") var isProgress : Int = 0

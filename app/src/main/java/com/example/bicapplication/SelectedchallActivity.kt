@@ -27,6 +27,7 @@ class SelectedchallActivity : AppCompatActivity() {
             }
             btnChallParticipate.setOnClickListener {
                 if (challData?.isProgress == 0) {
+                    ParticipateActivity.challData = challData
                     val intent = Intent(this@SelectedchallActivity, ParticipateActivity::class.java)
                     startActivity(intent)
                 } else if (challData?.isProgress == 1) {
