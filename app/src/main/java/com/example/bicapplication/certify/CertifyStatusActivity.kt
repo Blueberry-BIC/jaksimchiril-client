@@ -34,7 +34,7 @@ class CertifyStatusActivity : AppCompatActivity() {
 
         //인증하기 버튼 클릭시 -> 액션, 깃허브, 이미지 인증 3개중 한개 페이지 이동
         binding.certifyButton.setOnClickListener {
-            val intent = Intent(this, CameraCertifyActivity::class.java)  //ActionCertifyActivity  //GithubCertifyActivity  //CameraCertifyActivity
+            val intent = Intent(this, GithubCertifyActivity::class.java)  //ActionCertifyActivity  //GithubCertifyActivity  //CameraCertifyActivity
             startActivity(intent)
             finish()
         }
@@ -93,7 +93,7 @@ class CertifyStatusActivity : AppCompatActivity() {
             Log.e("태그,", "commitRepo:"+commitRepo)
 
             val success = if (is_success) "인증완료" else "미인증"
-            binding.successTextView.text = "$success\n커밋날짜: $commitDate\n레포이름: $commitRepo"
+            binding.successTextView.text = "$success\n커밋 날짜: $commitDate\n커밋한 레포: $commitRepo\n레포URL: https://github.com/로컬에 저장된 유저깃허브id값 넣기/$commitRepo "
         }
     }
 

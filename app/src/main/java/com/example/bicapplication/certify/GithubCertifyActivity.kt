@@ -64,7 +64,7 @@ class GithubCertifyActivity : AppCompatActivity() {
                     Log.e("태그", "깃허브커밋 통신 성공, "+response.body() )
 //                    Toast.makeText(this@GithubCertifyActivity, "인증결과: "+response.body()?.is_committed
 //                        +"\n마지막 커밋날짜:"+response.body()?.lastcommitday +"\n커밋한 repo이름:"+ response.body()?.commitRepo , Toast.LENGTH_SHORT).show()
-                    Toast.makeText(this@GithubCertifyActivity, "커밋한 repo이름:"+ response.body()?.commitRepo , Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this@GithubCertifyActivity, "인증성패여부", Toast.LENGTH_SHORT).show()
                     is_success = response.body()?.is_committed!!  //성공여부 저장
                     commitDate = response.body()?.lastcommitday!! //최신 커밋날짜 저장
                     commitRepo = response.body()?.commitRepo!! //커밋한 레포 저장
