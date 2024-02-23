@@ -86,7 +86,24 @@
         </activity>
         <activity
             android:name=".SelectedchallActivity"
-            android:exported="false">
+            android:exported="true">
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- setLink()에 전달하는 링크와 동일한 host, path, scheme -->
+                <data
+                    android:host="bicapplication.page.link"
+                    android:path="/invite"
+                    android:scheme="https" />
+
+                <data
+                    android:host="bicapplication.page.link"
+                    android:path="/invite"
+                    android:scheme="http" />
+            </intent-filter>
+
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
