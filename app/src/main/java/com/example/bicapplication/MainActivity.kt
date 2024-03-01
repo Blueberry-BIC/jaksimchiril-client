@@ -9,6 +9,7 @@ import androidx.core.view.marginStart
 import com.example.bicapplication.databinding.ActivityMainBinding
 import com.example.bicapplication.mychall.MychallFragment
 import com.google.android.material.navigation.NavigationBarView
+import com.google.firebase.FirebaseApp
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
     private lateinit var homeFragment: HomeFragment
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         homeFragment = HomeFragment.newInstance()
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_frame, homeFragment).commit()
+
 
         //로컬에 저장된 유저정보가 없으면 깃허브id 입력받고 로컬db, 몽고db에 저장
         githubDialog()
