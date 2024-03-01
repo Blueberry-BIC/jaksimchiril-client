@@ -33,6 +33,7 @@ data class ResultRespData(
 
 }
 data class Result(
-    val klaytn_address: String
+    val klaytn_address: String? = null,
+    val signed_tax: String?= null,
+    val tx_hash: String? = null
 )
-

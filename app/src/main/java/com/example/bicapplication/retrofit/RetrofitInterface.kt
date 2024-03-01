@@ -1,9 +1,7 @@
 package com.example.bicapplication.retrofit
 
 import com.example.bicapplication.datamodel.*
-import com.example.bicapplication.klaytn.AuthData
-import com.example.bicapplication.klaytn.PrepareRespData
-import com.example.bicapplication.klaytn.ResultRespData
+import com.example.bicapplication.klaytn.*
 import com.example.bicapplication.responseObject.ActionQuiz
 import com.example.bicapplication.responseObject.BooleanResponse
 import com.example.bicapplication.responseObject.UserPostResponse
@@ -67,6 +65,23 @@ interface RetrofitInterface {
     fun requestResult(
         @Path("request_key") request_key:String
     ) : Call<ResultRespData>
+
+    // kaikas send_klay
+    @POST("prepare")
+    fun reqSend(
+        @Body sendinfo: AuthData
+    ) : Call<PrepareRespData>
+
+    @GET("result/{request_key}")
+    fun sendResult(
+        @Path("request_key") request_key:String
+    ): Call<SendResultData>
+
+    //kaikas watch asset
+    @POST("prepare")
+    fun reqAsset(
+        @Body sendinfo: AssetData
+    ) : Call<PrepareRespData>
 
 
     // challInfo update method

@@ -1,6 +1,8 @@
 package com.example.bicapplication
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,8 +13,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.example.bicapplication.databinding.ActivityParticipateBinding
 import com.example.bicapplication.datamodel.*
+import com.example.bicapplication.klaytn.*
 import com.example.bicapplication.retrofit.RetrofitInterface
-import retrofit2.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LiveDataViewModel: ViewModel() {
     val currentWalletData: MutableLiveData<String> by lazy {
@@ -25,8 +30,12 @@ class ParticipateActivity : AppCompatActivity() {
     private var adminAddr: String = ""
     private val model: LiveDataViewModel by viewModels()
     private val userid = "65b537f388bb8423ff6e0f8d" // 지금은 임의 설정 -> 추후 usermanager를 통해 받을 수 있도록 수정 필요
+    private var check_request = false //유저가 카이카스 지갑주소 가져오기 auth 진행 2단계인 request까지해서 카이카스앱 오픈했는지 체크
+    private lateinit var request_key:String  //카이카스 지갑주소 받기위해 필요한 key값
 
-    val retrofitInterface = RetrofitInterface.create("http://10.0.2.2:8081/")
+    val retrofitInterface = RetrofitInterface.create("http://192.168.136.1:8081/")
+    val retrofitInterface2 = RetrofitInterface.create("https://api.kaikas.io/api/v1/k/")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityParticipateBinding.inflate(layoutInflater)
@@ -47,11 +56,22 @@ class ParticipateActivity : AppCompatActivity() {
             }
             btnParticipateParticipate.setOnClickListener {
                 participate()
-                //Toast.makeText(this@ParticipateActivity, "참가 완료되었습니다", Toast.LENGTH_SHORT).show()
+                //checkAsset()
+                sendKlay()
+                Toast.makeText(this@ParticipateActivity, "참가 완료되었습니다", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@ParticipateActivity, MainActivity::class.java) ///MainActivity
                 startActivity(intent)
             }
         }
+    }
+
+    override fun onResume() {
+        //유저가 2단계 과정인 request단계 진행해서 카이카스앱 연동까지 확인되면 result단계 진행
+        if(check_request){
+            Log.e("SEND", "Participate에서 onResume으로 result 시작")
+            result(request_key)
+        }
+        super.onResume()
     }
 
     //participate
@@ -144,6 +164,124 @@ class ParticipateActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun checkAsset(){
+        var asset = AssetData("watch_asset", AssetData.Bapp("BIC"), AssetData.AssetData("0x05Ed1eb522A63D15b533D48AeDAbcF074105BB48"))
+
+        retrofitInterface2.reqAsset(asset).enqueue(object : Callback<PrepareRespData>{
+            override fun onResponse(
+                call: Call<PrepareRespData>,
+                response: Response<PrepareRespData>
+            ) {
+                if (response.isSuccessful){
+                    request_key = response.body()?.request_key.toString()
+                    Log.d("ASSET", "participate에서 prepare 성공: ${request_key}")
+                    request(request_key)
+                }
+                else {
+                    Log.d("ASSET", "보낸것: ${asset}")
+                    Log.d("ASSET", "prepare 실패: ${response.body()}")
+                }
+            }
+
+            override fun onFailure(call: Call<PrepareRespData>, t: Throwable) {
+                Log.d("ASSET", "participate에서 prepare 실패")
+            }
+        })
+
+
+    }
+
+    private fun sendKlay(){
+        var sendData = AuthData("send_klay", AuthData.Bapp("BIC"), AuthData.TransactionData("0x05Ed1eb522A63D15b533D48AeDAbcF074105BB48", "1"))
+
+        retrofitInterface2.reqSend(sendData).enqueue(object : Callback<PrepareRespData>{
+            override fun onResponse(
+                call: Call<PrepareRespData>,
+                response: Response<PrepareRespData>
+            ) {
+                if (response.isSuccessful){
+                    request_key = response.body()?.request_key.toString()
+                    Log.d("SEND", "participate에서 prepare 성공: ${request_key}")
+                    request(request_key)
+                }
+                else {
+                    Log.d("SEND", "보낸것: ${sendData}")
+                    Log.d("SEND", "prepare 실패: ${response.body()}")
+                }
+            }
+
+            override fun onFailure(call: Call<PrepareRespData>, t: Throwable) {
+                Log.d("SEND", "participate에서 prepare 실패")
+            }
+        })
+    }
+
+    private fun request(reqkey:String) {
+        try {
+            Log.e("result: ", "move to app")
+            val urlScheme = "kaikas://wallet/api?request_key=${reqkey}"
+            val intent = Intent()
+            intent.action = Intent.ACTION_VIEW
+            intent.addCategory(Intent.CATEGORY_BROWSABLE)
+            intent.addCategory(Intent.CATEGORY_DEFAULT)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.data = Uri.parse(urlScheme)
+            startActivity(intent)  //여기서 카이카스앱 실행되고 그 앱에서 유저에게 BIC와 연동할지 물어봄
+            check_request = true //유저가 BIC앱 돌아왔을때 메인액티비티로 이동하기 위함
+        } catch (e: ActivityNotFoundException){
+            Log.e("REQUEST", "fail to request. ${e}")
+            val packageName = "io.klutch.wallet" //카이카스지갑앱 패키지네임
+            // 플레이 스토어로 이동
+            startActivity(
+                Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")
+                )
+            )
+            finish()
+        }
+    }
+
+    private fun result(reqkey:String){
+        val retrofitInterface = RetrofitInterface.create("https://api.kaikas.io/api/v1/k/")
+        retrofitInterface.sendResult(reqkey).enqueue(object : Callback<SendResultData> {
+            override fun onResponse(call: Call<SendResultData>, response: Response<SendResultData>){
+                //통신 성공했을 때
+                if(response.isSuccessful){
+                    Log.e("result결과값 태그","response: "+response.body())
+                    val signed_tx = response.body()?.result?.signed_tax
+                    val tx_hash = response.body()?.result?.tx_hash
+
+                    if(signed_tx!=null){
+                        Log.d("result결과값 태그", "signed_tx :"+response.body()?.result?.signed_tax)
+
+                        val intent = Intent(this@ParticipateActivity, MainActivity::class.java)
+                        //intent.putExtra("wallet_addr",wallet_addr)
+                        startActivity(intent)
+                        finish()
+                    }else{
+                        moveParticipateAct()
+                    }
+                }
+                else{
+                    Log.e("SEND", "success send result, but ${response.errorBody()}")
+                    moveParticipateAct()
+                }
+            }
+            //통신 실패했을 때
+            override fun onFailure(call: Call<SendResultData>, t: Throwable) {
+                Log.e("SEND", "fail result :  ${t}")
+                moveParticipateAct()
+            }
+        })
+    }
+
+    private fun moveParticipateAct(){
+        val intent = Intent(this@ParticipateActivity, Connect2KlaytnActivity::class.java) ///MainActivity
+        startActivity(intent)
+        finish()
+    }
+
 
     companion object {
         var challData: ChallData? = null
