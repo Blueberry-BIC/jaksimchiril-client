@@ -2,13 +2,23 @@ package com.example.bicapplication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.marginStart
+import androidx.lifecycle.lifecycleScope
 import com.example.bicapplication.databinding.ActivityMainBinding
+import com.example.bicapplication.manager.DataStoreModule
 import com.example.bicapplication.mychall.MychallFragment
+import com.example.bicapplication.retrofit.RetrofitInterface
 import com.google.android.material.navigation.NavigationBarView
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
     private lateinit var homeFragment: HomeFragment
@@ -17,11 +27,16 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private lateinit var mypageFragment: MypageFragment
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var dataStoreModule: DataStoreModule
+    private lateinit var walletAddr: String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        dataStoreModule = DataStoreModule(applicationContext)
 
         binding.bottomnav.setOnItemSelectedListener(this)
 
@@ -29,7 +44,24 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_frame, homeFragment).commit()
 
-        //로컬에 저장된 유저정보가 없으면 깃허브id 입력받고 로컬db, 몽고db에 저장
+        lifecycleScope.launch {
+            walletAddr = dataStoreModule.walletAddrData.first()
+            if (walletAddr.isNotBlank()) {
+                Log.d("dataStore", "[Main] wallet_addr: " + walletAddr)
+//                lifecycleScope.cancel()
+            }
+
+            if (userId.isNullOrBlank() == false) {
+                dataStoreModule.saveUserId(userId!!)
+                Log.d("dataStore", "[Main] user_id: " + userId)
+                lifecycleScope.cancel()
+            }
+        }
+
+        // 로그인시 받아온 지갑주소로 사용자 ID 값 가져오기
+        connectUserDB(walletAddr)
+
+        // 로컬에 저장된 유저정보가 없으면 깃허브id 입력받고 로컬db, 몽고db에 저장
         githubDialog()
     }
 
@@ -64,8 +96,27 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         return true
     }
 
+    private fun connectUserDB(walletaddr: String) {
+        val retrofitInterface = RetrofitInterface.create("http://10.0.2.2:8081/")
+        retrofitInterface.getUserIdFromAddr("aaa").enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    Log.d("dataStore", "success getUserId ${response.body()}")
+                    userId = response.body().toString()
+                    Log.d("dataStore", "success2 getUserId " + userId)
 
-    //깃허브id 입력받고 저장
+                    Log.d("dataStore", "success2 getUserId " + userId!!.isNullOrBlank())
+
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.d("dataStore", "fail getUserIdFromAddr ${t}")
+            }
+        })
+    }
+
+    // 깃허브id 입력받고 저장
     private fun githubDialog(){
         val builder = AlertDialog.Builder(this)
         builder.setMessage("본인 깃허브 ID를 입력해주세요.")
@@ -76,7 +127,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         builder.setPositiveButton(
             "완료"
         ) { dialog, which ->
-        //로컬db와 몽고db에 저장해주는 로직 진행
+        // 로컬db와 몽고db에 저장해주는 로직 진행
 
         }
         builder.setNeutralButton(
@@ -86,4 +137,9 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         builder.show() // 다이얼로그 보이기
     }
+
+    companion object {
+        var userId: String? = null
+    }
+
 }

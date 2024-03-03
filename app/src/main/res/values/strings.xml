@@ -7,6 +7,7 @@
     <string name="stack">스택</string>
     <string name="mypage">마이페이지</string>
     <string name="user_name">홍길동</string>
+    <string name="user_id">USER-12345</string>
     <string name="wallet_addr">지갑 주소</string>
     <string name="alarm_text">알림 허용</string>
     <string name="adv_text">마케팅 수신 동의</string>

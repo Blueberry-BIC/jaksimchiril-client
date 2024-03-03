@@ -1,15 +1,21 @@
 package com.example.bicapplication.klaytn
 
+import android.app.Application
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.example.bicapplication.LoginActivity
 import com.example.bicapplication.MainActivity
 import com.example.bicapplication.databinding.ActivityConnect2KlaytnBinding
+import com.example.bicapplication.manager.DataStoreModule
 import com.example.bicapplication.retrofit.RetrofitInterface
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,10 +28,13 @@ class Connect2KlaytnActivity : AppCompatActivity() {
     private var check_request = false //유저가 카이카스 지갑주소 가져오기 auth 진행 2단계인 request까지해서 카이카스앱 오픈했는지 체크
     private lateinit var request_key:String  //카이카스 지갑주소 받기위해 필요한 key값
 
+    private lateinit var dataStoreModule: DataStoreModule  // 자동로그인을 위해 지갑 주소를 저장할 dataStore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityConnect2KlaytnBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        dataStoreModule = DataStoreModule(applicationContext)
         connect2kaikas()
     }
 
@@ -109,9 +118,16 @@ class Connect2KlaytnActivity : AppCompatActivity() {
                         //유저데이터 서버로 전송(DB 추가를 위해) (서버에서 해당 유저데이터가 DB에 이미 존재하는지 확인)
                         registerUser()
 
+                        Log.d("dataStore", wallet_addr)
+                        // 지갑주소 dataStore에 저장
+//                        CoroutineScope(Dispatchers.IO).launch {
+                        lifecycleScope.launch {
+                            dataStoreModule.saveWalletAddr(wallet_addr)
+                        }
+
                         //받아온 지갑주소값과 함께 메인액티비티로 이동
                         val intent = Intent(this@Connect2KlaytnActivity, MainActivity::class.java)  //ActionCertifyActivity  //GithubCertifyActivity  //CameraCertifyActivity
-                        intent.putExtra("wallet_addr",wallet_addr)
+                        intent.putExtra("wallet_addr", wallet_addr)
                         startActivity(intent)
                         finish()
                     }else{ //받아온 지갑주소값이 없다면
@@ -145,6 +161,10 @@ class Connect2KlaytnActivity : AppCompatActivity() {
 
 
 
-
+//    companion object {
+//        private lateinit var instance: DataStoreModule
+//
+////        fun getInstance(): DataStoreModule = DataStoreModule
+//    }
 
 }
