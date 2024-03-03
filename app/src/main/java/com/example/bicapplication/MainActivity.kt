@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.google.firebase.FirebaseApp
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
     private lateinit var homeFragment: HomeFragment

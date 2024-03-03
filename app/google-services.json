@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "210587540869",
+    "project_id": "bicproject-233f4",
+    "storage_bucket": "bicproject-233f4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210587540869:android:9c48cdbdf700b03c5278ec",
+        "android_client_info": {
+          "package_name": "com.example.bicapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvLbhRU4aR0UbhoSSPGIt5Hfbu9S4QGnU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
