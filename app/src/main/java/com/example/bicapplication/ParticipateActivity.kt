@@ -33,7 +33,7 @@ class ParticipateActivity : AppCompatActivity() {
     private var check_request = false //유저가 카이카스 지갑주소 가져오기 auth 진행 2단계인 request까지해서 카이카스앱 오픈했는지 체크
     private lateinit var request_key:String  //카이카스 지갑주소 받기위해 필요한 key값
 
-    val retrofitInterface = RetrofitInterface.create("http://192.168.136.1:8081/")
+    val retrofitInterface = RetrofitInterface.create("http://10.0.2.2:8081/")
     val retrofitInterface2 = RetrofitInterface.create("https://api.kaikas.io/api/v1/k/")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,9 +56,7 @@ class ParticipateActivity : AppCompatActivity() {
             }
             btnParticipateParticipate.setOnClickListener {
                 participate()
-                //checkAsset()
                 sendKlay()
-                Toast.makeText(this@ParticipateActivity, "참가 완료되었습니다", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@ParticipateActivity, MainActivity::class.java) ///MainActivity
                 startActivity(intent)
             }
@@ -165,35 +163,9 @@ class ParticipateActivity : AppCompatActivity() {
         })
     }
 
-    private fun checkAsset(){
-        var asset = AssetData("watch_asset", AssetData.Bapp("BIC"), AssetData.AssetData("0x05Ed1eb522A63D15b533D48AeDAbcF074105BB48"))
-
-        retrofitInterface2.reqAsset(asset).enqueue(object : Callback<PrepareRespData>{
-            override fun onResponse(
-                call: Call<PrepareRespData>,
-                response: Response<PrepareRespData>
-            ) {
-                if (response.isSuccessful){
-                    request_key = response.body()?.request_key.toString()
-                    Log.d("ASSET", "participate에서 prepare 성공: ${request_key}")
-                    request(request_key)
-                }
-                else {
-                    Log.d("ASSET", "보낸것: ${asset}")
-                    Log.d("ASSET", "prepare 실패: ${response.body()}")
-                }
-            }
-
-            override fun onFailure(call: Call<PrepareRespData>, t: Throwable) {
-                Log.d("ASSET", "participate에서 prepare 실패")
-            }
-        })
-
-
-    }
-
     private fun sendKlay(){
-        var sendData = AuthData("send_klay", AuthData.Bapp("BIC"), AuthData.TransactionData("0x05Ed1eb522A63D15b533D48AeDAbcF074105BB48", "1"))
+        var fee = if (challData!=null) challData!!.money.toString() else "1"
+        var sendData = AuthData("send_klay", AuthData.Bapp("BIC"), AuthData.TransactionData(adminAddr, fee))
 
         retrofitInterface2.reqSend(sendData).enqueue(object : Callback<PrepareRespData>{
             override fun onResponse(
@@ -243,17 +215,16 @@ class ParticipateActivity : AppCompatActivity() {
     }
 
     private fun result(reqkey:String){
-        val retrofitInterface = RetrofitInterface.create("https://api.kaikas.io/api/v1/k/")
-        retrofitInterface.sendResult(reqkey).enqueue(object : Callback<SendResultData> {
+        retrofitInterface2.sendResult(reqkey).enqueue(object : Callback<SendResultData> {
             override fun onResponse(call: Call<SendResultData>, response: Response<SendResultData>){
                 //통신 성공했을 때
                 if(response.isSuccessful){
                     Log.e("result결과값 태그","response: "+response.body())
-                    val signed_tx = response.body()?.result?.signed_tax
+                    val signed_tx = response.body()?.result?.signed_tx
                     val tx_hash = response.body()?.result?.tx_hash
 
                     if(signed_tx!=null){
-                        Log.d("result결과값 태그", "signed_tx :"+response.body()?.result?.signed_tax)
+                        Log.d("result결과값 태그", "signed_tx :"+response.body()?.result?.signed_tx)
 
                         val intent = Intent(this@ParticipateActivity, MainActivity::class.java)
                         //intent.putExtra("wallet_addr",wallet_addr)

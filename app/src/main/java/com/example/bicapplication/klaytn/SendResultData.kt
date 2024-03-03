@@ -14,6 +14,6 @@ data class SendResultData(
 }
 
 data class SendResult(
-    val signed_tax: String?= null,
+    val signed_tx: String?= null,
     val tx_hash: String? = null
 )

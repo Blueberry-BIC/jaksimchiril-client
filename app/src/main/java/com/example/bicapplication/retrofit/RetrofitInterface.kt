@@ -77,13 +77,6 @@ interface RetrofitInterface {
         @Path("request_key") request_key:String
     ): Call<SendResultData>
 
-    //kaikas watch asset
-    @POST("prepare")
-    fun reqAsset(
-        @Body sendinfo: AssetData
-    ) : Call<PrepareRespData>
-
-
     // challInfo update method
     @FormUrlEncoded
     @PUT("chall")
