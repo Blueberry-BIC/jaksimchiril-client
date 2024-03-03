@@ -23,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
         //로그인 -> Connect2Klaytn으로 이동
         binding.apply {
             imagebtnKaikasLogin.setOnClickListener {
-                val intent = Intent(this@LoginActivity, Connect2KlaytnActivity::class.java) ///MainActivity
+                val intent = Intent(this@LoginActivity, MainActivity::class.java) ///MainActivity
                 startActivity(intent)  //Connect2KlaytnActivity
                 //finish()
             }
