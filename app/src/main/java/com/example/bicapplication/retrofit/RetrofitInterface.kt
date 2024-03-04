@@ -4,8 +4,8 @@ import com.example.bicapplication.datamodel.*
 import com.example.bicapplication.klaytn.AuthData
 import com.example.bicapplication.klaytn.PrepareRespData
 import com.example.bicapplication.klaytn.ResultRespData
-import com.example.bicapplication.responseObject.ActionQuiz
 import com.example.bicapplication.responseObject.BooleanResponse
+import com.example.bicapplication.responseObject.ListResponseData
 import com.example.bicapplication.responseObject.UserPostResponse
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -120,9 +120,13 @@ interface RetrofitInterface {
 
     // 민우 method
 
+    //user컬렉션에서 유저 docu 가져오기
+    @GET("user/{userid}")
+    fun getUserInfo(@Path("userid") userid:String): Call<ListResponseData>
+
     //액션퀴즈 랜덤으로 하나 가져오기 요청
     @GET("action")
-    fun getAction(): Call<ActionQuiz>
+    fun getAction(): Call<ListResponseData>
 
     //깃허브 기간내 나의 커밋여부 가져오기 요청
     @GET("github/{githubId}")

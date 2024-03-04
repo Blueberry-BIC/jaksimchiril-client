@@ -9,7 +9,6 @@ import android.widget.Toast
 import com.example.bicapplication.R
 import com.example.bicapplication.databinding.ActivityActionCertifyBinding
 import com.example.bicapplication.databinding.ActivityGithubCertifyBinding
-import com.example.bicapplication.responseObject.ActionQuiz
 import com.example.bicapplication.responseObject.BooleanResponse
 import com.example.bicapplication.retrofit.RetrofitInterface
 import org.json.JSONArray

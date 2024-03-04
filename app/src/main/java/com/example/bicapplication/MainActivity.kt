@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
 
         //로컬에 저장된 유저정보가 없으면 깃허브id 입력받고 로컬db, 몽고db에 저장
-        githubDialog()
+        //githubDialog()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

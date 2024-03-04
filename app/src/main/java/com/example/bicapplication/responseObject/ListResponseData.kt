@@ -4,11 +4,14 @@ package com.example.bicapplication.responseObject
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-//서버에서 보낸 액션퀴즈 담을 객체
-data class ActionQuiz(
-    @SerializedName("result") var result: List<Any>,
 
+// List<Any>타입으로 서버로부터 오는 json객체 파싱을 위한 클래스
+//응답으로 받는 주요 객체: 액션퀴즈, 유저정보
+data class ListResponseData(
+    @SerializedName("result") var result: List<Any>,
 )
+
+
 
 //data class ActionQuiz(
 //    @SerializedName("_id") var id: Int,
