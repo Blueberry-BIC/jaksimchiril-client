@@ -8,7 +8,7 @@ import android.os.CountDownTimer
 import android.util.Log
 import android.widget.Toast
 import com.example.bicapplication.databinding.ActivityActionCertifyBinding
-import com.example.bicapplication.responseObject.ActionQuiz
+import com.example.bicapplication.responseObject.ListResponseData
 import com.example.bicapplication.retrofit.RetrofitInterface
 import org.json.JSONArray
 import retrofit2.Call
@@ -44,17 +44,17 @@ class ActionCertifyActivity : AppCompatActivity() {
     @SuppressLint("SuspiciousIndentation")
     private fun getActionQuiz(){
         val retrofitInterface = RetrofitInterface.create("http://10.0.2.2:8081/")
-        retrofitInterface.getAction().enqueue(object : Callback<ActionQuiz> {
+        retrofitInterface.getAction().enqueue(object : Callback<ListResponseData> {
             override fun onFailure(
-                call: Call<ActionQuiz>,
+                call: Call<ListResponseData>,
                 t: Throwable
             ) {
                 Log.e("태그", "액션퀴즈요청 통신 아예실패  ,t.message: " + t.message)
                 //Toast.makeText(this@PostActivity, "댓글 업로드 실패", Toast.LENGTH_SHORT).show()
             }
             override fun onResponse(
-                call: Call<ActionQuiz>,
-                response: Response<ActionQuiz>
+                call: Call<ListResponseData>,
+                response: Response<ListResponseData>
             ) {
                 if (response.isSuccessful) {
                       //List<Any>타입으로 받은 data값을 jsonarray로 다시 만들어줌
