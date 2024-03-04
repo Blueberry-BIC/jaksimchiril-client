@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bicapplication.Adapter.ChallListAdapter
 import com.example.bicapplication.SelectedchallActivity
 import com.example.bicapplication.certify.CertifyStatusActivity
-import com.example.bicapplication.databinding.FragmentHomeBinding
 import com.example.bicapplication.databinding.FragmentMychallBinding
 import com.example.bicapplication.datamodel.ChallData
 import com.example.bicapplication.retrofit.RetrofitInterface

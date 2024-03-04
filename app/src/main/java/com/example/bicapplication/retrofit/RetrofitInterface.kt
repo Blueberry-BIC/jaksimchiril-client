@@ -126,6 +126,12 @@ interface RetrofitInterface {
         @Path("userId") userId: Int
     ) : Call<UserData>
 
+    // get userId from walletaddr method
+    @GET("user/{walletaddr}")
+    fun getUserIdFromAddr(
+        @Path("walletaddr") walletaddr: String
+    ) : Call<String>
+
     // 민우 method
 
     //액션퀴즈 랜덤으로 하나 가져오기 요청
