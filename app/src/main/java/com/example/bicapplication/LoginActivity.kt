@@ -6,12 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.emptyPreferences
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.lifecycleScope
 import com.example.bicapplication.databinding.ActivityLoginBinding
 import com.example.bicapplication.klaytn.Connect2KlaytnActivity
@@ -43,12 +37,12 @@ class LoginActivity : AppCompatActivity() {
 
         try {
             // 로그인된 상태인지 확인 (자동로그인)
-            CoroutineScope(Dispatchers.IO).launch {
-//            lifecycleScope.launch {
-                val id = dataStoreModule.userIdData.first()
-                Log.d("dataStore", "[Login] user_id: " + id)
+//            CoroutineScope(Dispatchers.IO).launch {
+            lifecycleScope.launch {
+                val wallet = dataStoreModule.walletAddrData.first()
+                Log.d("dataStore", "[Login] wallet: " + wallet)
 
-                if (id.isNullOrBlank()) {
+                if (wallet.isNullOrBlank()) {
                     lifecycleScope.cancel()
                 } else {
                     val intent = Intent(this@LoginActivity, MainActivity::class.java) ///MainActivity

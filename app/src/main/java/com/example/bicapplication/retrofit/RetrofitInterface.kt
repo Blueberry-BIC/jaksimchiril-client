@@ -127,7 +127,7 @@ interface RetrofitInterface {
     ) : Call<UserData>
 
     // get userId from walletaddr method
-    @GET("user/{walletaddr}")
+    @GET("wallet/{walletaddr}")
     fun getUserIdFromAddr(
         @Path("walletaddr") walletaddr: String
     ) : Call<String>
@@ -136,7 +136,7 @@ interface RetrofitInterface {
 
     //user컬렉션에서 유저 docu 가져오기
     @GET("user/{userid}")
-    fun getUserInfo(@Path("userid") userid:String): Call<ListResponseData>
+    fun getUser(@Path("userid") userid:String): Call<ListResponseData>
 
     //액션퀴즈 랜덤으로 하나 가져오기 요청
     @GET("action")
