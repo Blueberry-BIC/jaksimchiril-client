@@ -4,7 +4,7 @@ package com.example.bicapplication
 class GlobalVari{
     //GlobalVari 클래스의 모든 객체가 함께 공유하는 baseurl 변수
     companion object {
-        private var baseurl:String = "http://192.168.174.217:8081/"
+        private var baseurl:String = "http://10.0.2.2:8081/"
         fun getUrl() : String{
             return baseurl
         }
