@@ -1,12 +1,11 @@
 package com.example.bicapplication
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.marginStart
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.bicapplication.databinding.ActivityMainBinding
 import com.example.bicapplication.manager.DataStoreModule
@@ -19,7 +18,6 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import com.google.firebase.FirebaseApp
 
 class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListener {
     private lateinit var homeFragment: HomeFragment
@@ -98,8 +96,8 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     private fun connectUserDB(walletaddr: String) {
-        val retrofitInterface = RetrofitInterface.create("http://10.0.2.2:8081/")
-        retrofitInterface.getUserIdFromAddr("aaa").enqueue(object : Callback<String> {
+        val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())   //10.0.2.2
+        retrofitInterface.getUserIdFromAddr("0x0a58775fa47bde176b89fbb25df0c476b63292e8").enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
                 if (response.isSuccessful) {
                     Log.d("dataStore", "success getUserId ${response.body()}")
@@ -119,6 +117,8 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     // 깃허브id 입력받고 저장
     private fun githubDialog(){
+
+
         val builder = AlertDialog.Builder(this)
         builder.setMessage("본인 깃허브 ID를 입력해주세요.")
         builder.setCancelable(false) // 다이얼로그 화면 밖 터치 방지

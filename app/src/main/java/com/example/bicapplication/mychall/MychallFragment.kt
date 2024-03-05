@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bicapplication.Adapter.ChallListAdapter
+import com.example.bicapplication.GlobalVari
 import com.example.bicapplication.SelectedchallActivity
 import com.example.bicapplication.certify.CertifyStatusActivity
 import com.example.bicapplication.databinding.FragmentMychallBinding
@@ -25,7 +26,8 @@ class MychallFragment : Fragment() {
     private lateinit var adapter: ChallListAdapter
     private lateinit var layoutManager: RecyclerView.LayoutManager
     var challDataArray: ArrayList<ChallData> = ArrayList()
-    val retrofitInterface = RetrofitInterface.create("http://10.0.2.2:8081/")
+    val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl()
+    )  //127.0.0.1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

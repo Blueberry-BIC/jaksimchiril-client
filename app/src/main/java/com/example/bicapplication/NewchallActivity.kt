@@ -24,7 +24,7 @@ import java.util.Calendar
 class NewchallActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewchallBinding
     var challdata = ChallData.getDefault()
-    val retrofitInterface = RetrofitInterface.create("http://10.0.2.2:8081/")
+    val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
     val challDbManager = ChallDBManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -2,6 +2,7 @@ package com.example.bicapplication.retrofit
 
 import android.annotation.SuppressLint
 import android.util.Log
+import com.example.bicapplication.GlobalVari
 import com.example.bicapplication.datamodel.ChallData
 import kotlinx.coroutines.*
 import org.json.JSONArray
@@ -10,7 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ChallDBManager (private val baseurl: String = "http://10.0.2.2:8081/") {
+class ChallDBManager (private val baseurl: String = GlobalVari.getUrl()) {
     val retrofitInterface = RetrofitInterface.create(baseurl)
 
     // 진행중인 챌린지 정보 가져오기

@@ -33,7 +33,7 @@ class ParticipateActivity : AppCompatActivity() {
     private var check_request = false //유저가 카이카스 지갑주소 가져오기 auth 진행 2단계인 request까지해서 카이카스앱 오픈했는지 체크
     private lateinit var request_key:String  //카이카스 지갑주소 받기위해 필요한 key값
 
-    val retrofitInterface = RetrofitInterface.create("http://10.0.2.2:8081/")
+    val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
     val retrofitInterface2 = RetrofitInterface.create("https://api.kaikas.io/api/v1/k/")
 
     override fun onCreate(savedInstanceState: Bundle?) {

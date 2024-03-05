@@ -28,7 +28,7 @@ import kotlin.collections.ArrayList
 
 class MystackFragment : Fragment() {
     private lateinit var binding: FragmentMystackBinding
-    val retrofitInterface = RetrofitInterface.create("http://10.0.2.2:8081/")
+    val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
     private var STACK: Array<String> = arrayOf("코딩스킬","시사교양","신체단련","생활")
     private var values: ArrayList<BarEntry> = ArrayList()  // 1. [BarEntry]  (x, y) 쌍으로 Bar Chart에 표시될 데이터를 저장하여 이를 리스트에 추가
 
@@ -52,7 +52,9 @@ class MystackFragment : Fragment() {
 
     //서버로부터 내정보 가져오기
     private fun getMyInformation(){
-        retrofitInterface.getUserInfo("65b537f388bb8423ff6e0f8d").enqueue(object : Callback<ListResponseData> {
+
+        val userid = "65b537f388bb8423ff6e0f8d"
+        retrofitInterface.getUser(userid).enqueue(object : Callback<ListResponseData> {
             @SuppressLint("SetTextI18n")
             override fun onResponse(
                 call: Call<ListResponseData>,

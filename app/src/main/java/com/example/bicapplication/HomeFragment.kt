@@ -24,18 +24,20 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: ChallListAdapter
     private lateinit var layoutManager: RecyclerView.LayoutManager
-    var challDataArray: ArrayList<ChallData> = ArrayList()
-    val retrofitInterface = RetrofitInterface.create("http://10.0.2.2:8081/")   //192.168.0.101 - 실제기기 연결시(본인 와파 ip 넣기)  //10.0.2.2 - 애뮬레이터 연결시
+    var challDataArray: ArrayList<ChallData> = ArrayList()    //192.168.175.133
+    val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())   //192.168.0.101 - 실제기기 연결시(본인 와파 ip 넣기)  //10.0.2.2 - 애뮬레이터 연결시
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         // Grid Layout
         layoutManager = GridLayoutManager(activity, 2)
         binding.homeRecyclerview.layoutManager = layoutManager
+
+
 
         retrofitInterface.getActivatedChallInfo().enqueue(object : Callback<ArrayList<Any>> {
             override fun onResponse(
@@ -103,6 +105,8 @@ class HomeFragment : Fragment() {
 
         return binding.root
     }
+
+
 
     companion object {
         fun newInstance() : HomeFragment {
