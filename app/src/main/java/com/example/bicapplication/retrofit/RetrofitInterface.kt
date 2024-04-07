@@ -4,6 +4,7 @@ import com.example.bicapplication.datamodel.*
 import com.example.bicapplication.klaytn.*
 import com.example.bicapplication.responseObject.BooleanResponse
 import com.example.bicapplication.responseObject.ListResponseData
+import com.example.bicapplication.responseObject.UserBooleanResponse
 import com.example.bicapplication.responseObject.UserPostResponse
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -33,8 +34,16 @@ interface RetrofitInterface {
 
     //admin wallet address method
     @GET("admin_wallet")
-    fun getAdminWalletAddr(): Call<AdminWalletData>
+    fun getAdminWalletAddr(): Call<WalletData>
 
+    @GET("check/{walletAddr}")
+    fun checkExistUser(
+        @Path("walletAddr") walletAddr: WalletData
+    ): Call<UserBooleanResponse>
+
+    //신규 유저 등록 요청
+    @POST("user/add")
+    fun postUser(@Body users: UserData): Call<StringData>
 
     //참가하기
     @PUT("participate/{challId}")
@@ -145,10 +154,6 @@ interface RetrofitInterface {
     //깃허브 기간내 나의 커밋여부 가져오기 요청
     @GET("github/{githubId}")
     fun getIsCommitted(@Path("githubId") githubId:String): Call<BooleanResponse>
-
-    //신규 유저 등록 요청
-    @POST("user/add")
-    fun postUser(@Body users: UserData): Call<UserPostResponse>
 
 
 }

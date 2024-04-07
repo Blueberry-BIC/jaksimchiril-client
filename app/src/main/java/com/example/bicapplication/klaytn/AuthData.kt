@@ -1,8 +1,5 @@
 package com.example.bicapplication.klaytn
 
-import android.view.SurfaceControl.Transaction
-import com.example.bicapplication.datamodel.AdminWalletData
-
 data class AuthData(
     val type: String,
     var bapp: Bapp,
