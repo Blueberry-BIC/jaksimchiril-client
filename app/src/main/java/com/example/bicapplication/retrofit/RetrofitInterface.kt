@@ -129,16 +129,16 @@ interface RetrofitInterface {
         @Body challData: ChallData
     ) : Call<String>
 
-    // get userInfo method
-    @GET("user/{userId}")
-    fun getUserInfo(
-        @Path("userId") userId: Int
-    ) : Call<UserData>
-
     // get userId from walletaddr method
     @GET("wallet/{walletaddr}")
     fun getUserIdFromAddr(
         @Path("walletaddr") walletaddr: String
+    ) : Call<String>
+
+    // delete user (회원탈퇴)
+    @DELETE("delete/{userid}")
+    fun deleteUser(
+        @Path("userid") userid: String
     ) : Call<String>
 
     // 민우 method
