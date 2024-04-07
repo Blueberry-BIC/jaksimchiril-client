@@ -47,13 +47,14 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             walletAddr = dataStoreModule.walletAddrData.first()
             if (walletAddr.isNotBlank()) {
                 Log.d("dataStore", "[Main] wallet_addr: " + walletAddr)
+                connectUserDB(walletAddr)
 //                lifecycleScope.cancel()
             }
 
             if (userId.isNullOrBlank() == false) {
                 dataStoreModule.saveUserId(userId!!)
                 Log.d("dataStore", "[Main] user_id: " + userId)
-                lifecycleScope.cancel()
+//                lifecycleScope.cancel()
             }
         }
 
