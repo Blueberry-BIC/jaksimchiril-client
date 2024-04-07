@@ -43,7 +43,7 @@
         <EditText
             android:id="@+id/edittext_firstuserinfo_nickname"
             android:layout_width="300dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:hint="닉네임을 입력해주세요" />
@@ -69,7 +69,7 @@
         <EditText
             android:id="@+id/edittext_firstuserinfo_githubid"
             android:layout_width="300dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:hint="GitHubID를 입력해주세요."/>
