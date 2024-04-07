@@ -1,10 +1,10 @@
 package com.example.bicapplication.datamodel
 
 data class UserData(
-    var userId : String?=null,
     var userName : String?=null,
     var walletAddr : String?=null,
     var githubId : String?=null,
+    var userId : String?=null,
     var prizeMoney : Int = 0,  //총 얻은 상금값
     var stack1 : List<String>? =null,  //완료한 코딩 챌린지들
     var stack2 : List<String>? =null,  //완료한  시사교양  챌린지들

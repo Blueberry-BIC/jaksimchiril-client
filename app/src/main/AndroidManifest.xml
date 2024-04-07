@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <queries>
-        <package android:name="io.klutch.wallet"/>
+        <package android:name="io.klutch.wallet" />
     </queries>
 
     <application
@@ -25,22 +25,33 @@
         android:theme="@style/Theme.BICApplication"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
-
-
+        <activity
+            android:name=".FirstUserInfoActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".FirstUserInfo"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".klaytn.Connect2KlaytnActivity"
             android:exported="false"
             tools:ignore="AppLinkUrlError">
 
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.VIEW"/>-->
-<!--                <category android:name="android.intent.category.DEFAULT"/>-->
-<!--                <category android:name="android.intent.category.BROWSABLE"/>-->
-<!--                <data-->
-<!--                    android:host="wallet/api"-->
-<!--                    android:scheme="kaikas"/>-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.VIEW"/> -->
+            <!-- <category android:name="android.intent.category.DEFAULT"/> -->
+            <!-- <category android:name="android.intent.category.BROWSABLE"/> -->
+            <!-- <data -->
+            <!-- android:host="wallet/api" -->
+            <!-- android:scheme="kaikas"/> -->
+            <!-- </intent-filter> -->
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -90,9 +101,9 @@
         <activity
             android:name=".SelectedchallActivity"
             android:exported="true">
-
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- setLink()에 전달하는 링크와 동일한 host, path, scheme -->
@@ -100,7 +111,6 @@
                     android:host="bicapplication.page.link"
                     android:path="/invite"
                     android:scheme="https" />
-
                 <data
                     android:host="bicapplication.page.link"
                     android:path="/invite"
@@ -134,11 +144,13 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
 
             <meta-data
                 android:name="android.app.lib_name"

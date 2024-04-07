@@ -8,10 +8,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.bicapplication.LoginActivity
-import com.example.bicapplication.MainActivity
+import com.example.bicapplication.*
 import com.example.bicapplication.databinding.ActivityConnect2KlaytnBinding
+import com.example.bicapplication.datamodel.WalletData
 import com.example.bicapplication.manager.DataStoreModule
+import com.example.bicapplication.responseObject.UserBooleanResponse
 import com.example.bicapplication.retrofit.RetrofitInterface
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -116,20 +117,7 @@ class Connect2KlaytnActivity : AppCompatActivity() {
                         Log.e("result결과값 태그", "klaytn_address: "+response.body()!!.result.klaytn_address)
 
                         //유저데이터 서버로 전송(DB 추가를 위해) (서버에서 해당 유저데이터가 DB에 이미 존재하는지 확인)
-                        registerUser()
-
-                        Log.d("dataStore", wallet_addr)
-                        // 지갑주소 dataStore에 저장
-//                        CoroutineScope(Dispatchers.IO).launch {
-                        lifecycleScope.launch {
-                            dataStoreModule.saveWalletAddr(wallet_addr)
-                        }
-
-                        //받아온 지갑주소값과 함께 메인액티비티로 이동
-                        val intent = Intent(this@Connect2KlaytnActivity, MainActivity::class.java)  //ActionCertifyActivity  //GithubCertifyActivity  //CameraCertifyActivity
-                        intent.putExtra("wallet_addr", wallet_addr)
-                        startActivity(intent)
-                        finish()
+                        checkNewUser(wallet_addr)
                     }else{ //받아온 지갑주소값이 없다면
                         moveLoginAct()
                     }
@@ -154,9 +142,47 @@ class Connect2KlaytnActivity : AppCompatActivity() {
     }
 
 
-    //유저 신규 등록
-    private fun registerUser(){
+    //walletaddr를 통해 해당 지갑주소의 유저가 DB에 존재하는지 확인하는 함수
+    private fun checkNewUser(walletaddr: String){
+        // retrofit으로 접근
+        val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
+        var wallet = WalletData(walletaddr)
+        retrofitInterface.checkExistUser(wallet).enqueue(object: Callback<UserBooleanResponse>{
+            override fun onResponse(
+                call: Call<UserBooleanResponse>,
+                response: Response<UserBooleanResponse>
+            ) {
+                if(response.isSuccessful){
+                    Log.e("result결과값 태그","response: "+response.body())
+                    if (response.body()?.existUser == false){
+                        // 신규 유저
+                        Log.d("CHECKUSER","new user, response: "+response.body())
+                        val intent = Intent(this@Connect2KlaytnActivity, FirstUserInfoActivity::class.java)
+                        FirstUserInfoActivity.WalletData = walletaddr
+                        startActivity(intent)
+                    }
+                    else {
+                        // 이미 존재하는 유저
+                        Log.d("CHECKUSER","registered user, response: "+response.body())
+                        Log.d("dataStore", walletaddr)
+                        // 지갑주소 dataStore에 저장
+//                        CoroutineScope(Dispatchers.IO).launch {
+                        lifecycleScope.launch {
+                            dataStoreModule.saveWalletAddr(walletaddr)
+                        }
 
+                        //받아온 지갑주소값과 함께 메인액티비티로 이동
+                        val intent = Intent(this@Connect2KlaytnActivity, MainActivity::class.java)  //ActionCertifyActivity  //GithubCertifyActivity  //CameraCertifyActivity
+                        //intent.putExtra("wallet_addr", walletaddr)
+                        startActivity(intent)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<UserBooleanResponse>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 
 
