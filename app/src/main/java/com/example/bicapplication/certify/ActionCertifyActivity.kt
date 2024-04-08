@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import com.example.bicapplication.GlobalVari
 import com.example.bicapplication.databinding.ActivityActionCertifyBinding
 import com.example.bicapplication.responseObject.ListResponseData
 import com.example.bicapplication.retrofit.RetrofitInterface
@@ -21,7 +24,8 @@ import kotlin.properties.Delegates
 class ActionCertifyActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityActionCertifyBinding
-
+    //오답시 추가로 부여해줄 기회
+    private var qCount=2
     //퀴즈정보 담을 변수들
     private lateinit var problem:String
     private lateinit var answer:String
@@ -38,12 +42,10 @@ class ActionCertifyActivity : AppCompatActivity() {
         getActionQuiz()
     }
 
-
-
     //서버에게 액션퀴즈 하나 가져오는 요청보냄
     @SuppressLint("SuspiciousIndentation")
     private fun getActionQuiz(){
-        val retrofitInterface = RetrofitInterface.create("http://10.0.2.2:8081/")
+        val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
         retrofitInterface.getAction().enqueue(object : Callback<ListResponseData> {
             override fun onFailure(
                 call: Call<ListResponseData>,
@@ -90,20 +92,15 @@ class ActionCertifyActivity : AppCompatActivity() {
             var userAnswer = binding.ActionEditText.text.toString()
             userAnswer = userAnswer.trim()
             if(userAnswer == answer){  //정답일 경우
-                //내 인증현황 업데이트 등 처리해주기
-
                 Toast.makeText(this, "정답입니다!", Toast.LENGTH_SHORT).show()
                 moveActivity(true)
             }else if(userAnswer==""){  //답안 미작성일 경우
                 Toast.makeText(this, "답안을 작성하세요.", Toast.LENGTH_SHORT).show()
             }else{//오답일 경우
-                //내 인증현황 업데이트 등 처리해주기
-                Toast.makeText(this, "오답입니다.", Toast.LENGTH_SHORT).show()
-                moveActivity(false)
+                uncorrect("오답입니다.")
             }
         }
     }
-
 
     //타이머 기능
    private fun timer(){
@@ -115,11 +112,9 @@ class ActionCertifyActivity : AppCompatActivity() {
                 binding.timerTextView.text = "남은 시간: " + millisUntilFinished / 1000
             }
             @SuppressLint("SetTextI18n")
-            override fun onFinish() {
-                // 타이머가 종료되면 호출
-                binding.certifyButton.isClickable = false  //제출버튼 비활성화
-                Toast.makeText(this@ActionCertifyActivity, "시간이 종료되었습니다.", Toast.LENGTH_SHORT).show()
-                moveActivity(false)
+            override fun onFinish() { // 타이머가 종료되면 호출
+                uncorrect("시간이 종료되었습니다.")
+
             }
         }.start()
     }
@@ -129,12 +124,32 @@ class ActionCertifyActivity : AppCompatActivity() {
         val intent = Intent(this@ActionCertifyActivity, CertifyStatusActivity::class.java)
         intent.putExtra("액션인증방문", true)
         intent.putExtra("성공여부", success)
+        setResult(2,intent)
         mCountDown.cancel() //타이머 끝내주기
-        startActivity(intent)
         finish()
     }
 
+    //퀴즈 틀렸거나 타이머 끝난 경우 로직
+    private fun uncorrect(text:String){
+        if(qCount>0){
+            mCountDown.cancel() //타이머 끝내주기
+            Toast.makeText(this@ActionCertifyActivity, "${text}\n남은 기회:${qCount}번", Toast.LENGTH_SHORT).show()
+            qCount--
+            getActionQuiz()
+        }else{
+            //binding.certifyButton.isClickable = false  //제출버튼 비활성화
+            Toast.makeText(this@ActionCertifyActivity, text, Toast.LENGTH_SHORT).show()
+            moveActivity(false)
+            //내 인증현황 업데이트 등 처리해주기
+        }
+    }
 
+    //뒤로가기 클릭
+    override fun onBackPressed() {
+        super.onBackPressed()
+        mCountDown.cancel() //타이머 끝내주기
+        finish()
+    }
 
 
 

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.example.bicapplication.GlobalVari
 import com.example.bicapplication.R
 import com.example.bicapplication.databinding.ActivityActionCertifyBinding
 import com.example.bicapplication.databinding.ActivityGithubCertifyBinding
@@ -46,7 +47,7 @@ class GithubCertifyActivity : AppCompatActivity() {
 
     //서버로부터 깃허브 커밋여부와 마지막 커밋날짜 가져옴
     private fun getMyCommitInfo(githubId : String){
-        val retrofitInterface = RetrofitInterface.create("http://10.0.2.2:8081/")
+        val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
         retrofitInterface.getIsCommitted(githubId).enqueue(object : Callback<BooleanResponse> {
             override fun onFailure(
                 call: Call<BooleanResponse>,
@@ -87,7 +88,7 @@ class GithubCertifyActivity : AppCompatActivity() {
         intent.putExtra("커밋날짜", commitDate)
         intent.putExtra("커밋레포", commitRepo)
         intent.putExtra("깃허브인증방문", true)
-        startActivity(intent)
+        setResult(3,intent)
         finish()
     }
 

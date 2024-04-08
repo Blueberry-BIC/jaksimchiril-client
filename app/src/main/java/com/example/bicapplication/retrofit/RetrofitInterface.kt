@@ -8,6 +8,7 @@ import com.example.bicapplication.responseObject.UserBooleanResponse
 import com.example.bicapplication.responseObject.UserPostResponse
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -154,6 +155,12 @@ interface RetrofitInterface {
     //깃허브 기간내 나의 커밋여부 가져오기 요청
     @GET("github/{githubId}")
     fun getIsCommitted(@Path("githubId") githubId:String): Call<BooleanResponse>
+
+
+    //챌린지 인증 성공해서 db에 성공횟수 증 요청
+    @PUT("success/{userId}/{challId}")
+    fun putSuccess(@Path("userId") userId: String, @Path("challId") challId:String): Call<String>
+
 
 
 }

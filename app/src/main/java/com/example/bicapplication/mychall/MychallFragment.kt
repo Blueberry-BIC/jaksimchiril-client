@@ -66,12 +66,14 @@ class MychallFragment : Fragment() {
                         challDataArray.add(challData)
                     }
 
-                    // 챌린지 클릭 시 인증페이지로 이동
+                    //챌린지 클릭시 해당 챌의 id값과 종료기간 인증act로 전달 및 이동
                     adapter = ChallListAdapter(challDataArray) {
-                        SelectedchallActivity.challData = it
                         val intent = Intent(activity, CertifyStatusActivity::class.java)
+                        intent.putExtra("challId", it.challId)
+                        intent.putExtra("endDate", it.enddate)
                         startActivity(intent)
                     }
+
                     binding.mychallRecyclerview.adapter = adapter
 
                 }
@@ -86,14 +88,6 @@ class MychallFragment : Fragment() {
             }
         })
 
-
-        /*
-        //인증현황페이지 테스트 위한 작업
-        binding.mychall.setOnClickListener {
-            val intent = Intent(activity, CertifyStatusActivity::class.java)
-            startActivity(intent)
-        }
-         */
 
         return binding.root
     }
