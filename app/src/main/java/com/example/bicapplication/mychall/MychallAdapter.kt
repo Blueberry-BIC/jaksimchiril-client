@@ -38,7 +38,7 @@ class MychallAdapter(
         view?.findViewById<TextView>(R.id.numberTextView)?.text = item?.number //참여자수
         view?.findViewById<TextView>(R.id.periodTextView)?.text = item?.period //만료기간
 
-        //그리드뷰의 챌린지뷰 하나 클릭시 인증페이지 이동
+        //그리드뷰의 챌린지뷰 하나 클릭시 인증페이지 이동 (챌린지 id, 챌린지 종료기간 데이터 전송)
         view?.setOnClickListener {
             val intent = Intent(context, CertifyStatusActivity::class.java)
             context?.startActivity(intent)

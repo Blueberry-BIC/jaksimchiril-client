@@ -7,6 +7,7 @@ import com.example.bicapplication.responseObject.ListResponseData
 import com.example.bicapplication.responseObject.UserPostResponse
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -149,6 +150,13 @@ interface RetrofitInterface {
     //신규 유저 등록 요청
     @POST("user/add")
     fun postUser(@Body users: UserData): Call<UserPostResponse>
+
+    //챌린지 인증 성공해서 db에 성공횟수 증 요청
+    @PUT("success/{userId}/{challId}")
+    fun putSuccess(@Path("userId") userId: String, @Path("challId") challId:String): Call<String>
+
+
+
 
 
 }
