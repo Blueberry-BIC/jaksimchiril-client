@@ -4,6 +4,7 @@ import com.example.bicapplication.datamodel.*
 import com.example.bicapplication.klaytn.*
 import com.example.bicapplication.responseObject.BooleanResponse
 import com.example.bicapplication.responseObject.ListResponseData
+import com.example.bicapplication.responseObject.UserBooleanResponse
 import com.example.bicapplication.responseObject.UserPostResponse
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -34,8 +35,16 @@ interface RetrofitInterface {
 
     //admin wallet address method
     @GET("admin_wallet")
-    fun getAdminWalletAddr(): Call<AdminWalletData>
+    fun getAdminWalletAddr(): Call<WalletData>
 
+    @GET("check/{walletAddr}")
+    fun checkExistUser(
+        @Path("walletAddr") walletAddr: WalletData
+    ): Call<UserBooleanResponse>
+
+    //신규 유저 등록 요청
+    @POST("user/add")
+    fun postUser(@Body users: UserData): Call<StringData>
 
     //참가하기
     @PUT("participate/{challId}")
@@ -121,16 +130,16 @@ interface RetrofitInterface {
         @Body challData: ChallData
     ) : Call<String>
 
-    // get userInfo method
-    @GET("user/{userId}")
-    fun getUserInfo(
-        @Path("userId") userId: Int
-    ) : Call<UserData>
-
     // get userId from walletaddr method
     @GET("wallet/{walletaddr}")
     fun getUserIdFromAddr(
         @Path("walletaddr") walletaddr: String
+    ) : Call<String>
+
+    // delete user (회원탈퇴)
+    @DELETE("delete/{userid}")
+    fun deleteUser(
+        @Path("userid") userid: String
     ) : Call<String>
 
     // 민우 method
@@ -147,15 +156,10 @@ interface RetrofitInterface {
     @GET("github/{githubId}")
     fun getIsCommitted(@Path("githubId") githubId:String): Call<BooleanResponse>
 
-    //신규 유저 등록 요청
-    @POST("user/add")
-    fun postUser(@Body users: UserData): Call<UserPostResponse>
 
     //챌린지 인증 성공해서 db에 성공횟수 증 요청
     @PUT("success/{userId}/{challId}")
     fun putSuccess(@Path("userId") userId: String, @Path("challId") challId:String): Call<String>
-
-
 
 
 

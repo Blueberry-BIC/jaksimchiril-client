@@ -139,6 +139,7 @@ class CertifyStatusActivity : AppCompatActivity() {
                 ActionCertifyActivity::class.java
             )  //ActionCertifyActivity  //GithubCertifyActivity  //CameraCertifyActivity
             activityResultLauncher.launch(intent)
+
         }
 
         adapter = CertifyStatusAdapter(this, certifyDataList)
