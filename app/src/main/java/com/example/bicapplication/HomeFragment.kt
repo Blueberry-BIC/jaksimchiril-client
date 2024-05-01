@@ -7,12 +7,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bicapplication.Adapter.ChallListAdapter
+import com.example.bicapplication.MainActivity.Companion.userId
 import com.example.bicapplication.databinding.FragmentHomeBinding
 import com.example.bicapplication.datamodel.ChallData
+import com.example.bicapplication.manager.DataStoreModule
 import com.example.bicapplication.retrofit.RetrofitInterface
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
@@ -24,6 +29,8 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: ChallListAdapter
     private lateinit var layoutManager: RecyclerView.LayoutManager
+    private lateinit var dataStoreModule: DataStoreModule
+    private lateinit var userName: String
     var challDataArray: ArrayList<ChallData> = ArrayList()    //192.168.175.133
     val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())   //192.168.0.101 - 실제기기 연결시(본인 와파 ip 넣기)  //10.0.2.2 - 애뮬레이터 연결시
 
@@ -37,7 +44,13 @@ class HomeFragment : Fragment() {
         layoutManager = GridLayoutManager(activity, 2)
         binding.homeRecyclerview.layoutManager = layoutManager
 
+        dataStoreModule = DataStoreModule(requireContext())
 
+        lifecycleScope.launch {
+            userName = dataStoreModule.userNameData.first()
+            Log.d("dataStore", "[homefrag] user_id: " + userName)
+            binding.homeIdTextview.text = "안녕하세요, " + userName + " 님"
+        }
 
         retrofitInterface.getActivatedChallInfo().enqueue(object : Callback<ArrayList<Any>> {
             override fun onResponse(

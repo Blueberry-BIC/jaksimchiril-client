@@ -5,108 +5,168 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:id="@+id/main_header"
+
+    <LinearLayout
+        android:id="@+id/main_linearlayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:layout_constraintTop_toTopOf="parent" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
 
-        <ImageView
-            android:id="@+id/bic_logo"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            app:srcCompat="@drawable/bic_logo" />
-
-        <EditText
-            android:id="@+id/search_text"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@id/bic_logo"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name"
-            android:visibility="gone"/>
-
-        <!--        <SearchView-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            android:layout_alignParentEnd="true"-->
-        <!--            android:layout_marginEnd="40dp">-->
-        <!--        </SearchView>-->
-
-        <ImageView
-            android:id="@+id/search_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="50dp"
-            app:srcCompat="@drawable/search_btn" />
-
-        <ImageView
-            android:id="@+id/add_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="15dp"
-            app:srcCompat="@drawable/add_btn" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/home_category"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:paddingTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/main_header"
-        app:layout_constraintWidth="match_parent">
-
-        <TextView
-            android:id="@+id/stack"
+        <RelativeLayout
+            android:id="@+id/main_logo"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:paddingLeft="15dp"
-            android:textStyle="bold"
-            android:autoSizeTextType="uniform"
-            android:text="@string/stack" />
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/stack1"
-            android:layout_width="100dp"
+            <ImageView
+                android:id="@+id/bic_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/main_logo_small" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+
+            <TextView
+                android:id="@+id/home_id_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/purple_title"
+                android:text="안녕하세요, OO 님"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="37dp"
+                android:textSize="25sp"
+                android:gravity="center"
+                android:fontFamily="@font/nanumgothic_extrabold" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/gray_basic"
+                android:text="즐거운 챌린지 하실 준비되셨나요?"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="37dp"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:fontFamily="@font/nanumgothic_regular" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/bic_logo"
-            android:layout_below="@id/stack"
-            android:layout_alignParentStart="true" />
-        <ImageView
-            android:id="@+id/stack2"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/bic_logo"
-            android:layout_below="@id/stack"
-            android:layout_toRightOf="@id/stack1"/>
-        <ImageView
-            android:id="@+id/stack3"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/bic_logo"
-            android:layout_below="@id/stack"
-            android:layout_toRightOf="@id/stack2"/>
-        <ImageView
-            android:id="@+id/stack4"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/bic_logo"
-            android:layout_below="@id/stack"
-            android:layout_toRightOf="@id/stack3"
-            android:layout_alignParentRight="true"/>
-    </RelativeLayout>
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/search_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:layout_weight="5"
+                android:inputType="textPersonName"
+                android:hint="Search Bar"
+                android:gravity="center"
+                android:layout_gravity="fill_horizontal"
+                android:visibility="visible"/>
+
+            <!--        <SearchView-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="match_parent"-->
+            <!--            android:layout_alignParentEnd="true"-->
+            <!--            android:layout_marginEnd="40dp">-->
+            <!--        </SearchView>-->
+
+            <ImageView
+                android:id="@+id/search_btn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/search_btn" />
+
+            <ImageView
+                android:id="@+id/add_btn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/add_btn" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="40dp">
+
+            <TextView
+                android:id="@+id/stack1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="신체 단련"
+                android:background="@drawable/purple_gradient"
+                android:fontFamily="@font/nanumgothic_bold"
+                android:textColor="@color/purple_title"/>
+
+            <TextView
+                android:id="@+id/stack2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="코딩 스킬 향상"
+                android:background="@drawable/light_purple_gradient"
+                android:fontFamily="@font/nanumgothic_bold"
+                android:textColor="@color/purple_title"/>
+
+            <TextView
+                android:id="@+id/stack3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="시사/교양"
+                android:background="@drawable/light_pink_gradient"
+                android:fontFamily="@font/nanumgothic_bold"
+                android:textColor="@color/purple_title"/>
+
+            <TextView
+                android:id="@+id/stack4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="생활 습관"
+                android:background="@drawable/pink_gradient"
+                android:fontFamily="@font/nanumgothic_bold"
+                android:textColor="@color/purple_title"/>
+        </LinearLayout>
+    </LinearLayout>
+
 
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gray"
-        app:layout_constraintTop_toBottomOf="@+id/home_category"
+        app:layout_constraintTop_toBottomOf="@+id/main_linearlayout"
         android:layout_margin="10dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
