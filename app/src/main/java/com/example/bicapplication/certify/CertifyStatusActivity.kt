@@ -33,25 +33,6 @@ class CertifyStatusActivity : AppCompatActivity() {
     private lateinit var endDate: String
     private var myCertifyCount: Int = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityCertifyStatusBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        certifyDataList = arrayOf(
-            CertifyData("aa", R.drawable.bic_logo),
-            CertifyData("bb",R.drawable.bic_logo),
-            CertifyData("cc",R.drawable.bic_logo),
-            CertifyData("dd",R.drawable.bic_logo),
-            CertifyData("ee",R.drawable.bic_logo)
-        )
-
-        //인증하기 버튼 클릭시 -> 액션, 깃허브, 이미지 인증 3개중 한개 페이지 이동
-        binding.certifyButton.setOnClickListener {
-            val intent = Intent(this, CameraCertifyActivity::class.java)  //ActionCertifyActivity  //GithubCertifyActivity  //CameraCertifyActivity
-            startActivity(intent)
-            finish()
-
     //인증화면(이미지, 액션, 깃허브) 갔다올때 성공여부 등 데이터 전달받기위함
     @SuppressLint("SetTextI18n")
     private val activityResultLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
@@ -103,15 +84,6 @@ class CertifyStatusActivity : AppCompatActivity() {
             }
         }
 
-
-        if(visited){    //이미지 인증을 갔다왔으면 진행
-            Log.e("태그,", "bitmap:"+bitmap)
-            if(bitmap!=null){
-                Log.d("image", bitmap.toString())
-                binding.imageView.visibility = View.VISIBLE
-                binding.imageView.setImageBitmap(bitmap)
-            }else{  //아직 이미지 인증 안했거나, 다른 인증인 경우
-
         /**
         깃허브인증 결과 받아옴
          */
@@ -131,7 +103,6 @@ class CertifyStatusActivity : AppCompatActivity() {
                 } else {
                     success = "실패"
                 }
-
                 //binding.imageView.visibility = View.GONE
                 binding.successTextView.text =
                     "$success\n최신 커밋 날짜: $commitDate\n커밋한 레포: $commitRepo\n레포URL: https://github.com/로컬에 저장된 유저깃허브id값 넣기/$commitRepo "
