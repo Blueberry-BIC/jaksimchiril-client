@@ -68,7 +68,7 @@ class CameraCertifyActivity : AppCompatActivity() {
             val intent = Intent(this, CertifyStatusActivity::class.java)
             intent.putExtra("사진", bitmap)
             intent.putExtra("이미지인증방문", true)
-            startActivity(intent)
+            setResult(1,intent)
             finish()
         }
     }

@@ -1,8 +1,6 @@
 package com.example.bicapplication.datamodel
 
-import com.google.gson.annotations.SerializedName
-
-/*data class AdminWalletData(
+/*data class WalletData(
     @SerializedName(value="_id")
     val id: String,
 
@@ -10,7 +8,7 @@ import com.google.gson.annotations.SerializedName
     val walletAddr: String
 )*/
 
-data class AdminWalletData(
+data class WalletData(
     val walletAddr: String
 )
 

@@ -8,13 +8,18 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import com.example.bicapplication.databinding.ActivityParticipateBinding
 import com.example.bicapplication.datamodel.*
 import com.example.bicapplication.klaytn.*
+import com.example.bicapplication.manager.DataStoreModule
 import com.example.bicapplication.retrofit.RetrofitInterface
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,12 +32,14 @@ class LiveDataViewModel: ViewModel() {
 
 class ParticipateActivity : AppCompatActivity() {
     private lateinit var binding: ActivityParticipateBinding
-    private var adminAddr: String = ""
-    private val model: LiveDataViewModel by viewModels()
-    private val userid = "65b537f388bb8423ff6e0f8d" // 지금은 임의 설정 -> 추후 usermanager를 통해 받을 수 있도록 수정 필요
-    private var check_request = false //유저가 카이카스 지갑주소 가져오기 auth 진행 2단계인 request까지해서 카이카스앱 오픈했는지 체크
+    private lateinit var dataStoreModule: DataStoreModule
     private lateinit var request_key:String  //카이카스 지갑주소 받기위해 필요한 key값
 
+    private var adminAddr: String = ""
+    //private var userid: String = ""
+    private val model: LiveDataViewModel by viewModels()
+    private val userid = "65e3b68de9562a3a91d247ca" // 지금은 임의 설정 -> 추후 usermanager를 통해 받을 수 있도록 수정 필요
+    private var check_request = false //유저가 카이카스 지갑주소 가져오기 auth 진행 2단계인 request까지해서 카이카스앱 오픈했는지 체크
     val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
     val retrofitInterface2 = RetrofitInterface.create("https://api.kaikas.io/api/v1/k/")
 
@@ -46,14 +53,27 @@ class ParticipateActivity : AppCompatActivity() {
         }
         model.currentWalletData.observe(this, walletObserver)
 
+        /*dataStoreModule = DataStoreModule(applicationContext)
+
+        lifecycleScope.launch {
+            if (userid.isNotBlank()){
+                userid = dataStoreModule.userIdData.first()
+                Log.d("dataStore", "[Main] wallet_addr: " + userid)
+            }
+        }*/
+
         binding.apply {
+            // 사용자 화면 출력을 위해 관리자 지갑 주소와 챌린지 참가비 가져오기
             getAdminWalletAddr()
             textviewParticipateDeposit.text = challData?.money.toString()
 
+            //참가 취소 -> main으로 돌아가기
             btnParticipateExit.setOnClickListener {
                 val intent = Intent(this@ParticipateActivity, MainActivity::class.java) ///MainActivity
                 startActivity(intent)
             }
+
+            //참가하기 -> db 정보 업데이트, 참가비 송금 완료된 이후 main으로 돌아가기
             btnParticipateParticipate.setOnClickListener {
                 participate()
                 sendKlay()
@@ -142,10 +162,10 @@ class ParticipateActivity : AppCompatActivity() {
 
     // admin wallet address DB에서 가져와서 화면에 출력
     private fun getAdminWalletAddr() {
-        retrofitInterface.getAdminWalletAddr().enqueue(object:Callback<AdminWalletData>{
+        retrofitInterface.getAdminWalletAddr().enqueue(object:Callback<WalletData>{
             override fun onResponse(
-                call: Call<AdminWalletData>,
-                response: Response<AdminWalletData>
+                call: Call<WalletData>,
+                response: Response<WalletData>
             ) {
                 if (response.isSuccessful){
                     Log.d("PARTICIPATE", "success get walletaddr ${response.body()}")
@@ -157,7 +177,7 @@ class ParticipateActivity : AppCompatActivity() {
                     Log.d("PARTICIPATE", "fail with ${response.errorBody()}")
                 }
             }
-            override fun onFailure(call: Call<AdminWalletData>, t: Throwable) {
+            override fun onFailure(call: Call<WalletData>, t: Throwable) {
                 Log.d("PARTICIPATE", "fail with ${t}")
             }
         })

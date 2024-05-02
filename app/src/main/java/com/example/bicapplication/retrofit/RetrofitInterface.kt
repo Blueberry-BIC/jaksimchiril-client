@@ -4,9 +4,11 @@ import com.example.bicapplication.datamodel.*
 import com.example.bicapplication.klaytn.*
 import com.example.bicapplication.responseObject.BooleanResponse
 import com.example.bicapplication.responseObject.ListResponseData
+import com.example.bicapplication.responseObject.UserBooleanResponse
 import com.example.bicapplication.responseObject.UserPostResponse
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.flow.Flow
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -33,8 +35,16 @@ interface RetrofitInterface {
 
     //admin wallet address method
     @GET("admin_wallet")
-    fun getAdminWalletAddr(): Call<AdminWalletData>
+    fun getAdminWalletAddr(): Call<WalletData>
 
+    @GET("check/{walletAddr}")
+    fun checkExistUser(
+        @Path("walletAddr") walletAddr: WalletData
+    ): Call<UserBooleanResponse>
+
+    //신규 유저 등록 요청
+    @POST("user/add")
+    fun postUser(@Body users: UserData): Call<StringData>
 
     //참가하기
     @PUT("participate/{challId}")
@@ -151,9 +161,15 @@ interface RetrofitInterface {
     @GET("github/{githubId}")
     fun getIsCommitted(@Path("githubId") githubId:String): Call<BooleanResponse>
 
-    //신규 유저 등록 요청
-    @POST("user/add")
-    fun postUser(@Body users: UserData): Call<UserPostResponse>
+
+    //챌린지 인증 성공해서 db에 성공횟수 증 요청
+    @PUT("success/{userId}/{challId}")
+    fun putSuccess(@Path("userId") userId: String, @Path("challId") challId:String): Call<String>
+
+    //챌린지 컬렉션에서 챌린지 도큐 가져오기
+    @GET("certifycount/{challId}")
+    fun getActivatedChall(@Path("challId") challId:String): Call<ListResponseData>
+
 
 
 }
