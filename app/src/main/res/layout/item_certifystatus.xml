@@ -9,16 +9,20 @@
         android:id="@+id/ItemTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="name"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:textStyle="bold" />
 
-    <ImageView
-        android:id="@+id/ItemImageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        app:srcCompat="@drawable/certify_status_image" />
+    <TextView
+        android:id="@+id/ItemTextView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="0회"
+        android:textSize="18sp" />
 
 
 </LinearLayout>

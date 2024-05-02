@@ -6,13 +6,25 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
+import com.example.bicapplication.GlobalVari
+import com.example.bicapplication.MainActivity
 import com.example.bicapplication.databinding.ActivityCameraCertifyBinding
+import com.example.bicapplication.manager.DataStoreModule
+import com.example.bicapplication.retrofit.RetrofitInterface
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 //이미지인증을 수행하는 액티비티
 class CameraCertifyActivity : AppCompatActivity() {
@@ -22,12 +34,30 @@ class CameraCertifyActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCameraCertifyBinding
     private lateinit var bitmap:Bitmap
+    private lateinit var userid: String
+
+    private lateinit var dataStoreModule: DataStoreModule
+    private lateinit var encryptImageActivity: EncryptImageActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraCertifyBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        dataStoreModule = DataStoreModule(applicationContext)
+        encryptImageActivity = EncryptImageActivity()
+
+//        lifecycleScope.launch {
+//            userid = dataStoreModule.userIdData.first()
+//            if (userid.isNotBlank()) {
+//                Log.d("encImg", "[Camera] userid: " + userid)
+//                lifecycleScope.cancel()
+//            }
+//        }
+
         callCamera()
+//        encryptTest()
+
         // 다시찍기 버튼 클릭시
         binding.cameraButton.setOnClickListener {
             callCamera()
@@ -91,6 +121,53 @@ class CameraCertifyActivity : AppCompatActivity() {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             activityResult.launch(intent)
         }
+    }
+
+    private fun decodeHex(input: String): ByteArray {
+        check(input.length % 2 == 0) { "Must have an even length" }
+
+        val byteIterator = input.chunkedSequence(2)
+            .map { input.toLong(16).toByte() }
+            .iterator()
+
+        return ByteArray(input.length / 2) { byteIterator.next() }
+    }
+
+    // 이미지 암호화
+    private fun encryptTest() {
+        val key = "1334eea06ea6e2f99e002d72d7f03158be8f0489654dcb5aad3a58a9cd50476e"
+        val byteKey = decodeHex(key)
+        Log.d("encImg", "byteKey: " + byteKey)
+        val iv = encryptImageActivity.setIv()
+        val enc = encryptImageActivity.encrypt("asdfghjk", byteKey, iv)
+        val dec = encryptImageActivity.decrypt(enc, byteKey, iv)
+        Log.d("encImg", "iv: " + iv)
+        Log.d("encImg", "enc: " + enc)
+        Log.d("encImg", "dec: " + dec)
+    }
+
+    private fun getGroupKey(userId: String) {
+        val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())   //10.0.2.2
+        retrofitInterface.getGroupKey(userId).enqueue(object :
+            Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    Log.d("encImg", "success getGroupKey ${response.body()}")
+                    CameraCertifyActivity.groupKey = response.body().toString()
+                    Log.d("encImg", "success2 getGroupKey " + CameraCertifyActivity.groupKey)
+
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.d("encImg", "fail getGroupKey ${t}")
+            }
+        })
+    }
+
+
+    companion object {
+        var groupKey: String? = null
     }
 
 }

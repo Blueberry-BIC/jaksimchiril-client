@@ -106,7 +106,6 @@ interface RetrofitInterface {
 
     // 유경 method
 
-
     // save userInfo method
     @POST("user/{userId}")
     fun setUserInfo(
@@ -142,6 +141,12 @@ interface RetrofitInterface {
         @Path("userid") userid: String
     ) : Call<String>
 
+    // get
+    @GET("/imageKey/{userid}")
+    fun getGroupKey(
+        @Path("userid") userid: String
+    ) : Call<String>
+
     // 민우 method
 
     //user컬렉션에서 유저 docu 가져오기
@@ -160,6 +165,10 @@ interface RetrofitInterface {
     //챌린지 인증 성공해서 db에 성공횟수 증 요청
     @PUT("success/{userId}/{challId}")
     fun putSuccess(@Path("userId") userId: String, @Path("challId") challId:String): Call<String>
+
+    //챌린지 컬렉션에서 챌린지 도큐 가져오기
+    @GET("certifycount/{challId}")
+    fun getActivatedChall(@Path("challId") challId:String): Call<ListResponseData>
 
 
 
