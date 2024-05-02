@@ -56,14 +56,14 @@ class MypageFragment : Fragment() {
         binding.Withdrawal.setOnClickListener {
             // 회원 탈퇴 시 User DB에서 해당 사용자 정보 삭제
             Log.d("dataStore", "call deleteUser ${userId}")
-//            deleteUser(userId)
-//            lifecycleScope.launch {
-////                deleteUser(userId)
-//                dataStoreModule.saveUserId("")
-//                dataStoreModule.saveWalletAddr("")
-//                val intent = Intent(requireActivity(), LoginActivity::class.java) ///MainActivity
-//                startActivity(intent)
-//            }
+            deleteUser(userId)
+            lifecycleScope.launch {
+//                deleteUser(userId)
+                dataStoreModule.saveUserId("")
+                dataStoreModule.saveWalletAddr("")
+                val intent = Intent(requireActivity(), LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
 
         return binding.root

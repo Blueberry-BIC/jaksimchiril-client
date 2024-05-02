@@ -47,19 +47,21 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             walletAddr = dataStoreModule.walletAddrData.first()
             if (walletAddr.isNotBlank()) {
                 Log.d("dataStore", "[Main] wallet_addr: " + walletAddr)
-                connectUserDB(walletAddr)
-//                lifecycleScope.cancel()
-            }
-
-            if (userId.isNullOrBlank() == false) {
-                dataStoreModule.saveUserId(userId!!)
-                Log.d("dataStore", "[Main] user_id: " + userId)
-//                lifecycleScope.cancel()
+//                connectUserDB(walletAddr)
+                lifecycleScope.cancel()
             }
         }
 
         // 로그인시 받아온 지갑주소로 사용자 ID 값 가져오기
         connectUserDB(walletAddr)
+
+        lifecycleScope.launch {
+            if (userId.isNullOrBlank() == false) {
+                dataStoreModule.saveUserId(userId!!)
+                Log.d("dataStore", "[Main] user_id: " + userId)
+                lifecycleScope.cancel()
+            }
+        }
 
         // 로컬에 저장된 유저정보가 없으면 깃허브id 입력받고 로컬db, 몽고db에 저장
         githubDialog()

@@ -34,7 +34,7 @@ class CertifyStatusActivity : AppCompatActivity() {
 
         //인증하기 버튼 클릭시 -> 액션, 깃허브, 이미지 인증 3개중 한개 페이지 이동
         binding.certifyButton.setOnClickListener {
-            val intent = Intent(this, ActionCertifyActivity::class.java)  //ActionCertifyActivity  //GithubCertifyActivity  //CameraCertifyActivity
+            val intent = Intent(this, CameraCertifyActivity::class.java)  //ActionCertifyActivity  //GithubCertifyActivity  //CameraCertifyActivity
             startActivity(intent)
             finish()
         }
@@ -66,6 +66,7 @@ class CertifyStatusActivity : AppCompatActivity() {
         if(visited){    //이미지 인증을 갔다왔으면 진행
             Log.e("태그,", "bitmap:"+bitmap)
             if(bitmap!=null){
+                Log.d("image", bitmap.toString())
                 binding.imageView.visibility = View.VISIBLE
                 binding.imageView.setImageBitmap(bitmap)
             }else{  //아직 이미지 인증 안했거나, 다른 인증인 경우

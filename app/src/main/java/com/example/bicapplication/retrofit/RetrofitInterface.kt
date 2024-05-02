@@ -96,7 +96,6 @@ interface RetrofitInterface {
 
     // 유경 method
 
-
     // save userInfo method
     @POST("user/{userId}")
     fun setUserInfo(
@@ -129,6 +128,12 @@ interface RetrofitInterface {
     // delete user (회원탈퇴)
     @DELETE("delete/{userid}")
     fun deleteUser(
+        @Path("userid") userid: String
+    ) : Call<String>
+
+    // get
+    @GET("/imageKey/{userid}")
+    fun getGroupKey(
         @Path("userid") userid: String
     ) : Call<String>
 
