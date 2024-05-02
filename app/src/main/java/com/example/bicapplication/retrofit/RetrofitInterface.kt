@@ -161,6 +161,10 @@ interface RetrofitInterface {
     @PUT("success/{userId}/{challId}")
     fun putSuccess(@Path("userId") userId: String, @Path("challId") challId:String): Call<String>
 
+    //챌린지 컬렉션에서 챌린지 도큐 가져오기
+    @GET("certifycount/{challId}")
+    fun getActivatedChall(@Path("challId") challId:String): Call<ListResponseData>
+
 
 
 }
