@@ -36,7 +36,7 @@ interface RetrofitInterface {
 
     @GET("check/{walletAddr}")
     fun checkExistUser(
-        @Path("walletAddr") walletAddr: WalletData
+        @Path("walletAddr") walletAddr: String
     ): Call<UserBooleanResponse>
 
     //신규 유저 등록 요청

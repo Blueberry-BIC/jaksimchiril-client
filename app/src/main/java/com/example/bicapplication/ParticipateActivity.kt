@@ -95,7 +95,7 @@ class ParticipateActivity : AppCompatActivity() {
     //participate
     private fun participate(){
         challData?.let {
-            if (it.userNum == 0){
+            if (it.userNum == 1){
                 // user_list 데이터 새로 만들어서 필드 추가 필요한 경우
                 val userList = mutableListOf<String>(userid)
                 it.userNum = userList.size
