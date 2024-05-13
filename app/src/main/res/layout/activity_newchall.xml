@@ -101,7 +101,7 @@
                         android:layout_margin="5dp"
                         android:gravity="center"
                         android:layout_gravity="center"
-                        android:text="@string/chall_auth_method" />
+                        android:text="@string/chall_kind" />
 
                     <TextView
                         android:layout_width="wrap_content"

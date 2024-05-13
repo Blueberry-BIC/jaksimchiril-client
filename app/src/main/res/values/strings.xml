@@ -18,7 +18,7 @@
     <string name="chall_status">챌린지 현황</string>
     <string name="chall_daterange">챌린지 기간</string>
     <string name="chall_category">카테고리</string>
-    <string name="chall_auth_method">인증방식</string>
+    <string name="chall_kind">챌린지 종목</string>
     <string name="chall_choose_open">공개 여부</string>
     <string name="chall_grouppwd">비밀번호</string>
     <string name="chall_desc">챌린지 소개</string>
