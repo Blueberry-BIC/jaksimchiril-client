@@ -138,7 +138,7 @@ class CertifyStatusActivity : AppCompatActivity() {
         binding.certifyButton.setOnClickListener {
             val intent = Intent(
                 this,
-                ActionCertifyActivity::class.java
+                CameraCertifyActivity::class.java
             )  //ActionCertifyActivity  //GithubCertifyActivity  //CameraCertifyActivity
             activityResultLauncher.launch(intent)
         }

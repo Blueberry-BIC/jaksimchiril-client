@@ -141,10 +141,16 @@ interface RetrofitInterface {
         @Path("userid") userid: String
     ) : Call<String>
 
-    // get
-    @GET("/imageKey/{userid}")
+    // get groupkey
+    @GET("imageKey/{userid}")
     fun getGroupKey(
         @Path("userid") userid: String
+    ) : Call<String>
+
+    // post imageData
+    @PATCH("image")
+    fun saveImage(
+        @Body user: ImageData
     ) : Call<String>
 
     // 민우 method
