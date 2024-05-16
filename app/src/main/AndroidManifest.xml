@@ -10,6 +10,10 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <queries>
         <package android:name="io.klutch.wallet" />
     </queries>
@@ -25,6 +29,19 @@
         android:theme="@style/Theme.BICApplication"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <!--카메라앱으로부터 이미지를 받기 위한 content provider 추가
+        androidx package 내 FileProvider 이용 (특정 폴더 공유할 때 사용하는 content provider-->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/external" />
+        </provider>
+
         <activity
             android:name=".FirstUserInfoActivity"
             android:exported="false">
