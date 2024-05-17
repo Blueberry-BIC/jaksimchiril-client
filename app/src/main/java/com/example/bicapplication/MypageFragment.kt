@@ -33,8 +33,8 @@ class MypageFragment : Fragment() {
         dataStoreModule = DataStoreModule(requireContext())
 
         lifecycleScope.launch {
-//            val userName = dataStoreModule.userNameData.first()
-//            binding.name.text = userName
+            val userName = dataStoreModule.userNameData.first()
+            binding.name.text = userName
             userId = dataStoreModule.userIdData.first()
             Log.d("dataStore", "[Mypage] user_id: " + userId)
             binding.id.text = userId

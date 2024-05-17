@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.example.bicapplication.databinding.ActivityNewchallBinding
 import android.widget.ArrayAdapter
 import com.example.bicapplication.datamodel.ChallData
@@ -64,23 +65,47 @@ class NewchallActivity : AppCompatActivity() {
                 }
             }
             // 챌린지 인증방식 선택
-            radiogroupNewchallAuthMethod.setOnCheckedChangeListener { _, checkedid ->
+//            radiogroupNewchallAuthMethod.setOnCheckedChangeListener { _, checkedid ->
+//                when (checkedid) {
+//                    R.id.radiobtn_newchall_image -> {
+//                        challdata.authMethod = 1
+//                    }
+//                    R.id.radiobtn_newchall_github -> {
+//                        challdata.authMethod = 2
+//                    }
+//                    R.id.radiobtn_newchall_action -> {
+//                        challdata.authMethod = 3
+//                    }
+//                }
+//            }
+
+            // 신체단련 카테고리에서 챌린지 종목 선택
+            radiogroupNewchallExercise.setOnCheckedChangeListener { _, checkedid ->
                 when (checkedid) {
-                    R.id.radiobtn_newchall_image -> {
-                        challdata.authMethod = 1
-                    }
-                    R.id.radiobtn_newchall_github -> {
-                        challdata.authMethod = 2
-                    }
-                    R.id.radiobtn_newchall_action -> {
-                        challdata.authMethod = 3
-                    }
+                    R.id.radiobtn_newchall_indoor -> challdata.authMethod = 1
+                    R.id.radiobtn_newchall_outdoor -> challdata.authMethod = 4
                 }
             }
+
             // 챌린지 카테고리 선택
             autocomepletetextviewNewchallCategory.setOnItemClickListener { parent, view, position, id ->
                 var item = autocomepletetextviewNewchallCategory.text.toString()
                 challdata.category = item
+
+                if (item == "신체 단련") {
+                    exerciseText.visibility = View.VISIBLE
+                    radiogroupNewchallExercise.visibility = View.VISIBLE
+                } else {
+                    exerciseText.visibility = View.GONE
+                    radiogroupNewchallExercise.visibility = View.GONE
+                }
+
+                when(item) {
+                    "코딩 스킬 향상" -> challdata.authMethod = 2
+                    "시사/교양" -> challdata.authMethod = 5
+                    "생활" -> challdata.authMethod = 3
+                }
+
             }
             // 챌린지 기간 선택
             imgbtnNewchallDaterange.setOnClickListener {

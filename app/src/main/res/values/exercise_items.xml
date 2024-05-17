@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="exercise">
+        신체 단련
+    </string>
+    <string-array name="exercise_items">
+        <item>실내 운동</item>
+        <item>야외 운동</item>
+    </string-array>
+</resources>

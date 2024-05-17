@@ -94,6 +94,7 @@
                         android:text="@string/chall_category" />
 
                     <TextView
+                        android:id="@+id/exercise_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
@@ -101,7 +102,8 @@
                         android:layout_margin="5dp"
                         android:gravity="center"
                         android:layout_gravity="center"
-                        android:text="@string/chall_auth_method" />
+                        android:visibility="gone"
+                        android:text="@string/chall_kind" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -198,7 +200,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <RadioGroup
-                        android:id="@+id/radiogroup_newchall_auth_method"
+                        android:id="@+id/radiogroup_newchall_exercise"
                         android:layout_width="278dp"
                         android:layout_height="wrap_content"
                         android:layout_row="3"
@@ -206,28 +208,22 @@
                         android:layout_columnSpan="2"
                         android:layout_gravity="fill_horizontal"
                         android:gravity="center"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <RadioButton
-                            android:id="@+id/radiobtn_newchall_image"
+                            android:id="@+id/radiobtn_newchall_indoor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
-                            android:text="@string/auth_image" />
+                            android:text="@string/indoor_exercise" />
 
                         <RadioButton
-                            android:id="@+id/radiobtn_newchall_github"
+                            android:id="@+id/radiobtn_newchall_outdoor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="10dp"
-                            android:text="@string/auth_github" />
-
-                        <RadioButton
-                            android:id="@+id/radiobtn_newchall_action"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:text="@string/auth_action" />
+                            android:text="@string/outdoor_exercise" />
                     </RadioGroup>
 
                     <RadioGroup
