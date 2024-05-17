@@ -71,6 +71,8 @@ class SelectedchallActivity : AppCompatActivity() {
                 1 -> textAuthMethod.text = "이미지 인증"
                 2 -> textAuthMethod.text = "깃허브 인증"
                 3 -> textAuthMethod.text = "액션 인증"
+                4 -> textAuthMethod.text = "걸음수 인증"
+                5 -> textAuthMethod.text = "IT뉴스 인증"
             }
             when (challData?.isPublic) {
                 true -> textIsPublic.text = "공개"
