@@ -32,7 +32,7 @@ import retrofit2.Response
 
 class SelectedchallActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySelectedchallBinding
-    private val user_id = "65e3b68de9562a3a91d247ca"
+    private val user_id = "6613b099e4640fd1d21e6f0a"
     val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +53,7 @@ class SelectedchallActivity : AppCompatActivity() {
     }
 
     private fun initLayout() {
+        checkUserlist()
 
         binding.apply {
             btnSelectedBack.setOnClickListener {
@@ -68,17 +69,6 @@ class SelectedchallActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
             }
-
-            /*if (challData?.isProgress == 0) {
-                //btnChallParticipate.text = "참가하기"
-                //checkParticipant()
-                checkUserlist()
-            } else if (challData?.isProgress == 1) {
-                //btnChallParticipate.text = "인증 현황 보기"
-                changeBtn()
-                binding.btnChallCertify.isEnabled = true
-                //binding.btnChallCertifystatus.isEnabled = true
-            }*/
 
             when (challData?.authMethod) {
                 1 -> textAuthMethod.text = "이미지 인증"
@@ -187,12 +177,11 @@ class SelectedchallActivity : AppCompatActivity() {
                     if (response.isSuccessful){
 
                         var data = response.body()
-                        Log.d("selected", "${data}")
                         if (data?.is_participant == true){
                             //참가자이다
                             changeBtn()
                             //진행중인가?
-                            if (challData?.isProgress == 1) {
+                            if (it.isProgress == 1) {
                                 binding.btnChallCertifystatus.isEnabled = true
                                 //오늘 인증을 했는가?
                                 if (!data.certified){
@@ -200,9 +189,12 @@ class SelectedchallActivity : AppCompatActivity() {
                                 }
                             }else{
                                 //진행중이지 않으니까 일단 버튼 다 비활성화
+                                binding.btnChallCertifystatus.isEnabled = false
+                                binding.btnChallCertify.isEnabled = false
                                 Log.d("checkbtn", "참가자이지만 진행중은 아님")
                             }
                         } else{
+                            binding.btnChallParticipate.text = "인증현황보기"
                             Log.d("checkbtn", "참가자가 아님")
                         }
                     }
@@ -214,19 +206,6 @@ class SelectedchallActivity : AppCompatActivity() {
         }
     }
 
-    /*// 참가자인지 아닌지 확인 후 버튼 변경
-    private fun checkParticipant() {
-        try{
-            if (challData?.userList!!.indexOf(user_id) != -1) {
-                // user 이미 존재 - 참가자가 클릭한 경우
-                Log.d("selectedchall", "participant, ${challData?.userList}")
-                changeBtn()
-            }
-
-        } catch (e:Exception){
-            Log.d("selectedchall", "EXCEPTION of checkparticipant: ${e}, ${challData?.userList}")
-        }
-    }*/
 
     private fun changeBtn(){
         binding.apply {

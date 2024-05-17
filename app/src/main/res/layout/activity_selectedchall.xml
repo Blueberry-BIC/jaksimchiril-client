@@ -233,7 +233,7 @@
             android:layout_height="50dp"
             android:text="인증 현황 보기"
             android:layout_marginEnd="10dp"
-            android:enabled="false"/>
+            android:enabled="true"/>
 
         <Button
             android:id="@+id/btn_chall_certify"
@@ -241,7 +241,7 @@
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
             android:text="인증하기"
-            android:enabled="false"/>
+            android:enabled="true"/>
 
     </LinearLayout>
     <RelativeLayout

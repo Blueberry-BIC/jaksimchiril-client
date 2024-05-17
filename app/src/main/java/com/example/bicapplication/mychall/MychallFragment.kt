@@ -25,7 +25,7 @@ class MychallFragment : Fragment() {
     private lateinit var binding: FragmentMychallBinding
     private lateinit var adapter: ChallListAdapter
     private lateinit var layoutManager: RecyclerView.LayoutManager
-    private var userid = "65e3b68de9562a3a91d247ca"
+    private var userid = "6613b099e4640fd1d21e6f0a"
     var challDataArray: ArrayList<ChallData> = ArrayList()
     val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl()
     )  //127.0.0.1
@@ -70,6 +70,7 @@ class MychallFragment : Fragment() {
                         challData.passwd = data.getInt("passwd")
                         challData.userNum = data.getInt("user_num")
                         challData.totalDays = data.getLong("total_days")
+                        challData.isProgress = data.getInt("is_progress")
                         //challData.userList = users
 
                         challDataArray.add(challData)

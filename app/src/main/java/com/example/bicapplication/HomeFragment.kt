@@ -68,6 +68,7 @@ class HomeFragment : Fragment() {
 
                         val startDate = data.getString("start_date").substring(0, 10)
                         val start = dateFormat.parse(startDate)
+                        Log.d("homefrag", "data=${data}")
 
                         // 오늘 날짜 기준으로 시작 전인 챌린지 목록만 나타내기
                         if (today.before(start)) {
