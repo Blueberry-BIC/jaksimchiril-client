@@ -47,21 +47,13 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             walletAddr = dataStoreModule.walletAddrData.first()
             if (walletAddr.isNotBlank()) {
                 Log.d("dataStore", "[Main] wallet_addr: " + walletAddr)
-//                connectUserDB(walletAddr)
-                lifecycleScope.cancel()
+                connectUserDB(walletAddr)
             }
         }
 
         // 로그인시 받아온 지갑주소로 사용자 ID 값 가져오기
-        //connectUserDB(walletAddr)
+//        connectUserDB(walletAddr)
 
-        lifecycleScope.launch {
-            if (userId.isNullOrBlank() == false) {
-                dataStoreModule.saveUserId(userId!!)
-                Log.d("dataStore", "[Main] user_id: " + userId)
-                lifecycleScope.cancel()
-            }
-        }
 
         // 로컬에 저장된 유저정보가 없으면 깃허브id 입력받고 로컬db, 몽고db에 저장
         //githubDialog()
@@ -106,8 +98,13 @@ class MainActivity : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     Log.d("dataStore", "success getUserId ${response.body()}")
                     userId = response.body().toString()
                     Log.d("dataStore", "success2 getUserId " + userId)
-
-                    Log.d("dataStore", "success2 getUserId " + userId!!.isNullOrBlank())
+                    lifecycleScope.launch {
+                        if (userId.isNullOrBlank() == false) {
+                            dataStoreModule.saveUserId(userId!!)
+                            Log.d("dataStore", "[Main2] user_id: " + userId)
+                            lifecycleScope.cancel()
+                        }
+                    }
 
                 }
             }

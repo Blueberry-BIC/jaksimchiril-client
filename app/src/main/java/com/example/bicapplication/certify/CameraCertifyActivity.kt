@@ -1,10 +1,15 @@
 package com.example.bicapplication.certify
 
 import android.Manifest
+import android.app.Activity
+import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
@@ -17,14 +22,22 @@ import androidx.lifecycle.lifecycleScope
 import com.example.bicapplication.GlobalVari
 import com.example.bicapplication.MainActivity
 import com.example.bicapplication.databinding.ActivityCameraCertifyBinding
+import com.example.bicapplication.datamodel.ImageData
 import com.example.bicapplication.manager.DataStoreModule
 import com.example.bicapplication.retrofit.RetrofitInterface
+import com.google.firebase.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.storage
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 //이미지인증을 수행하는 액티비티
 class CameraCertifyActivity : AppCompatActivity() {
@@ -34,10 +47,14 @@ class CameraCertifyActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCameraCertifyBinding
     private lateinit var bitmap:Bitmap
-    private lateinit var userid: String
+    private lateinit var userId: String
+    private lateinit var challId: String
+    private lateinit var imageUri: Uri
+//    private lateinit var fbStorage: Firebase
 
     private lateinit var dataStoreModule: DataStoreModule
     private lateinit var encryptImageActivity: EncryptImageActivity
+    val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())   //10.0.2.2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,16 +64,20 @@ class CameraCertifyActivity : AppCompatActivity() {
         dataStoreModule = DataStoreModule(applicationContext)
         encryptImageActivity = EncryptImageActivity()
 
-//        lifecycleScope.launch {
-//            userid = dataStoreModule.userIdData.first()
-//            if (userid.isNotBlank()) {
-//                Log.d("encImg", "[Camera] userid: " + userid)
-//                lifecycleScope.cancel()
-//            }
-//        }
+        val intent = intent
+        challId = intent.getStringExtra("challId").toString()
+
+        lifecycleScope.launch {
+            userId = dataStoreModule.userIdData.first()
+            if (userId.isNotBlank()) {
+                Log.d("encImg", "[Camera] userid: " + userId)
+                lifecycleScope.cancel()
+            }
+        }
+
+        Log.d("encImg", "${System.currentTimeMillis()}")
 
         callCamera()
-//        encryptTest()
 
         // 다시찍기 버튼 클릭시
         binding.cameraButton.setOnClickListener {
@@ -64,6 +85,17 @@ class CameraCertifyActivity : AppCompatActivity() {
         }
         // 완료하기 버튼 클릭시
         binding.completeButton.setOnClickListener {
+            //Firebase에 사진 업로드
+            Log.d("encImg", "[completeButton] URI: " + imageUri)
+            uploadImage(imageUri,
+                mSuccessHandler = { uri ->
+                    Toast.makeText(this, "업로드에 성공했습니다", Toast.LENGTH_SHORT).show()
+                    saveImage(uri)
+                },
+                mErrorHandler = {
+                    Toast.makeText(this, "업로드에 실패했습니다", Toast.LENGTH_SHORT).show()
+                }
+            )
             //bitmap 사진 데이터를 담아서 인증현황 액티비티로 이동
             val intent = Intent(this, CertifyStatusActivity::class.java)
             intent.putExtra("사진", bitmap)
@@ -105,6 +137,8 @@ class CameraCertifyActivity : AppCompatActivity() {
     //결과 가져오기
     private val activityResult : ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()){
+        getImageIntent(applicationContext)
+        Log.d("encImg", "[activityResult] URI : ${imageUri}")
         if(it.resultCode== RESULT_OK && it.data != null){
             //값 담기
             val extras = it.data!!.extras
@@ -123,6 +157,28 @@ class CameraCertifyActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun getImageIntent(context: Context): Intent {
+        imageUri = Uri.EMPTY
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val contentValues = ContentValues()
+        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, "${timeStamp}.jpg")
+        contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+        //'RELATIVE_PATH', RequiresApi Q
+        contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+
+        //URI 형식 EX) content://media/external/images/media/1006
+        imageUri = context.contentResolver.insert(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            contentValues
+        ) ?: Uri.EMPTY
+        Log.d("encImg", "[getImageIntent] URI: ${imageUri}")
+        val fullSizeCaptureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        fullSizeCaptureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        return fullSizeCaptureIntent
+    }
+
+
     private fun decodeHex(input: String): ByteArray {
         check(input.length % 2 == 0) { "Must have an even length" }
 
@@ -131,6 +187,12 @@ class CameraCertifyActivity : AppCompatActivity() {
             .iterator()
 
         return ByteArray(input.length / 2) { byteIterator.next() }
+    }
+
+    private fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
+        var outputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 80, outputStream)
+        return outputStream.toByteArray()
     }
 
     // 이미지 암호화
@@ -146,8 +208,59 @@ class CameraCertifyActivity : AppCompatActivity() {
         Log.d("encImg", "dec: " + dec)
     }
 
+    // 이미지를 Firebase에 업로드
+    private fun uploadImage(
+        imageURI: Uri,
+        mSuccessHandler: (String) -> Unit,
+        mErrorHandler: () -> Unit,
+    ) {
+        val storage = Firebase.storage
+        val storageRef = storage.getReference("images")
+        val imageFileName = "${System.currentTimeMillis()}.png"
+        val mountainsRef = storageRef.child(imageFileName)
+        Log.d("encImg", mountainsRef.toString())
+        mountainsRef.putFile(imageURI)
+            .addOnCompleteListener {
+                Log.d("encImg", it.toString())
+                if (it.isSuccessful) {
+                    mSuccessHandler(imageURI.toString())
+                    // 파일 업로드에 성공했기 때문에 파일을 다시 받아 오도록 해야함
+//                    fbStorage.reference.child("images").child(imageFileName).downloadUrl
+//                        .addOnSuccessListener { uri ->
+//                            Log.d("encImg", "Upload Success: " + uri.toString())
+//                            mSuccessHandler(uri.toString())
+//                        }.addOnFailureListener {
+//                            Log.d("encImg", "Upload Failed: ${it.toString()}")
+//                            mErrorHandler()
+//                        }
+                } else {
+                    mErrorHandler()
+                }
+            }
+    }
+
+    // 파일명으로 Firebase에서 이미지 다운로드
+    private fun downloadImage(filename: String) {
+        // storage 인스턴스 생성
+        val storage = Firebase.storage
+        // storage 참조
+        val storageRef = storage.getReference("image")
+        // storage에서 가져올 파일명 선언
+        val mountainsRef = storageRef.child("${filename}.png")
+
+        val downloadTask = mountainsRef.downloadUrl
+        downloadTask.addOnSuccessListener { uri ->
+            // 파일 다운로드 성공
+            // Glide를 사용하여 이미지를 ImageView에 직접 가져오기
+//            Glide.with(mainActivity).load(uri).into(binding.imageArea)
+        }.addOnFailureListener {
+            // 파일 다운로드 실패
+        }
+    }
+
+    // 서버로부터 그룹키 가져오기
     private fun getGroupKey(userId: String) {
-        val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())   //10.0.2.2
+//        val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())   //10.0.2.2
         retrofitInterface.getGroupKey(userId).enqueue(object :
             Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -161,6 +274,21 @@ class CameraCertifyActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<String>, t: Throwable) {
                 Log.d("encImg", "fail getGroupKey ${t}")
+            }
+        })
+    }
+
+    private fun saveImage(uri: String) {
+        var imageData = ImageData(challId, userId, uri)
+        retrofitInterface.saveImage(imageData).enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    Log.d("encImg", "success saveImage ${response.body()}")
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.d("encImg", "fail saveImage ${t}")
             }
         })
     }

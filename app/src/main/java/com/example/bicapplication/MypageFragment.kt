@@ -47,6 +47,7 @@ class MypageFragment : Fragment() {
             // 로그아웃 시 dataStore의 userId 값 삭제
             lifecycleScope.launch {
                 dataStoreModule.saveWalletAddr("")
+                dataStoreModule.saveUserId("")
                 val intent = Intent(requireActivity(), LoginActivity::class.java) ///MainActivity
                 startActivity(intent)
             }
