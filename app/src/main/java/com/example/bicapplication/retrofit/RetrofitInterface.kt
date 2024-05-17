@@ -2,10 +2,7 @@ package com.example.bicapplication.retrofit
 
 import com.example.bicapplication.datamodel.*
 import com.example.bicapplication.klaytn.*
-import com.example.bicapplication.responseObject.BooleanResponse
-import com.example.bicapplication.responseObject.ListResponseData
-import com.example.bicapplication.responseObject.UserBooleanResponse
-import com.example.bicapplication.responseObject.UserPostResponse
+import com.example.bicapplication.responseObject.*
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import kotlinx.coroutines.flow.Flow
@@ -175,6 +172,10 @@ interface RetrofitInterface {
     //챌린지 컬렉션에서 챌린지 도큐 가져오기
     @GET("certifycount/{challId}")
     fun getActivatedChall(@Path("challId") challId:String): Call<ListResponseData>
+
+    //it시사뉴스 문제 가져오기 요청
+    @GET("news")
+    fun getNews(): Call<ItNewsResponse>
 
 
 

@@ -9,13 +9,17 @@ import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.lifecycleScope
 import com.example.bicapplication.GlobalVari
 import com.example.bicapplication.R
 import com.example.bicapplication.databinding.ActivityCertifyStatusBinding
 import com.example.bicapplication.datamodel.ChallData
+import com.example.bicapplication.manager.DataStoreModule
 import com.example.bicapplication.responseObject.ListResponseData
 import com.example.bicapplication.retrofit.RetrofitInterface
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.first
 import org.json.JSONArray
 import org.json.JSONException
 import retrofit2.Call
@@ -31,9 +35,16 @@ class CertifyStatusActivity : AppCompatActivity() {
     private var certifyDataList: ArrayList<CertifyData> = ArrayList()
     private lateinit var challId: String
     private lateinit var endDate: String
-    private var myCertifyCount: Int = 0
+    private var myCertifyCount: Double = 0.0
 
-    //인증화면(이미지, 액션, 깃허브) 갔다올때 성공여부 등 데이터 전달받기위함
+    /**
+    //datastore에서 값 가져오기 위한 변수
+    private lateinit var userid: String
+    private lateinit var dataStoreModule: DataStoreModule
+     */
+
+
+    //인증화면(이미지, 액션, 깃허브, 시사뉴스, 걸음수) 갔다올때 성공여부 등 데이터 전달받기위함
     @SuppressLint("SetTextI18n")
     private val activityResultLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -48,12 +59,14 @@ class CertifyStatusActivity : AppCompatActivity() {
             val visited = intent?.getBooleanExtra("이미지인증방문", false) //이미지인증을 갔다온건지 확인위함
             //이미지 인증을 갔다왔으면 진행
             if (visited == true) {
-                Log.e("태그,", "bitmap:" + bitmap)
+                //Log.e("태그,", "bitmap:" + bitmap)
                 if (bitmap != null) {  //올린 사진이 있을경우(인증 완료인 경우)
                     binding.imageView.visibility = View.VISIBLE
                     binding.imageView.setImageBitmap(bitmap)
                     binding.successTextView.visibility = View.GONE
-                    myCertifyCount++ //인증횟수 1증가
+                    //DB의 activiated_chall에 해당 유저의 is_sucesss필드에다가 성공횟수 +1 하기
+                    plusSuccessCount()
+                    myCertifyCount++ //인증횟수 1증가(뷰 재랜더링을 위해)
                 } else {  //아직 이미지 인증 안했거나, 다른 인증인 경우
                     binding.imageView.visibility = View.GONE
                 }
@@ -65,18 +78,18 @@ class CertifyStatusActivity : AppCompatActivity() {
          */
         else if (it.resultCode == 2) {
             val intent = it.data
-            val visited = intent?.getBooleanExtra("액션인증방문", false) //깃허브인증을 갔다온건지 확인위함
+            val visited = intent?.getBooleanExtra("액션인증방문", false) //액션인증을 갔다온건지 확인위함
             val is_success = intent?.getBooleanExtra("성공여부", false)
 
             //액션 인증 갔다가 여기로 온거라면 진행
             if (visited == true) {
-                Log.e("태그,", "is_success:" + is_success)
+               // Log.e("태그,", "is_success:" + is_success)
                 var success = ""
                 if (is_success == true) {
                     success = "성공"
                     //DB의 activiated_chall에 해당 유저의 is_sucesss필드에다가 성공횟수 +1 하기
                     plusSuccessCount()
-                    myCertifyCount++ //인증횟수 1증가
+                    myCertifyCount++ //인증횟수 1증가(뷰 재랜더링을 위해)
                 } else {
                     success = "실패"
                 }
@@ -99,7 +112,9 @@ class CertifyStatusActivity : AppCompatActivity() {
                 var success = ""
                 if (is_success == true) {
                     success = "성공"
-                    myCertifyCount++ //인증횟수 1증가
+                    //DB의 activiated_chall에 해당 유저의 is_sucesss필드에다가 성공횟수 +1 하기
+                    plusSuccessCount()
+                    myCertifyCount++ //인증횟수 1증가(뷰 재랜더링을 위해)
                 } else {
                     success = "실패"
                 }
@@ -108,14 +123,60 @@ class CertifyStatusActivity : AppCompatActivity() {
                     "$success\n최신 커밋 날짜: $commitDate\n커밋한 레포: $commitRepo\n레포URL: https://github.com/로컬에 저장된 유저깃허브id값 넣기/$commitRepo "
             }
         }
-    }
 
+        /**
+        it시사뉴스인증 결과 받아옴
+         */
+        else if (it.resultCode == 4) {
+            val intent = it.data
+            val is_success = intent?.getBooleanExtra("성공여부", false)
+            val visited = intent?.getBooleanExtra("시사뉴스인증방문", false)
+
+            //시사뉴스인증 갔다가 여기로 온거라면 진행
+            if (visited == true) {
+                var success = ""
+                if (is_success == true) {
+                    success = "성공"
+                    //DB의 activiated_chall에 해당 유저의 is_sucesss필드에다가 성공횟수 +1 하기
+                    plusSuccessCount()
+                    myCertifyCount++ //인증횟수 1증가(뷰 재랜더링을 위해)
+                } else {
+                    success = "실패"
+                }
+                //binding.imageView.visibility = View.GONE
+                binding.successTextView.text = success
+            }
+        }
+        /**
+        걸음수인증 결과 받아옴
+         */
+        else if (it.resultCode == 5) {
+            val intent = it.data
+            val is_success = intent?.getBooleanExtra("성공여부", false)
+            val visited = intent?.getBooleanExtra("걸음수인증방문", false)
+
+            //시사뉴스인증 갔다가 여기로 온거라면 진행
+            if (visited == true) {
+                var success = ""
+                if (is_success == true) {
+                    success = "성공"
+                    //DB의 activiated_chall에 해당 유저의 is_sucesss필드에다가 성공횟수 +1 하기
+                    plusSuccessCount()
+                    myCertifyCount++ //인증횟수 1증가(뷰 재랜더링을 위해)
+                } else {
+                    success = "실패"
+                }
+                //binding.imageView.visibility = View.GONE
+                binding.successTextView.text = success
+            }
+        }
+    }
 
     @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
-        //인증화면에서 성공후 돌아왔을시 인증횟수 바로 뷰에 업데이트
-        binding.textView9.text = "$myCertifyCount" + "회"
+        //인증화면에서 성공후 돌아왔을시 인증횟수 바로 재랜더링
+        binding.textView9.text = myCertifyCount.toInt().toString() + "회"
     }
 
 
@@ -124,6 +185,19 @@ class CertifyStatusActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCertifyStatusBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        /**
+        dataStoreModule = DataStoreModule(this)
+
+        //datastore에서 값 가져오기
+        lifecycleScope.launch {
+        userid = dataStoreModule.userIdData.first()
+        Log.e("태그@@@@@@@#########", "userid: " + userid)
+        if (userid.isNotBlank()) {
+        lifecycleScope.cancel()
+        }
+        }
+         */
 
         //mychall프래그먼트로부터 전달 받은 챌id와 종료기간
         val intent = intent
@@ -134,15 +208,14 @@ class CertifyStatusActivity : AppCompatActivity() {
         //현재 챌린지 정보 가져와서 참가자 이름, 인증횟수들 텍스트뷰에 채우기
         getChallInfo()
 
-        //인증하기 버튼 클릭시 -> 액션, 깃허브, 이미지 인증 3개중 한개 페이지 이동
+        //인증하기 버튼 클릭시 -> 액션, 깃허브, 이미지, 시사뉴스, 걸음수 인증 -> 5개중 한개 페이지 이동
         binding.certifyButton.setOnClickListener {
             val intent = Intent(
                 this,
-                CameraCertifyActivity::class.java
-            )  //ActionCertifyActivity  //GithubCertifyActivity  //CameraCertifyActivity
+                NewsCertifyActivity::class.java
+            )  //ActionCertifyActivity  //GithubCertifyActivity  //CameraCertifyActivity  //NewsCertifyActivity  //WalkingCertifyActivity
             activityResultLauncher.launch(intent)
         }
-
     }
 
     //챌린지 인증 성공시 DB의 성공횟수 1증가 로직
@@ -177,7 +250,6 @@ class CertifyStatusActivity : AppCompatActivity() {
         })
     }
 
-
     //챌린지id로 현재 챌린지 docu 가져와서 참가자들 이름, 인증횟수 넣어주기 (각 유저들 인증횟수, user_list 등 가져오기 위함)
     private fun getChallInfo() {
         val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
@@ -206,21 +278,25 @@ class CertifyStatusActivity : AppCompatActivity() {
                         if (userList[i] == "65b537f388bb8423ff6e0f8d") {  //만약 내 userid일 경우 패스
                             //만약 본인이 인증 한번도 안해서 챌린지 docu의 필드값에 본인 userid값 없을 경우 예외처리
                             try {
-                                myCertifyCount = jsonObject.getInt(userList[i] as String)
-                                binding.textView9.text = myCertifyCount.toString() + "회"
+                                val arr =  jsonObject.getJSONArray(userList[i] as String)
+
+                                myCertifyCount = arr[0] as Double  // 인증횟수
+
+                                binding.textView9.text = myCertifyCount.toInt().toString() + "회"
                                 continue
                             } catch (_: JSONException) {
-                                binding.textView9.text = "$myCertifyCount" + "회"
+                                binding.textView9.text =  myCertifyCount.toInt().toString() + "회"
                                 continue
                             }
                         }
                         //만약 참가자가 인증 한번도 안해서 챌린지 docu의 필드값에 해당 참가자 userid값 없을 경우 예외처리
                         try {
-                            val certifyCount = jsonObject.getInt(userList[i] as String) // 인증횟수
+                            val arr =  jsonObject.getJSONArray(userList[i] as String)
+                            val certifyCount = arr[0] as Double // 인증횟수
                             val userid = userList[i].toString().substring(0 until 7) //참가자 userid값을 잘라서 0부터 7까지만 저장
                             val username = CertifyData(
                                 "참가자${num + 1}\n(${userid}..)",
-                                certifyCount.toString() + "회",
+                                certifyCount.toInt().toString() + "회",
                                 R.drawable.bic_logo
                             )
                             certifyDataList.add(username)
