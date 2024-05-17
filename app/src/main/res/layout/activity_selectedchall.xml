@@ -215,7 +215,37 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/linearlayout_btn_certify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center"
+        android:layout_marginBottom="50dp"
+        android:visibility="gone"
+        >
+        <Button
+            android:id="@+id/btn_chall_certifystatus"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            android:text="인증 현황 보기"
+            android:layout_marginEnd="10dp"
+            android:enabled="false"/>
+
+        <Button
+            android:id="@+id/btn_chall_certify"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:text="인증하기"
+            android:enabled="false"/>
+
+    </LinearLayout>
     <RelativeLayout
+        android:id="@+id/relativelayout_btn_participate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"

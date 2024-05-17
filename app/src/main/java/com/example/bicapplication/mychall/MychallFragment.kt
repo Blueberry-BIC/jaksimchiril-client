@@ -25,6 +25,7 @@ class MychallFragment : Fragment() {
     private lateinit var binding: FragmentMychallBinding
     private lateinit var adapter: ChallListAdapter
     private lateinit var layoutManager: RecyclerView.LayoutManager
+    private var userid = "65e3b68de9562a3a91d247ca"
     var challDataArray: ArrayList<ChallData> = ArrayList()
     val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl()
     )  //127.0.0.1
@@ -39,7 +40,7 @@ class MychallFragment : Fragment() {
         layoutManager = GridLayoutManager(activity, 2)
         binding.mychallRecyclerview.layoutManager = layoutManager
 
-        retrofitInterface.getActivatedChallInfo().enqueue(object : Callback<ArrayList<Any>> {
+        retrofitInterface.getMyChall(userid).enqueue(object : Callback<ArrayList<Any>> {
             override fun onResponse(
                 call: Call<ArrayList<Any>>,
                 response: Response<ArrayList<Any>>
@@ -49,6 +50,13 @@ class MychallFragment : Fragment() {
 
                     for (i in 0 until challArray.length()) {
                         var data = challArray.getJSONObject(i)
+                        /*var userlist = data.getJSONArray("user_list")
+                        var users = mutableListOf<String>()
+                        for (u in 0 until userlist.length()){
+                            users.add(userlist[u].toString())
+                        }
+                        Log.d("mychall", "${users}")*/
+
 
                         var challData = ChallData.getDefault()
                         challData.challId = data.getString("_id")
@@ -62,15 +70,18 @@ class MychallFragment : Fragment() {
                         challData.passwd = data.getInt("passwd")
                         challData.userNum = data.getInt("user_num")
                         challData.totalDays = data.getLong("total_days")
+                        //challData.userList = users
 
                         challDataArray.add(challData)
                     }
 
                     //챌린지 클릭시 해당 챌의 id값과 종료기간 인증act로 전달 및 이동
                     adapter = ChallListAdapter(challDataArray) {
-                        val intent = Intent(activity, CertifyStatusActivity::class.java)
-                        intent.putExtra("challId", it.challId)
-                        intent.putExtra("endDate", it.enddate)
+                        //val intent = Intent(activity, CertifyStatusActivity::class.java)
+                        //intent.putExtra("challId", it.challId)
+                        //intent.putExtra("endDate", it.enddate)
+                        SelectedchallActivity.challData = it
+                        val intent = Intent(activity, SelectedchallActivity::class.java)
                         startActivity(intent)
                     }
 
@@ -78,13 +89,13 @@ class MychallFragment : Fragment() {
 
                 }
                 else {
-                    Log.d("CHALL", "success getActivatedChall2 ${response.errorBody()}")
+                    Log.d("CHALL", "success getMyChall ${response.errorBody()}")
                 }
 
             }
 
             override fun onFailure(call: Call<ArrayList<Any>>, t: Throwable) {
-                Log.d("CHALL", "fail getActivatedChall ${t}")
+                Log.d("CHALL", "fail getMyChall ${t}")
             }
         })
 
