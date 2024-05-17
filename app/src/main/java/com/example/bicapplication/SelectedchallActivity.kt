@@ -10,10 +10,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import com.example.bicapplication.ParticipateActivity.Companion.challData
-import com.example.bicapplication.certify.ActionCertifyActivity
-import com.example.bicapplication.certify.CameraCertifyActivity
-import com.example.bicapplication.certify.CertifyStatusActivity
-import com.example.bicapplication.certify.GithubCertifyActivity
+import com.example.bicapplication.certify.*
 import com.example.bicapplication.databinding.ActivitySelectedchallBinding
 import com.example.bicapplication.datamodel.ChallData
 import com.example.bicapplication.datamodel.StringData
@@ -232,10 +229,12 @@ class SelectedchallActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                     4 -> {
-
+                        var intent = Intent(this@SelectedchallActivity, WalkingCertifyActivity::class.java)
+                        startActivity(intent)
                     }
                     5 -> {
-
+                        var intent = Intent(this@SelectedchallActivity, NewsCertifyActivity::class.java)
+                        startActivity(intent)
                     }
                 }
             }
