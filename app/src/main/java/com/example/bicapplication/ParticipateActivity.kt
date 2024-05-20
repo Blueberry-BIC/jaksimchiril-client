@@ -38,7 +38,7 @@ class ParticipateActivity : AppCompatActivity() {
     private var adminAddr: String = ""
     //private var userid: String = ""
     private val model: LiveDataViewModel by viewModels()
-    private val userid = "65e3b68de9562a3a91d247ca" // 지금은 임의 설정 -> 추후 usermanager를 통해 받을 수 있도록 수정 필요
+    private val userid = "6613b099e4640fd1d21e6f0a" // 지금은 임의 설정 -> 추후 usermanager를 통해 받을 수 있도록 수정 필요
     private var check_request = false //유저가 카이카스 지갑주소 가져오기 auth 진행 2단계인 request까지해서 카이카스앱 오픈했는지 체크
     val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
     val retrofitInterface2 = RetrofitInterface.create("https://api.kaikas.io/api/v1/k/")
@@ -95,7 +95,7 @@ class ParticipateActivity : AppCompatActivity() {
     //participate
     private fun participate(){
         challData?.let {
-            if (it.userNum == 0){
+            if (it.userNum == 1){
                 // user_list 데이터 새로 만들어서 필드 추가 필요한 경우
                 val userList = mutableListOf<String>(userid)
                 it.userNum = userList.size

@@ -5,18 +5,32 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.Toast
-import com.example.bicapplication.certify.CertifyStatusActivity
+import androidx.core.content.ContextCompat.startActivity
+import com.example.bicapplication.ParticipateActivity.Companion.challData
+import com.example.bicapplication.certify.*
 import com.example.bicapplication.databinding.ActivitySelectedchallBinding
 import com.example.bicapplication.datamodel.ChallData
+import com.example.bicapplication.datamodel.StringData
+import com.example.bicapplication.responseObject.CheckUserData
+import com.example.bicapplication.responseObject.ListResponseData
+import com.example.bicapplication.retrofit.RetrofitInterface
 import com.google.firebase.FirebaseApp
 import com.google.firebase.dynamiclinks.DynamicLink
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
+import org.json.JSONArray
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SelectedchallActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySelectedchallBinding
+    private val user_id = "6613b099e4640fd1d21e6f0a"
+    val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +50,7 @@ class SelectedchallActivity : AppCompatActivity() {
     }
 
     private fun initLayout() {
+        checkUserlist()
 
         binding.apply {
             btnSelectedBack.setOnClickListener {
@@ -52,16 +67,12 @@ class SelectedchallActivity : AppCompatActivity() {
                 }
             }
 
-            if (challData?.isProgress == 0) {
-                btnChallParticipate.text = "참가하기"
-            } else if (challData?.isProgress == 1) {
-                btnChallParticipate.text = "인증하기"
-            }
-
             when (challData?.authMethod) {
                 1 -> textAuthMethod.text = "이미지 인증"
                 2 -> textAuthMethod.text = "깃허브 인증"
                 3 -> textAuthMethod.text = "액션 인증"
+                4 -> textAuthMethod.text = "걸음수 인증"
+                5 -> textAuthMethod.text = "IT뉴스 인증"
             }
             when (challData?.isPublic) {
                 true -> textIsPublic.text = "공개"
@@ -149,9 +160,87 @@ class SelectedchallActivity : AppCompatActivity() {
 
     }
 
+    // userid에 따라 인증현황보기, 인증하기 버튼 활성화
+    // 참가자가 아니면 무조건 참가하기 버튼 = 기본
+    // 참가자면 -> 1 확인 후 버튼 변경 -> userid의 인증여부 true 확인 버튼 비활성화
+    
+    private fun checkUserlist(){
+        challData?.let {
+            Log.d("selected", "user=${user_id}, chall=${it.challId.toString()}")
+            retrofitInterface.getUserlist(it.challId.toString(), user_id).enqueue(object: Callback<CheckUserData>{
+                override fun onFailure(call: Call<CheckUserData>, t: Throwable) {
+                    Log.d("selected", "fail with ${t}")
+                }
+
+                override fun onResponse(call: Call<CheckUserData>, response: Response<CheckUserData>) {
+                    if (response.isSuccessful){
+
+                        var data = response.body()
+                        if (data?.is_participant == true){
+                            //참가자이다
+                            changeBtn()
+                            //진행중인가?
+                            if (it.isProgress == 1) {
+                                binding.btnChallCertifystatus.isEnabled = true
+                                //오늘 인증을 했는가?
+                                if (!data.certified){
+                                    binding.btnChallCertify.isEnabled = true
+                                }
+                            }else{
+                                //진행중이지 않으니까 일단 버튼 다 비활성화
+                                binding.btnChallCertifystatus.isEnabled = false
+                                binding.btnChallCertify.isEnabled = false
+                                Log.d("checkbtn", "참가자이지만 진행중은 아님")
+                            }
+                        } else{
+                            binding.btnChallParticipate.text = "인증현황보기"
+                            Log.d("checkbtn", "참가자가 아님")
+                        }
+                    }
+                    else{
+                        Log.d("selected", "fail2 : ${response.errorBody()}")
+                    }
+                }
+            })
+        }
+    }
 
 
+    private fun changeBtn(){
+        binding.apply {
+            relativelayoutBtnParticipate.visibility = View.GONE
+            linearlayoutBtnCertify.visibility = View.VISIBLE
 
+            btnChallCertifystatus.setOnClickListener {
+                var intent = Intent(this@SelectedchallActivity, CertifyStatusActivity::class.java)
+                startActivity(intent)
+            }
 
+            btnChallCertify.setOnClickListener {
+                when (challData?.authMethod) {
+                    1 -> {
+                        var intent = Intent(this@SelectedchallActivity, CameraCertifyActivity::class.java)
+                        startActivity(intent)
+                    }
+                    2 -> {
+                        var intent = Intent(this@SelectedchallActivity, GithubCertifyActivity::class.java)
+                        startActivity(intent)
+                    }
+                    3 -> {
+                        var intent = Intent(this@SelectedchallActivity, ActionCertifyActivity::class.java)
+                        startActivity(intent)
+                    }
+                    4 -> {
+                        var intent = Intent(this@SelectedchallActivity, WalkingCertifyActivity::class.java)
+                        startActivity(intent)
+                    }
+                    5 -> {
+                        var intent = Intent(this@SelectedchallActivity, NewsCertifyActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+            }
+        }
+    }
 
 }

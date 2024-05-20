@@ -146,8 +146,7 @@ class Connect2KlaytnActivity : AppCompatActivity() {
     private fun checkNewUser(walletaddr: String){
         // retrofit으로 접근
         val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
-        var wallet = WalletData(walletaddr)
-        retrofitInterface.checkExistUser(wallet).enqueue(object: Callback<UserBooleanResponse>{
+        retrofitInterface.checkExistUser(walletaddr).enqueue(object: Callback<UserBooleanResponse>{
             override fun onResponse(
                 call: Call<UserBooleanResponse>,
                 response: Response<UserBooleanResponse>
@@ -180,7 +179,7 @@ class Connect2KlaytnActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<UserBooleanResponse>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.d("CHECKUSER","failure with ${t}")
             }
         })
     }

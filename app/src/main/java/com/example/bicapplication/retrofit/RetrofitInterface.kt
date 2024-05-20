@@ -34,9 +34,10 @@ interface RetrofitInterface {
     @GET("admin_wallet")
     fun getAdminWalletAddr(): Call<WalletData>
 
+    //신규유저인지 아닌지 DB 체크
     @GET("check/{walletAddr}")
     fun checkExistUser(
-        @Path("walletAddr") walletAddr: WalletData
+        @Path("walletAddr") walletAddr: String
     ): Call<UserBooleanResponse>
 
     //신규 유저 등록 요청
@@ -50,6 +51,18 @@ interface RetrofitInterface {
         @Body challData: ChallData
     ): Call<StringData>
 
+    //참여중인 챌린지만 가져오기
+    @GET("get/mychall/{userId}")
+    fun getMyChall(
+        @Path("userId") userId: String
+    ): Call<ArrayList<Any>>
+
+    // 챌린지를 클릭한 사용자가 참가자인지 아닌지 확인
+    @GET("get/userlist")
+    fun getUserlist(
+        @Query("challId") challId: String,
+        @Query("userId") userId: String
+    ): Call<CheckUserData>
 
     //user patch
     @PATCH("participate/{userId}")
