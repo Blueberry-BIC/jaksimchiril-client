@@ -20,6 +20,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_centerVertical="true"
+            android:textSize="25dp"
             android:text="@string/newchall_header" />
     </RelativeLayout>
 
@@ -49,254 +50,260 @@
                 android:orientation="vertical"
                 android:layout_marginBottom="20dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:text="@string/newchall_info" />
-
                 <GridLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:columnCount="3"
                     android:rowCount="7"
+                    android:columnCount="1"
                     android:layout_gravity="center">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_row="0"
-                        android:text="@string/chall_name"
-                        android:layout_margin="5dp"
-                        android:gravity="center"
-                        android:layout_gravity="center"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_row="1"
-                        android:text="@string/chall_daterange"
-                        android:layout_margin="5dp"
-                        android:gravity="center"
-                        android:layout_gravity="center"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_row="2"
-                        android:layout_margin="5dp"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:text="@string/chall_category" />
-
-                    <TextView
-                        android:id="@+id/exercise_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_row="3"
-                        android:layout_margin="5dp"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:visibility="gone"
-                        android:text="@string/chall_kind" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_row="4"
-                        android:layout_margin="5dp"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:text="@string/chall_choose_open" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_row="5"
-                        android:layout_margin="5dp"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:text="@string/chall_grouppwd" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_row="6"
-                        android:layout_margin="5dp"
-                        android:gravity="center"
-                        android:layout_gravity="center"
-                        android:text="@string/deposit" />
-
-                    <EditText
-                        android:id="@+id/edittext_newchall_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_row="0"
-                        android:layout_column="1"
-                        android:layout_columnSpan="2"
-                        android:layout_gravity="fill_horizontal"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:clickable="false"
-                        android:ems="10"
-                        android:gravity="center"
-                        android:hint="@string/chall_name"
-                        android:textSize="14sp"
-                        tools:ignore="TouchTargetSizeCheck" />
-
-                    <TextView
-                        android:id="@+id/textview_newchall_daterange"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_row="1"
-                        android:layout_column="1"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="@string/chall_daterange" />
-
-                    <ImageButton
-                        android:id="@+id/imgbtn_newchall_daterange"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_row="1"
-                        android:layout_column="2"
-                        android:layout_gravity="center"
-                        android:layout_margin="5dp"
-                        android:background="@android:color/transparent"
-                        android:gravity="center"
-                        app:srcCompat="@drawable/calendar"
-                        tools:ignore="TouchTargetSizeCheck"
-                        android:contentDescription="@string/chall_daterange"/>
-
-                    <com.google.android.material.textfield.TextInputLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                        android:hint="@string/newchall_category_hint"
-                        android:layout_column="1"
-                        android:layout_row="2"
-                        android:layout_columnSpan="2"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_gravity="fill_horizontal">
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_row="0">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/chall_choose_open"
+                            android:layout_margin="5dp"
+                            android:gravity="center"
+                            android:layout_gravity="center"/>
 
-                        <AutoCompleteTextView
-                            android:id="@+id/autocomepletetextview_newchall_category"
+                        <Switch
+                            android:id="@+id/btn_choose_open"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="20dp"
+                            android:checked="true"
+                            android:layout_gravity="fill_horizontal"
+                            android:track="@drawable/selector_switch"
+                            android:thumb="@drawable/switch_thumb" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_row="1">
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/chall_name"
+                            android:gravity="center"
+                            android:layout_gravity="center"/>
+
+                        <EditText
+                            android:id="@+id/edittext_newchall_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="none"
+                            android:layout_gravity="center"
+                            android:padding="8dp"
+                            android:layout_margin="15dp"
+                            android:background="@drawable/edit_text_background"
+                            android:elevation="10dp"
+                            android:outlineSpotShadowColor="@color/purple_workoutchall"
+                            android:clickable="false"
+                            android:ems="10"
+                            android:gravity="center"
+                            android:hint="@string/chall_name"
                             android:textSize="14sp"
                             tools:ignore="TouchTargetSizeCheck" />
-                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <RadioGroup
-                        android:id="@+id/radiogroup_newchall_exercise"
-                        android:layout_width="278dp"
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_row="3"
-                        android:layout_column="1"
-                        android:layout_columnSpan="2"
-                        android:layout_gravity="fill_horizontal"
-                        android:gravity="center"
                         android:orientation="horizontal"
-                        android:visibility="gone">
+                        android:layout_row="2">
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/chall_daterange"
+                            android:layout_margin="5dp"
+                            android:gravity="center"
+                            android:layout_gravity="center"/>
 
-                        <RadioButton
-                            android:id="@+id/radiobtn_newchall_indoor"
+                        <TextView
+                            android:id="@+id/textview_newchall_daterange"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="8dp"
+                            android:layout_margin="15dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:elevation="10dp"
+                            android:text="@string/chall_daterange" />
+
+                        <ImageButton
+                            android:id="@+id/imgbtn_newchall_daterange"
+                            android:layout_width="15dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="15dp"
+                            android:background="@android:color/transparent"
+                            app:srcCompat="@drawable/choose_btn"
+                            tools:ignore="TouchTargetSizeCheck"
+                            android:contentDescription="@string/chall_daterange"/>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_row="3">
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:text="@string/chall_category" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="15dp"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                            android:hint="@string/newchall_category_hint"
+                            android:layout_gravity="center">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/autocomepletetextview_newchall_category"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edit_text_background"
+                                android:inputType="none"
+                                android:textSize="14sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_row="4">
+                        <TextView
+                            android:id="@+id/exercise_text"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:visibility="gone"
+                            android:text="@string/chall_kind" />
+
+                        <RadioGroup
+                            android:id="@+id/radiogroup_newchall_exercise"
+                            android:layout_width="278dp"
+                            android:layout_height="wrap_content"
+                            android:layout_row="4"
+                            android:layout_column="1"
+                            android:layout_columnSpan="2"
+                            android:layout_gravity="fill_horizontal"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <RadioButton
+                                android:id="@+id/radiobtn_newchall_indoor"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="10dp"
+                                android:text="@string/indoor_exercise" />
+
+                            <RadioButton
+                                android:id="@+id/radiobtn_newchall_outdoor"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="10dp"
+                                android:text="@string/outdoor_exercise" />
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_row="5">
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:text="@string/chall_grouppwd" />
+
+                        <EditText
+                            android:id="@+id/edittext_newchall_grouppwd"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="8dp"
+                            android:layout_margin="15dp"
+                            android:background="@drawable/edit_text_background"
+                            android:elevation="10dp"
+                            android:outlineSpotShadowColor="@color/purple_workoutchall"
+                            android:clickable="false"
+                            android:ems="10"
+                            android:gravity="center"
+                            android:hint="@string/chall_grouppwd"
+                            android:inputType="textPassword"
+                            android:textSize="14sp"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_row="6">
+                        <TextView
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:text="@string/deposit" />
+
+                        <EditText
+                            android:id="@+id/edittext_newchall_deposit"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="8dp"
+                            android:layout_margin="15dp"
+                            android:background="@drawable/edit_text_background"
+                            android:elevation="10dp"
+                            android:outlineSpotShadowColor="@color/purple_workoutchall"
+                            android:clickable="false"
+                            android:ems="10"
+                            android:gravity="center"
+                            android:hint="@string/deposit"
+                            android:inputType="number"
+                            android:textSize="14sp"
+                            tools:ignore="TouchTargetSizeCheck" />
+
+                        <TextView
+                            android:id="@+id/textview_newchall_deposit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:text="@string/indoor_exercise" />
-
-                        <RadioButton
-                            android:id="@+id/radiobtn_newchall_outdoor"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:text="@string/outdoor_exercise" />
-                    </RadioGroup>
-
-                    <RadioGroup
-                        android:id="@+id/radiogroup_newchall_choose_open"
-                        android:layout_width="278dp"
-                        android:layout_height="wrap_content"
-                        android:layout_row="4"
-                        android:layout_column="1"
-                        android:layout_columnSpan="2"
-                        android:layout_gravity="fill_horizontal"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/radiobtn_newchall_open"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="10dp"
-                            android:text="@string/newchall_open" />
-
-                        <RadioButton
-                            android:id="@+id/radiobtn_newchall_private"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:text="@string/newchall_private" />
-                    </RadioGroup>
-
-                    <EditText
-                        android:id="@+id/edittext_newchall_grouppwd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_row="5"
-                        android:layout_column="1"
-                        android:layout_columnSpan="2"
-                        android:layout_gravity="fill_horizontal"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:clickable="false"
-                        android:ems="10"
-                        android:gravity="center"
-                        android:hint="@string/chall_grouppwd"
-                        android:inputType="textPassword"
-                        android:textSize="14sp"
-                        tools:ignore="TouchTargetSizeCheck" />
-
-                    <EditText
-                        android:id="@+id/edittext_newchall_deposit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_row="6"
-                        android:layout_column="1"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:clickable="false"
-                        android:ems="10"
-                        android:gravity="center"
-                        android:hint="@string/deposit"
-                        android:inputType="number"
-                        android:textSize="14sp"
-                        tools:ignore="TouchTargetSizeCheck" />
-
-                    <TextView
-                        android:id="@+id/textview_newchall_deposit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_row="6"
-                        android:layout_column="2"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="@string/newchall_klay" />
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="@string/newchall_klay" />
+                    </LinearLayout>
 
                 </GridLayout>
             </LinearLayout>
@@ -307,9 +314,10 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
                     android:text="@string/chall_desc" />
 
                 <EditText
@@ -341,12 +349,14 @@
                     android:layout_margin="10dp"
                     android:src="@drawable/bic_logo" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_newchall_uploadimg"
                     android:layout_width="220dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:gravity="center"
+                    android:textColor="@color/white"
+                    android:background="@drawable/create_btn"
                     android:text="@string/newchall_upload_image"
                     tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
@@ -363,25 +373,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_newchall_exit"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:text="@string/exit"/>
+            android:textColor="@color/white"
+            android:background="@drawable/exit_btn"
+            android:text="@string/exit" />
 
-        <Button
-            android:id="@+id/btn_newchall_participate"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_newchall_create"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:text="@string/participate"
-            android:layout_toEndOf="@id/btn_newchall_exit"/>
-
+            android:textColor="@color/white"
+            android:background="@drawable/create_btn"
+            android:text="@string/create"
+            android:layout_toEndOf="@id/btn_newchall_exit" />
 
     </RelativeLayout>
 
