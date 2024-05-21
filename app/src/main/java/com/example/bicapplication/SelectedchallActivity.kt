@@ -53,9 +53,6 @@ class SelectedchallActivity : AppCompatActivity() {
         checkUserlist()
 
         binding.apply {
-            btnSelectedBack.setOnClickListener {
-                finish()
-            }
             btnChallParticipate.setOnClickListener {
                 if (challData?.isProgress == 0) {
                     ParticipateActivity.challData = challData
@@ -79,9 +76,8 @@ class SelectedchallActivity : AppCompatActivity() {
                 false -> textIsPublic.text = "비공개"
                 else -> {}
             }
-            textChallName.text = challData?.challName
-            textTotaldays.text = challData?.totalDays.toString()
-            textviewFinishedDesc.text = challData?.challDesc
+            textviewFinishedDesc.text = "이번 목표는 " + challData?.challName + "입니다!"
+            //textviewFinishedDesc.text = challData?.challDesc
             textCategory.text = challData?.category
             textPeriod.text = challData?.enddate
             textMoney.text = challData?.money.toString()
@@ -193,7 +189,6 @@ class SelectedchallActivity : AppCompatActivity() {
                                 Log.d("checkbtn", "참가자이지만 진행중은 아님")
                             }
                         } else{
-                            binding.btnChallParticipate.text = "인증현황보기"
                             Log.d("checkbtn", "참가자가 아님")
                         }
                     }
