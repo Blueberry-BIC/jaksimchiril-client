@@ -54,12 +54,12 @@ class NewchallActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             // 챌린지 공개여부 선택
-            radiogroupNewchallChooseOpen.setOnCheckedChangeListener { _, checkedid ->
+            btnChooseOpen.setOnCheckedChangeListener { _, checkedid ->
                 when (checkedid) {
-                    R.id.radiobtn_newchall_open -> {
+                    true -> {
                         challdata.isPublic = true
                     }
-                    R.id.radiobtn_newchall_private -> {
+                    false -> {
                         challdata.isPublic = false
                     }
                 }
@@ -136,8 +136,8 @@ class NewchallActivity : AppCompatActivity() {
                 })
             }
 
-            // 참가하기 버튼
-            btnNewchallParticipate.setOnClickListener {
+            // 개설하기 버튼
+            btnNewchallCreate.setOnClickListener {
                 challdata.challName = edittextNewchallName.text.toString()
                 challdata.challDesc = editextmultiLineNewchallDesc.text.toString()
                 challdata.money = edittextNewchallDeposit.text.toString().toInt()
