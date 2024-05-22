@@ -6,36 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".SelectedchallActivity">
 
+    <FrameLayout
+        android:id="@+id/framelayout_img"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:src="@drawable/ellipse" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/framelayout_img"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal"
+        android:weightSum="8"
+        >
+
+        <ImageView
+            android:id="@+id/imageview_selected_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:src="@drawable/chall_img_sample" />
+    </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/relativelayout_selected_header"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth="match_parent">
-
-        <ImageButton
-            android:id="@+id/btn_selected_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="15dp"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/backbtn_desciption"
-            app:srcCompat="@drawable/back_btn"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <TextView
-            android:id="@+id/text_chall_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="110dp"
-            android:layout_marginBottom="46dp"
-            android:layout_toStartOf="@+id/Invitebutton"
-            android:text="@string/chall_name" />
 
         <ImageView
             android:id="@+id/Invitebutton"
@@ -57,49 +69,46 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativelayout_selected_header"
+        app:layout_constraintTop_toBottomOf="@+id/framelayout_img"
         android:paddingStart="20dp"
+        android:layout_marginTop="20dp"
         android:paddingEnd="20dp">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintHorizontal_bias="0.5"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp">
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:paddingBottom="30dp">
 
             <TextView
-                android:id="@+id/text_totaldays"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="주 7일"
-                android:gravity="center"/>
+                android:maxLength="100"
+                android:layout_marginBottom="5dp"
+                android:text="친구들과 함께하는 챌린지 준비되셨나요?"
+                android:textSize="15sp"
+                android:fontFamily="@font/nanumgothic_regular"/>
             <TextView
-                android:id="@+id/text_auth_method"
-                android:layout_width="0dp"
+                android:id="@+id/textview_finished_desc"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="이미지 인증"/>
-       </LinearLayout>
-
-        <ImageView
-            android:id="@+id/imageview_selected_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/bic_logo"
-            android:layout_marginBottom="50dp"/>
-
-        <TextView
-            android:id="@+id/textview_finished_desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
-            android:maxLength="100"
-            android:text="@string/chall_desc" />
+                android:maxLength="100"
+                android:layout_marginBottom="5dp"
+                android:text="이번의 목표는 6:00AM 입니다!"
+                android:textSize="20sp"
+                android:fontFamily="@font/nanumgothic_bold"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="100"
+                android:text="아자아자 아자뵹"
+                android:textSize="15sp"
+                android:fontFamily="@font/nanumgothic_regular"/>
+        </LinearLayout>
 
         <GridLayout
             android:layout_width="match_parent"
@@ -108,53 +117,76 @@
             android:layout_marginBottom="20dp"
             android:columnCount="2"
             android:orientation="horizontal"
-            android:rowCount="5"
-            android:padding="10dp">
+            android:rowCount="6"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="0"
                 android:layout_column="0"
-                android:layout_marginBottom="5dp"
-                android:layout_marginEnd="5dp"
-                android:text="@string/chall_category" />
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/chall_category"
+                android:textSize="17sp"
+                android:fontFamily="@font/nanumgothic_bold"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="1"
                 android:layout_column="0"
-                android:layout_marginBottom="5dp"
-                android:layout_marginEnd="5dp"
-                android:text="@string/chall_daterange" />
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/chall_daterange"
+                android:textSize="17sp"
+                android:fontFamily="@font/nanumgothic_bold"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="2"
                 android:layout_column="0"
-                android:layout_marginBottom="5dp"
-                android:layout_marginEnd="5dp"
-                android:text="@string/chall_choose_open" />
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/chall_choose_open"
+                android:textSize="17sp"
+                android:fontFamily="@font/nanumgothic_bold"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="3"
                 android:layout_column="0"
-                android:layout_marginBottom="5dp"
-                android:layout_marginEnd="5dp"
-                android:text="@string/deposit" />
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="10dp"
+                android:text="인증 방법"
+                android:textSize="17sp"
+                android:fontFamily="@font/nanumgothic_bold"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="4"
                 android:layout_column="0"
-                android:layout_marginBottom="5dp"
-                android:layout_marginEnd="5dp"
-                android:text="@string/participate_count" />
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/deposit"
+                android:textSize="17sp"
+                android:fontFamily="@font/nanumgothic_bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="5"
+                android:layout_column="0"
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/participate_count"
+                android:textSize="17sp"
+                android:fontFamily="@font/nanumgothic_bold"/>
 
             <TextView
                 android:id="@+id/text_category"
@@ -162,10 +194,13 @@
                 android:layout_height="wrap_content"
                 android:layout_row="0"
                 android:layout_column="1"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/chall_category"
                 android:layout_gravity="fill_horizontal"
-                android:gravity="center"/>
+                android:gravity="right"
+                android:textSize="17sp"
+                android:fontFamily="@font/nanumgothic_regular"/>
 
             <TextView
                 android:id="@+id/text_period"
@@ -173,10 +208,13 @@
                 android:layout_height="wrap_content"
                 android:layout_row="1"
                 android:layout_column="1"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="15dp"
                 android:text="@string/chall_daterange"
                 android:layout_gravity="fill_horizontal"
-                android:gravity="center"/>
+                android:layout_marginEnd="10dp"
+                android:gravity="right"
+                android:textSize="17sp"
+                android:fontFamily="@font/nanumgothic_regular"/>
 
             <TextView
                 android:id="@+id/text_is_public"
@@ -185,80 +223,116 @@
                 android:layout_row="2"
                 android:layout_column="1"
                 android:layout_gravity="fill_horizontal"
-                android:gravity="center"
-                android:layout_marginBottom="5dp"
-                android:text="@string/chall_choose_open" />
+                android:gravity="right"
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="10dp"
+                android:text="@string/chall_choose_open"
+                android:textSize="17sp"
+                android:fontFamily="@font/nanumgothic_regular"/>
+
+            <TextView
+                android:id="@+id/text_auth_method"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="3"
+                android:layout_column="1"
+                android:layout_marginBottom="15dp"
+                android:layout_marginEnd="10dp"
+                android:layout_gravity="fill_horizontal"
+                android:gravity="right"
+                android:text="이미지 인증"
+                android:textSize="17sp"
+                android:fontFamily="@font/nanumgothic_regular"/>
 
             <TextView
                 android:id="@+id/text_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_row="3"
+                android:layout_row="4"
                 android:layout_column="1"
+                android:layout_marginEnd="15dp"
                 android:layout_gravity="fill_horizontal"
-                android:gravity="center"
-                android:layout_marginBottom="5dp"
-                android:text="@string/deposit" />
+                android:gravity="right"
+                android:layout_marginBottom="10dp"
+                android:text="@string/deposit"
+                android:textSize="17sp"
+                android:fontFamily="@font/nanumgothic_regular" />
 
             <TextView
                 android:id="@+id/text_user_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_row="4"
+                android:layout_row="5"
                 android:layout_column="1"
+                android:layout_marginEnd="15dp"
                 android:layout_gravity="fill_horizontal"
-                android:gravity="center"
-                android:layout_marginBottom="5dp"
-                android:text="@string/participate_count" />
+                android:gravity="right"
+                android:layout_marginBottom="10dp"
+                android:text="@string/participate_count"
+                android:textSize="17sp"
+                android:fontFamily="@font/nanumgothic_regular"/>
 
         </GridLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearlayout_btn_certify"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:gravity="center"
+    <RelativeLayout
+        android:id="@+id/relativelayout_btn_certify"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
         android:layout_marginBottom="50dp"
-        android:visibility="gone"
-        >
-        <Button
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_chall_certifystatus"
             android:layout_width="130dp"
-            android:layout_height="50dp"
-            android:text="인증 현황 보기"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:enabled="true"/>
+            android:textColor="@color/white"
+            android:background="@drawable/exit_btn"
+            android:text="인증 현황 보기"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_chall_certify"
             android:layout_width="130dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/white"
+            android:background="@drawable/create_btn"
             android:text="인증하기"
-            android:enabled="true"/>
+            android:layout_toEndOf="@id/btn_chall_certifystatus" />
 
-    </LinearLayout>
+    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/relativelayout_btn_participate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="80dp"
         android:layout_marginBottom="50dp"
-        android:gravity="center">
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_chall_participate"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:text="@string/participate"/>
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/white"
+            android:background="@drawable/create_btn"
+            android:text="챌린지 참가" />
     </RelativeLayout>
 
 
