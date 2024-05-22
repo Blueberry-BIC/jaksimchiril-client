@@ -79,7 +79,7 @@ class SelectedchallActivity : AppCompatActivity() {
             textviewFinishedDesc.text = "이번 목표는 " + challData?.challName + "입니다!"
             //textviewFinishedDesc.text = challData?.challDesc
             textCategory.text = challData?.category
-            textPeriod.text = challData?.enddate
+            textPeriod.text = challData?.startdate + " ~ "+challData?.enddate
             textMoney.text = challData?.money.toString()
             textUserNum.text = challData?.userNum.toString()
         }
@@ -204,7 +204,8 @@ class SelectedchallActivity : AppCompatActivity() {
     private fun changeBtn(){
         binding.apply {
             relativelayoutBtnParticipate.visibility = View.GONE
-            linearlayoutBtnCertify.visibility = View.VISIBLE
+            relativelayoutBtnCertify.visibility = View.VISIBLE
+            btnChallParticipate.isEnabled = false
 
             btnChallCertifystatus.setOnClickListener {
                 var intent = Intent(this@SelectedchallActivity, CertifyStatusActivity::class.java)

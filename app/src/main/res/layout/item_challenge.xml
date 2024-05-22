@@ -1,74 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/item_chall_cardview"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_chall"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="15dp"
-    android:layout_margin="5dp"
-    app:cardCornerRadius="15dp"
-    app:cardElevation="4dp"
-    app:contentPadding="5dp">
+    android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:id="@+id/item_chall_layout"
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/stackTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="코딩 스택"
-            android:layout_margin="5dp"
-            android:textColor="@color/purple_title"
-            android:fontFamily="@font/nanumgothic_bold"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/nameTextView"
+        android:layout_height="wrap_content"
+        app:cardElevation="4dp"
+        android:id="@+id/item_chall_cardview"
+        android:layout_gravity="center"
+        app:cardCornerRadius="15dp"
+        android:layout_margin="10dp"
+        app:contentPadding="30dp">
+        <LinearLayout
+            android:id="@+id/item_chall_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:text="챌린지임"
-            android:layout_margin="5dp"
-            android:textColor="@color/gray_basic"
-            android:fontFamily="@font/nanumgothic_regular"
-            android:textSize="12sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="8">
 
-        <TextView
-            android:id="@+id/contentsTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:text="내용~"
-            android:layout_margin="5dp"
-            android:textColor="@color/gray_basic"
-            android:fontFamily="@font/nanumgothic_regular"
-            android:textSize="12sp" />
+            <TextView
+                android:id="@+id/nameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="챌린지이름~"
+                android:layout_margin="5dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/purple_title"
+                android:fontFamily="@font/nanumgothic_bold"
+                android:textSize="17sp"
+                android:layout_weight="2"/>
 
-        <TextView
-            android:id="@+id/numberTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:layout_margin="5dp"
-            android:textColor="@color/gray_basic"
-            android:fontFamily="@font/nanumgothic_regular"
-            android:text="참여인원: 00명"
-            android:textSize="12sp" />
+            <TextView
+                android:id="@+id/stackTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:fontFamily="@font/nanumgothic_regular"
+                android:gravity="start"
+                android:text="카테고리~"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                tools:ignore="TextContrastCheck"
+                android:layout_weight="1"/>
 
-        <TextView
-            android:id="@+id/periodTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:textColor="@color/gray_basic"
-            android:layout_margin="5dp"
-            android:fontFamily="@font/nanumgothic_regular"
-            android:text="만료기간: 2024.xx.xx"
-            android:textSize="12sp" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/contentsTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="내용~"
+                android:layout_margin="5dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/nanumgothic_regular"
+                android:textSize="15sp"
+                android:layout_weight="1"/>
 
-</androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/numberTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_margin="5dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/nanumgothic_regular"
+                android:text="참여인원: 00명"
+                android:textSize="15sp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/periodTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:fontFamily="@font/nanumgothic_bold"
+                android:gravity="end"
+                android:text="만료기간: 2024.xx.xx"
+                android:textColor="@color/purple_title"
+                android:textSize="20sp"
+                tools:ignore="TextContrastCheck"
+                android:layout_weight="2"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+</LinearLayout>
