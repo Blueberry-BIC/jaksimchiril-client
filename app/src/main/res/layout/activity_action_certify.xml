@@ -6,12 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".certify.ActionCertifyActivity">
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/certifyButton"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="100dp"
-        android:text="답안제출"
+        android:background="@drawable/circle_btn"
+        android:text="제출하기"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -21,11 +24,11 @@
         android:layout_width="282dp"
         android:layout_height="205dp"
         android:layout_marginTop="70dp"
-        android:background="#B090E8"
+        android:background="@drawable/quiz_box"
         android:gravity="center"
-        android:text="(퀴즈화면)"
         android:textAlignment="center"
-        android:textSize="18sp"
+        android:textColor="#605399"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,11 +38,11 @@
         android:id="@+id/timerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="65dp"
         android:layout_marginTop="5dp"
         android:text="남은 시간: 00분 00초"
-        android:textColor="#FD2424"
-        android:textSize="18sp"
+        android:textColor="#D562BE"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/QuizTextView" />
 
@@ -53,7 +56,7 @@
         android:gravity="center"
         android:hint="답안을 입력하세요."
         android:lineSpacingExtra="6sp"
-        android:textColorHint="#616161"
+        android:textColorHint="#EBC1EE"
         android:textSize="14sp"
         android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"

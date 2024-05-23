@@ -18,30 +18,49 @@
             android:id="@+id/mystack"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
             android:autoSizeTextType="uniform"
-            android:textStyle="bold"
-            android:text="@string/mystack" />
+            android:text="@string/mystack"
+            android:textColor="#695B9F"
+            android:textStyle="bold" />
+
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="40dp"
+        android:text="2nd Best ranker"
+        android:textColor="#A0A0A0"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mystack_header" />
 
     <RelativeLayout
         android:id="@+id/bar_graph"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="36dp"
+        android:layout_width="413dp"
+        android:layout_height="249dp"
+        android:layout_marginTop="20dp"
         android:padding="10dp"
-        app:layout_constraintTop_toBottomOf="@id/mystack_header"
-        app:layout_constraintWidth="match_parent"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:layout_constraintWidth="match_parent">
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/chart"
             android:layout_width="match_parent"
             android:layout_height="310dp"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_gravity="center"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="26dp"
             android:layout_marginTop="18dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="25dp"
             android:layout_marginBottom="10dp"
             tools:ignore="MissingClass" />
 
@@ -57,9 +76,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
             android:autoSizeTextType="uniform"
-            android:gravity="center"
+            android:gravity="center|left"
             android:text="@string/chall_status"
+            android:textColor="#695B9F"
+            android:textSize="16sp"
             android:textStyle="bold" />
     </RelativeLayout>
 
@@ -97,8 +119,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="center"
-                        android:text="TextView"
-                        android:textColor="#FF9800"
+                        android:textColor="#646464"
                         android:textSize="17sp"
                         android:textStyle="bold" />
 
@@ -109,6 +130,7 @@
                         android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:text="참가중"
+                        android:textColor="#8E8E8E"
                         android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -132,8 +154,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="center"
-                        android:text="TextView"
-                        android:textColor="#FF9800"
+                        android:textColor="#646464"
                         android:textSize="17sp"
                         android:textStyle="bold" />
 
@@ -144,6 +165,7 @@
                         android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:text="완료"
+                        android:textColor="#8E8E8E"
                         android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -167,8 +189,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="center"
-                        android:text="0개"
-                        android:textColor="#FF9800"
+                        android:text="2개"
+                        android:textColor="#646464"
                         android:textSize="17sp"
                         android:textStyle="bold" />
 
@@ -178,7 +200,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="center"
-                        android:text="뭘로할까"
+                        android:text="개설"
+                        android:textColor="#8E8E8E"
                         android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -202,8 +225,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="center"
-                        android:text="0개"
-                        android:textColor="#FF9800"
+                        android:text="75%"
+                        android:textColor="#646464"
                         android:textSize="17sp"
                         android:textStyle="bold" />
 
@@ -213,7 +236,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:gravity="center"
-                        android:text="뭘로할까"
+                        android:text="달성률"
+                        android:textColor="#8E8E8E"
                         android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

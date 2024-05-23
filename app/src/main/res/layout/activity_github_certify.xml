@@ -6,12 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".certify.GithubCertifyActivity">
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/certifyButton"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:background="@drawable/circle_btn"
         android:text="인증하기"
+        android:textColor="#FDFDFD"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +27,6 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="200dp"
         android:layout_marginBottom="10dp"
-        android:background="#EDEDED"
         android:gravity="center"
         android:hint="깃허브ID를 입력해주세요."
         android:lineSpacingExtra="6sp"

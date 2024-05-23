@@ -14,7 +14,7 @@
         android:layout_marginTop="250dp"
         android:layout_marginBottom="30dp"
         android:text="걸음수 측정기"
-        android:textColor="#1C3AFF"
+        android:textColor="#605399"
         android:textSize="30dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/stepCountTag"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:text="걸음수 :"
-        android:textColor="#202020"
+        android:textColor="#D562BE"
         android:textSize="25dp"
         app:layout_constraintEnd_toStartOf="@+id/stepCountView"
         app:layout_constraintStart_toStartOf="@+id/title"
@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
-        android:textColor="#202020"
+        android:textColor="#D562BE"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="@+id/stepCountTag"
         app:layout_constraintEnd_toEndOf="@+id/title"
@@ -52,17 +52,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="5000보에 달성하면 성공입니다!"
-        android:textColor="#787878"
+        android:textColor="#EBC1EE"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/stepCountTag" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/resetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/circle_btn"
         android:text="다시시작"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/finishButton"
         app:layout_constraintHorizontal_bias="0.5"
@@ -70,11 +72,13 @@
         app:layout_constraintTop_toBottomOf="@+id/stepCountTag"
         app:layout_constraintVertical_bias="0.501" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/finishButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="인증완료"
+        android:background="@drawable/circle_btn"
+        android:text="인증종료"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/resetButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
