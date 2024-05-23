@@ -29,7 +29,7 @@ import kotlin.collections.ArrayList
 class MystackFragment : Fragment() {
     private lateinit var binding: FragmentMystackBinding
     val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
-    private var STACK: Array<String> = arrayOf("코딩스킬","시사교양","신체단련","생활")
+    private var STACK: Array<String> = arrayOf("코딩","시사","운동","생활")
     private var values: ArrayList<BarEntry> = ArrayList()  // 1. [BarEntry]  (x, y) 쌍으로 Bar Chart에 표시될 데이터를 저장하여 이를 리스트에 추가
 
     override fun onCreateView(
@@ -102,11 +102,13 @@ class MystackFragment : Fragment() {
 
 
     //BarChart의 기본적인 것들 세팅
+    @SuppressLint("ResourceAsColor")
     private fun configureChartAppearance() {
         binding.chart.getDescription().setEnabled(false) // chart 밑에 description 표시 유무
         binding.chart.setTouchEnabled(false) // 터치 유무
         binding.chart.getLegend().setEnabled(false) // Legend는 차트의 범례
         binding.chart.setExtraOffsets(10f, 0f, 40f, 0f)
+
 
         // X, Y 바의 애니메이션 효과
         binding.chart.animateY(1000)
@@ -153,7 +155,13 @@ class MystackFragment : Fragment() {
         val set2 = BarDataSet(values, SET_LABEL)
         set2.setDrawIcons(false)
         set2.setDrawValues(true)
-        set2.color = Color.parseColor("#66767676") // 색상 설정
+
+        set2.setColors(
+            Color.parseColor("#E4DEF9"), Color.parseColor("#605399"),
+            Color.parseColor("#EBC1EE"), Color.parseColor("#D562BE"))
+
+
+//        set2.color = Color.parseColor("#D562BE") // 색상 설정
         // 데이터 값 원하는 String 포맷으로 설정하기 (ex. ~회)
         set2.valueFormatter = object : ValueFormatter() {
             override fun getFormattedValue(value: Float): String {

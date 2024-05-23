@@ -12,6 +12,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="name"
+        android:textColor="#605399"
         android:textSize="20dp"
         android:textStyle="bold" />
 
@@ -22,6 +23,7 @@
         android:layout_marginTop="5dp"
         android:gravity="center"
         android:text="0회"
+        android:textColor="#EBC1EE"
         android:textSize="18sp" />
 
 
