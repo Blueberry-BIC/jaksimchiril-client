@@ -36,8 +36,8 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_centerHorizontal="true"
-            android:background="@color/gray"
-            app:srcCompat="@drawable/profile_img"
+            android:background="@color/purple_workoutchall"
+            app:srcCompat="@drawable/profile_img3"
             app:shapeAppearanceOverlay="@style/Circle" />
 
         <TextView
