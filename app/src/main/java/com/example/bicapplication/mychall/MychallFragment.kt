@@ -83,9 +83,10 @@ class MychallFragment : Fragment() {
                         //intent.putExtra("endDate", it.enddate)
                         SelectedchallActivity.challData = it
                         val intent = Intent(activity, SelectedchallActivity::class.java)
+                        intent.putExtra("challId", it.challId)
+                        intent.putExtra("endDate", it.enddate)
                         startActivity(intent)
                     }
-
                     binding.mychallRecyclerview.adapter = adapter
 
                 }

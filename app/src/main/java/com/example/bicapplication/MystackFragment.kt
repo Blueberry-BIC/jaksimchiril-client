@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.bicapplication.databinding.FragmentMystackBinding
+import com.example.bicapplication.manager.DataStoreModule
 import com.example.bicapplication.responseObject.ListResponseData
 import com.example.bicapplication.retrofit.RetrofitInterface
 import com.github.mikephil.charting.components.XAxis
@@ -18,6 +20,9 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
@@ -32,11 +37,26 @@ class MystackFragment : Fragment() {
     private var STACK: Array<String> = arrayOf("코딩","시사","운동","생활")
     private var values: ArrayList<BarEntry> = ArrayList()  // 1. [BarEntry]  (x, y) 쌍으로 Bar Chart에 표시될 데이터를 저장하여 이를 리스트에 추가
 
+    //datastore에서 값 가져오기 위한 변수
+    private lateinit var userid: String
+    private lateinit var dataStoreModule: DataStoreModule
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding=FragmentMystackBinding.inflate(inflater, container, false)
+
+        dataStoreModule = DataStoreModule(requireActivity())
+        //datastore에서 값 가져오기
+        lifecycleScope.launch {
+            userid = dataStoreModule.userIdData.first()
+            Log.e("마이스택에서의 태그@@@@@@@#####", "userid: " + userid)
+            if (userid.isNotBlank()) {
+                lifecycleScope.cancel()
+            }
+        }
 
         getMyInformation() //서버로부터 내정보 가져오기
         configureChartAppearance() //BarChart의 기본적인 ui등 세팅
@@ -52,8 +72,6 @@ class MystackFragment : Fragment() {
 
     //서버로부터 내정보 가져오기
     private fun getMyInformation(){
-
-        val userid = "65b537f388bb8423ff6e0f8d"
         retrofitInterface.getUser(userid).enqueue(object : Callback<ListResponseData> {
             @SuppressLint("SetTextI18n")
             override fun onResponse(

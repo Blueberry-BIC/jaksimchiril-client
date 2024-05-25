@@ -32,10 +32,20 @@ class SelectedchallActivity : AppCompatActivity() {
     private val user_id = "6613b099e4640fd1d21e6f0a"
     val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
 
+    //마이챌탭에서 유저가 선택한 챌린지id값과 종료일 (인증현황 이동시 필요)
+    private lateinit var challId: String
+    private lateinit var enddate: String
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySelectedchallBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //mychall프래그먼트로부터 전달 받은 챌린지id값
+        val intent = intent
+        challId = intent.getStringExtra("challId").toString()
+        enddate = intent.getStringExtra("endDate").toString()
 
         initLayout()
 
@@ -209,6 +219,9 @@ class SelectedchallActivity : AppCompatActivity() {
 
             btnChallCertifystatus.setOnClickListener {
                 var intent = Intent(this@SelectedchallActivity, CertifyStatusActivity::class.java)
+                intent.putExtra("challId", challId)
+                intent.putExtra("endDate", enddate)
+                Log.e("셀렉티드챌 태그@@@@@@@#########", "challId: " + challId)
                 startActivity(intent)
             }
 
