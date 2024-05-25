@@ -8,12 +8,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.lifecycleScope
+import com.example.bicapplication.MainActivity.Companion.userId
 import com.example.bicapplication.ParticipateActivity.Companion.challData
 import com.example.bicapplication.certify.*
 import com.example.bicapplication.databinding.ActivitySelectedchallBinding
 import com.example.bicapplication.datamodel.ChallData
 import com.example.bicapplication.datamodel.StringData
+import com.example.bicapplication.manager.DataStoreModule
 import com.example.bicapplication.responseObject.CheckUserData
 import com.example.bicapplication.responseObject.ListResponseData
 import com.example.bicapplication.retrofit.RetrofitInterface
@@ -22,6 +26,8 @@ import com.google.firebase.dynamiclinks.DynamicLink
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,7 +35,8 @@ import retrofit2.Response
 
 class SelectedchallActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySelectedchallBinding
-    private val user_id = "6613b099e4640fd1d21e6f0a"
+    private lateinit var dataStoreModule: DataStoreModule
+    private lateinit var userId: String
     val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
 
     //마이챌탭에서 유저가 선택한 챌린지id값과 종료일 (인증현황 이동시 필요)
@@ -46,6 +53,14 @@ class SelectedchallActivity : AppCompatActivity() {
         val intent = intent
         challId = intent.getStringExtra("challId").toString()
         enddate = intent.getStringExtra("endDate").toString()
+
+        dataStoreModule = DataStoreModule(applicationContext)
+
+        lifecycleScope.launch {
+            userId = dataStoreModule.userIdData.first()
+            Log.d("dataStore", "[Selectedchall] user_id: " + userId)
+
+        }
 
         initLayout()
 
@@ -172,8 +187,8 @@ class SelectedchallActivity : AppCompatActivity() {
     
     private fun checkUserlist(){
         challData?.let {
-            Log.d("selected", "user=${user_id}, chall=${it.challId.toString()}")
-            retrofitInterface.getUserlist(it.challId.toString(), user_id).enqueue(object: Callback<CheckUserData>{
+            Log.d("selected", "user=${userId}, chall=${it.challId.toString()}")
+            retrofitInterface.getUserlist(it.challId.toString(), userId).enqueue(object: Callback<CheckUserData>{
                 override fun onFailure(call: Call<CheckUserData>, t: Throwable) {
                     Log.d("selected", "fail with ${t}")
                 }
@@ -226,6 +241,7 @@ class SelectedchallActivity : AppCompatActivity() {
             }
 
             btnChallCertify.setOnClickListener {
+                Log.d("selected", "auth=${challData?.authMethod}")
                 when (challData?.authMethod) {
                     1 -> {
                         var intent = Intent(this@SelectedchallActivity, CameraCertifyActivity::class.java)
