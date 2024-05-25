@@ -26,6 +26,7 @@
     <string name="deposit">예치금</string>
     <string name="exit">취소하기</string>
     <string name="create">개설하기</string>
+    <string name="participate">참가하기</string>
     <string name="backbtn_desciption">뒤로가기</string>
     <string name="newchall_header">CHALLENGE</string>
     <string name="newchall_category_hint">카테고리를 선택하세요</string>
@@ -40,7 +41,7 @@
     <string name="newchall_klay">KLAY</string>
     <string name="newchall_desc_limit">챌린지 소개(100자 이내)</string>
     <string name="newchall_upload_image">이미지 업로드</string>
-    <string name="participate_participate">챌린지 참가</string>
+    <string name="participate_participate">챌린지에 참여하시겠습니까?</string>
     <string name="participate_walletaddr">송금할 지갑 주소</string>
     <string name="finished_chall_description">종료된 챌린지입니다.</string>
     <string name="participate_count">참가자 수</string>

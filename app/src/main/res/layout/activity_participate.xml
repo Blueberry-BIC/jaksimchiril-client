@@ -10,6 +10,7 @@
         android:id="@+id/relativelayout_participate_header"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth="match_parent"
         android:gravity="center">
@@ -20,6 +21,9 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_centerVertical="true"
+            android:textSize="20dp"
+            android:textColor="@color/purple_title"
+            android:textStyle="bold"
             android:text="@string/participate_participate" />
     </RelativeLayout>
 
@@ -37,6 +41,8 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="20dp"
             android:text="@string/deposit"
             android:layout_gravity="center"/>
 
@@ -44,6 +50,7 @@
             android:id="@+id/textview_participate_deposit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15dp"
             android:text="100 KLAY"
             android:layout_gravity="center"/>
     </LinearLayout>
@@ -62,6 +69,8 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="20dp"
             android:text="@string/participate_walletaddr"
             android:layout_gravity="center"/>
 
@@ -69,6 +78,7 @@
             android:id="@+id/textview_participate_walletaddr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="15dp"
             android:text="AAAAAAAAAAAAAAAAAAAAA"
             android:layout_gravity="center"/>
     </LinearLayout>
@@ -80,29 +90,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearlayout_participate_walletaddr">
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_participate_exit"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="취소하기"/>
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:textColor="@color/white"
+            android:background="@drawable/exit_btn"
+            android:text="@string/exit" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_participate_participate"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="참가하기"
-            android:layout_toEndOf="@id/btn_participate_exit"/>
-
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:textColor="@color/white"
+            android:background="@drawable/create_btn"
+            android:text="@string/participate"
+            android:layout_toEndOf="@id/btn_participate_exit" />
 
     </RelativeLayout>
 
