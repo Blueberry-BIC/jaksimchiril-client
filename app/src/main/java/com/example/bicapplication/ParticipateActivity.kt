@@ -75,10 +75,6 @@ class ParticipateActivity : AppCompatActivity() {
 
             //참가하기 -> db 정보 업데이트, 참가비 송금 완료된 이후 main으로 돌아가기
             btnParticipateParticipate.setOnClickListener {
-                /*participate()
-                sendKlay()
-                val intent = Intent(this@ParticipateActivity, MainActivity::class.java) ///MainActivity
-                startActivity(intent)*/
                 checkParticipant()
             }
         }
@@ -101,13 +97,17 @@ class ParticipateActivity : AppCompatActivity() {
                 // userlist 존재하지 않음
                 // 무조건 참가 가능
                 Log.d("Participate", "check1: ${userId}")
-                sendKlay(it.money.toString())
+                if (it.money == 0){
+                    participate(userId, challData?.challId!!)
+                    moveMainAct()
+                } else{
+                    sendKlay(it.money.toString())
+                }
             } else {
                 // userlist가 null이 아니고, 빈 값도 없는
                 // user가 포함되는지 확인이 필요
                 if (it.userList!!.indexOf(userId) == -1) {
                     // user 미존재 - 아직 참여하지 않은 경우
-                    //participate(userId, it.challId!!)
                     Log.d("Participate", "check2: ${userId}")
                     if (it.money == 0){
                         participate(userId, challData?.challId!!)
