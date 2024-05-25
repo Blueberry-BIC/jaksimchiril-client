@@ -1,58 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".mychall.MychallFragment">
 
-    <RelativeLayout
-        android:id="@+id/mychall_logo"
+    <LinearLayout
+        android:id="@+id/wrap_constraint"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/bic_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/main_logo_small" />
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/mychall_header"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:padding="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/mychall_logo"
-        app:layout_constraintWidth="match_parent">
-        <TextView
-            android:id="@+id/mychall"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="37dp"
-            android:textSize="25sp"
-            android:gravity="center"
-            android:textColor="@color/purple_title"
-            android:fontFamily="@font/nanumgothic_extrabold"
-            android:text="참가 중인 챌린지" />
-    </RelativeLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/mychall_recyclerview"
-        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="80dp"
-        android:layout_margin="20dp"
-        app:layout_constraintTop_toBottomOf="@id/mychall_header"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        android:orientation="vertical"
+        android:layout_marginBottom="80dp">
+        <RelativeLayout
+            android:id="@+id/mychall_logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/bic_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/main_logo_small" />
+        </RelativeLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <RelativeLayout
+            android:id="@+id/mychall_header"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/mychall_logo"
+            app:layout_constraintWidth="match_parent">
+            <TextView
+                android:id="@+id/mychall"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="37dp"
+                android:textSize="25sp"
+                android:gravity="center"
+                android:textColor="@color/purple_title"
+                android:fontFamily="@font/nanumgothic_extrabold"
+                android:text="참가 중인 챌린지" />
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mychall_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            app:layout_constraintTop_toBottomOf="@id/mychall_header"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never"/>
+    </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>
