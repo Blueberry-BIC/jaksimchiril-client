@@ -37,11 +37,9 @@ class CertifyStatusActivity : AppCompatActivity() {
     private lateinit var endDate: String
     private var myCertifyCount: Double = 0.0
 
-    /**
     //datastore에서 값 가져오기 위한 변수
     private lateinit var userid: String
     private lateinit var dataStoreModule: DataStoreModule
-     */
 
 
     //인증화면(이미지, 액션, 깃허브, 시사뉴스, 걸음수) 갔다올때 성공여부 등 데이터 전달받기위함
@@ -186,22 +184,21 @@ class CertifyStatusActivity : AppCompatActivity() {
         binding = ActivityCertifyStatusBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /**
         dataStoreModule = DataStoreModule(this)
-
         //datastore에서 값 가져오기
         lifecycleScope.launch {
-        userid = dataStoreModule.userIdData.first()
-        Log.e("태그@@@@@@@#########", "userid: " + userid)
-        if (userid.isNotBlank()) {
-        lifecycleScope.cancel()
+            userid = dataStoreModule.userIdData.first()
+            Log.e("태그@@@@@@@#########", "userid: " + userid)
+            if (userid.isNotBlank()) {
+                lifecycleScope.cancel()
+            }
         }
-        }
-         */
 
-        //mychall프래그먼트로부터 전달 받은 챌id와 종료기간
+        //selectedchall액티비티로부터 전달 받은 챌id, 종료일
         val intent = intent
         challId = intent.getStringExtra("challId").toString()
+
+        Log.e("태그@@@@@@@#########", "challId: " + challId)
         endDate = intent.getStringExtra("endDate").toString()
         binding.TimeTextView.text = "종료 시간:$endDate"
 
@@ -220,7 +217,7 @@ class CertifyStatusActivity : AppCompatActivity() {
 
     //챌린지 인증 성공시 DB의 성공횟수 1증가 로직
     private fun plusSuccessCount() {
-        val userid = "65b537f388bb8423ff6e0f8d"//현재는 임의설정. 이후엔 datastore값 이용 예정
+        //val userid = userid//현재는 임의설정. 이후엔 datastore값 이용 예정
         //Log.e("태그", "userid: " + userid)
         val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
         retrofitInterface.putSuccess(userid, challId).enqueue(object : Callback<String> {
@@ -273,9 +270,9 @@ class CertifyStatusActivity : AppCompatActivity() {
                     val userList = jsonObject.getJSONArray("user_list")
                     //Log.e("태그", "인증횟수get 통신 성공: , userList:" + userList)
 
-                    var num = 0;
+                    var num = 0
                     for (i in 0 until userList.length()) {
-                        if (userList[i] == "65b537f388bb8423ff6e0f8d") {  //만약 내 userid일 경우 패스
+                        if (userList[i] == userid) {  //만약 내 userid일 경우 패스
                             //만약 본인이 인증 한번도 안해서 챌린지 docu의 필드값에 본인 userid값 없을 경우 예외처리
                             try {
                                 val arr =  jsonObject.getJSONArray(userList[i] as String)
