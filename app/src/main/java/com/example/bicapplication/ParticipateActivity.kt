@@ -13,6 +13,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
+import com.example.bicapplication.MainActivity.Companion.userId
 import com.example.bicapplication.databinding.ActivityParticipateBinding
 import com.example.bicapplication.datamodel.*
 import com.example.bicapplication.klaytn.*
@@ -36,9 +37,8 @@ class ParticipateActivity : AppCompatActivity() {
     private lateinit var request_key:String  //카이카스 지갑주소 받기위해 필요한 key값
 
     private var adminAddr: String = ""
-    //private var userid: String = ""
     private val model: LiveDataViewModel by viewModels()
-    private val userid = "6613b099e4640fd1d21e6f0a" // 지금은 임의 설정 -> 추후 usermanager를 통해 받을 수 있도록 수정 필요
+    private lateinit var userId: String
     private var check_request = false //유저가 카이카스 지갑주소 가져오기 auth 진행 2단계인 request까지해서 카이카스앱 오픈했는지 체크
     val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
     val retrofitInterface2 = RetrofitInterface.create("https://api.kaikas.io/api/v1/k/")
@@ -53,14 +53,13 @@ class ParticipateActivity : AppCompatActivity() {
         }
         model.currentWalletData.observe(this, walletObserver)
 
-        /*dataStoreModule = DataStoreModule(applicationContext)
+        dataStoreModule = DataStoreModule(applicationContext)
 
         lifecycleScope.launch {
-            if (userid.isNotBlank()){
-                userid = dataStoreModule.userIdData.first()
-                Log.d("dataStore", "[Main] wallet_addr: " + userid)
-            }
-        }*/
+            userId = dataStoreModule.userIdData.first()
+            Log.d("dataStore", "[Participate] user_id: " + userId)
+
+        }
 
         binding.apply {
             // 사용자 화면 출력을 위해 관리자 지갑 주소와 챌린지 참가비 가져오기
@@ -95,18 +94,19 @@ class ParticipateActivity : AppCompatActivity() {
     //participate
     private fun participate(){
         challData?.let {
+            Log.d("userId", "${userId}")
             if (it.userNum == 1){
                 // user_list 데이터 새로 만들어서 필드 추가 필요한 경우
-                val userList = mutableListOf<String>(userid)
+                val userList = mutableListOf<String>(userId)
                 it.userNum = userList.size
                 it.userList = userList
                 Log.d("CHECK", "check1 ${it}")
             }
             else {
                 try{
-                    if (it.userList!!.indexOf(userid) == -1) {
+                    if (it.userList!!.indexOf(userId) == -1) {
                         // user 미존재 - 아직 참여하지 않은 경우
-                        it.userList!!.add(userid)
+                        it.userList!!.add(userId)
                         it.userNum = it.userList!!.size
                         Log.d("CHECK", "check2 ${it}")
                     }
@@ -142,7 +142,7 @@ class ParticipateActivity : AppCompatActivity() {
             })
 
             // participate 서버 api 동작 (2) - user collection update
-            retrofitInterface.patchProgressChall(userid, StringData(it.challId.toString())).enqueue(object: Callback<StringData>{
+            retrofitInterface.patchProgressChall(userId, StringData(it.challId.toString())).enqueue(object: Callback<StringData>{
                 override fun onResponse(call: Call<StringData>, response: Response<StringData>) {
                     if (response.isSuccessful){
                         Log.d("PARTICIPATE", "success patch progress_chall: ${response.body()}")

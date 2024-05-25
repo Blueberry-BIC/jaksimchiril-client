@@ -7,15 +7,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bicapplication.Adapter.ChallListAdapter
 import com.example.bicapplication.GlobalVari
+import com.example.bicapplication.MainActivity.Companion.userId
 import com.example.bicapplication.SelectedchallActivity
 import com.example.bicapplication.certify.CertifyStatusActivity
 import com.example.bicapplication.databinding.FragmentMychallBinding
 import com.example.bicapplication.datamodel.ChallData
+import com.example.bicapplication.manager.DataStoreModule
 import com.example.bicapplication.retrofit.RetrofitInterface
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
@@ -25,7 +31,8 @@ class MychallFragment : Fragment() {
     private lateinit var binding: FragmentMychallBinding
     private lateinit var adapter: ChallListAdapter
     private lateinit var layoutManager: RecyclerView.LayoutManager
-    private var userid = "6613b099e4640fd1d21e6f0a"
+    private lateinit var dataStoreModule: DataStoreModule
+    private lateinit var userId: String
     var challDataArray: ArrayList<ChallData> = ArrayList()
     val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl()
     )  //127.0.0.1
@@ -36,11 +43,19 @@ class MychallFragment : Fragment() {
     ): View {
         binding=FragmentMychallBinding.inflate(inflater, container, false)
 
+        dataStoreModule = DataStoreModule(requireContext())
+
+        lifecycleScope.launch {
+            userId = dataStoreModule.userIdData.first()
+            Log.d("dataStore", "[Mychall] user_id: " + userId)
+
+        }
+
         // Grid Layout
         layoutManager = GridLayoutManager(activity, 2)
         binding.mychallRecyclerview.layoutManager = layoutManager
 
-        retrofitInterface.getMyChall(userid).enqueue(object : Callback<ArrayList<Any>> {
+        retrofitInterface.getMyChall(userId).enqueue(object : Callback<ArrayList<Any>> {
             override fun onResponse(
                 call: Call<ArrayList<Any>>,
                 response: Response<ArrayList<Any>>
