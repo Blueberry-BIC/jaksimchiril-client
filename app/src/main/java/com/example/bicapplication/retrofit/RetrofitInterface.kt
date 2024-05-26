@@ -45,10 +45,10 @@ interface RetrofitInterface {
     fun postUser(@Body users: UserData): Call<StringData>
 
     //참가하기
-    @PUT("participate/{challId}")
-    fun putUserList(
+    @PUT("participate/{challId}/{userId}")
+    fun participate(
         @Path("challId") challId: String,
-        @Body challData: ChallData
+        @Path("userId") userId: String
     ): Call<StringData>
 
     //참여중인 챌린지만 가져오기
@@ -63,13 +63,6 @@ interface RetrofitInterface {
         @Query("challId") challId: String,
         @Query("userId") userId: String
     ): Call<CheckUserData>
-
-    //user patch
-    @PATCH("participate/{userId}")
-    fun patchProgressChall(
-        @Path("userId") userId: String,
-        @Body challId: StringData
-    ) : Call<StringData>
 
     //kaikas method
     //kaikas prepare-Auth step method

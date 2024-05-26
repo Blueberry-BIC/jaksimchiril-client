@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.service.autofill.Validators.or
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -14,6 +15,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import com.example.bicapplication.MainActivity.Companion.userId
+import com.example.bicapplication.SelectedchallActivity.Companion.challData
 import com.example.bicapplication.databinding.ActivityParticipateBinding
 import com.example.bicapplication.datamodel.*
 import com.example.bicapplication.klaytn.*
@@ -35,10 +37,9 @@ class ParticipateActivity : AppCompatActivity() {
     private lateinit var binding: ActivityParticipateBinding
     private lateinit var dataStoreModule: DataStoreModule
     private lateinit var request_key:String  //카이카스 지갑주소 받기위해 필요한 key값
-
+    private lateinit var userId: String
     private var adminAddr: String = ""
     private val model: LiveDataViewModel by viewModels()
-    private lateinit var userId: String
     private var check_request = false //유저가 카이카스 지갑주소 가져오기 auth 진행 2단계인 request까지해서 카이카스앱 오픈했는지 체크
     val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
     val retrofitInterface2 = RetrofitInterface.create("https://api.kaikas.io/api/v1/k/")
@@ -74,10 +75,7 @@ class ParticipateActivity : AppCompatActivity() {
 
             //참가하기 -> db 정보 업데이트, 참가비 송금 완료된 이후 main으로 돌아가기
             btnParticipateParticipate.setOnClickListener {
-                participate()
-                sendKlay()
-                val intent = Intent(this@ParticipateActivity, MainActivity::class.java) ///MainActivity
-                startActivity(intent)
+                checkParticipant()
             }
         }
     }
@@ -92,73 +90,60 @@ class ParticipateActivity : AppCompatActivity() {
     }
 
     //participate
-    private fun participate(){
+    private fun checkParticipant() {
         challData?.let {
-            Log.d("userId", "${userId}")
-            if (it.userNum == 1){
-                // user_list 데이터 새로 만들어서 필드 추가 필요한 경우
-                val userList = mutableListOf<String>(userId)
-                it.userNum = userList.size
-                it.userList = userList
-                Log.d("CHECK", "check1 ${it}")
-            }
-            else {
-                try{
-                    if (it.userList!!.indexOf(userId) == -1) {
-                        // user 미존재 - 아직 참여하지 않은 경우
-                        it.userList!!.add(userId)
-                        it.userNum = it.userList!!.size
-                        Log.d("CHECK", "check2 ${it}")
+            Log.d("Participate", "chall_list = ${it.userList}")
+            if ((it.userList == null) or (it.userList?.get(0).isNullOrEmpty())) {
+                // userlist 존재하지 않음
+                // 무조건 참가 가능
+                Log.d("Participate", "check1: ${userId}")
+                if (it.money == 0){
+                    participate(userId, challData?.challId!!)
+                    moveMainAct()
+                } else{
+                    sendKlay(it.money.toString())
+                }
+            } else {
+                // userlist가 null이 아니고, 빈 값도 없는
+                // user가 포함되는지 확인이 필요
+                if (it.userList!!.indexOf(userId) == -1) {
+                    // user 미존재 - 아직 참여하지 않은 경우
+                    Log.d("Participate", "check2: ${userId}")
+                    if (it.money == 0){
+                        participate(userId, challData?.challId!!)
+                        moveMainAct()
+                    } else{
+                        sendKlay(it.money.toString())
                     }
-                    else {
-                        // user 이미 존재 - 이미 참여했으나 여기까지 넘어와진 경우 - 이전에 예외처리 필요
-                        Log.d("CHECK", "check3 ${it}")
-                        Toast.makeText(this@ParticipateActivity, "이미 참가한 챌린지입니다.", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this@ParticipateActivity, MainActivity::class.java) ///MainActivity
-                        startActivity(intent)
-                    }
-                } catch (e:Exception){
-                    Log.d("CHECK4", "EXCEPTION: ${e}")
+                } else {
+                    // user 이미 존재 - 이미 참여했으나 어쩌다가 여기까지 넘어와진 경우
+                    Log.d("Participate", "check3 ${userId}")
+                    Toast.makeText(this@ParticipateActivity, "이미 참가한 챌린지입니다.", Toast.LENGTH_SHORT).show()
+                    moveMainAct()
                 }
             }
-            // participate 서버 api 동작 (1) - activated_chall collection update
-            retrofitInterface.putUserList(it.challId.toString(), it).enqueue(object : Callback<StringData>{
-                override fun onResponse(
-                    call: Call<StringData>,
-                    response: Response<StringData>
-                ) {
-                    if (response.isSuccessful){
-                        Log.d("PARTICIPATE", "success put user_list ${response.body()}")
-                        Toast.makeText(this@ParticipateActivity, response.body()!!.stringData, Toast.LENGTH_SHORT).show()
-                    }
-                    else {
-                        Log.d("PARTICIPATE", "fail1 with ${response.errorBody()}")
-                    }
-                }
-
-                override fun onFailure(call: Call<StringData>, t: Throwable) {
-                    Log.d("PARTICIPATE", "fail2 with ${t}")
-                }
-            })
-
-            // participate 서버 api 동작 (2) - user collection update
-            retrofitInterface.patchProgressChall(userId, StringData(it.challId.toString())).enqueue(object: Callback<StringData>{
-                override fun onResponse(call: Call<StringData>, response: Response<StringData>) {
-                    if (response.isSuccessful){
-                        Log.d("PARTICIPATE", "success patch progress_chall: ${response.body()}")
-                        Toast.makeText(this@ParticipateActivity, response.body()!!.stringData, Toast.LENGTH_SHORT).show()
-                    }
-                    else {
-                        Log.d("PARTICIPATE", "fail with ${response.errorBody()}")
-                    }
-                }
-                override fun onFailure(call: Call<StringData>, t: Throwable) {
-                    Log.d("PARTICIPATE", "fail with ${t}")
-                }
-            })
         }
-
     }
+
+    private fun participate(userId:String, challId:String){
+        // 참여하는 경우 -> api 호출
+        // 디비 userlist에 push
+        retrofitInterface.participate(challId, userId).enqueue(object:Callback<StringData>{
+            override fun onResponse(call: Call<StringData>, response: Response<StringData>) {
+                if (response.isSuccessful){
+                    Log.d("PARTICIPATE", "success 참가 ${response.body()}")
+                    Toast.makeText(this@ParticipateActivity, response.body()!!.stringData, Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    Log.d("PARTICIPATE", "fail1 with ${response.errorBody()}")
+                }
+            }
+
+            override fun onFailure(call: Call<StringData>, t: Throwable) {
+                Log.d("PARTICIPATE", "fail2 with ${t}")
+            }
+        })
+   }
 
     // admin wallet address DB에서 가져와서 화면에 출력
     private fun getAdminWalletAddr() {
@@ -183,8 +168,7 @@ class ParticipateActivity : AppCompatActivity() {
         })
     }
 
-    private fun sendKlay(){
-        var fee = if (challData!=null) challData!!.money.toString() else "1"
+    private fun sendKlay(fee:String){
         var sendData = AuthData("send_klay", AuthData.Bapp("BIC"), AuthData.TransactionData(adminAddr, fee))
 
         retrofitInterface2.reqSend(sendData).enqueue(object : Callback<PrepareRespData>{
@@ -233,7 +217,6 @@ class ParticipateActivity : AppCompatActivity() {
             finish()
         }
     }
-
     private fun result(reqkey:String){
         retrofitInterface2.sendResult(reqkey).enqueue(object : Callback<SendResultData> {
             override fun onResponse(call: Call<SendResultData>, response: Response<SendResultData>){
@@ -245,30 +228,28 @@ class ParticipateActivity : AppCompatActivity() {
 
                     if(signed_tx!=null){
                         Log.d("result결과값 태그", "signed_tx :"+response.body()?.result?.signed_tx)
-
-                        val intent = Intent(this@ParticipateActivity, MainActivity::class.java)
-                        //intent.putExtra("wallet_addr",wallet_addr)
-                        startActivity(intent)
-                        finish()
+                        Log.d("Participate", "register 시작 ${userId}")
+                        participate(userId, challData?.challId!!)
+                        moveMainAct()
                     }else{
-                        moveParticipateAct()
+                        moveMainAct()
                     }
                 }
                 else{
                     Log.e("SEND", "success send result, but ${response.errorBody()}")
-                    moveParticipateAct()
+                    moveMainAct()
                 }
             }
             //통신 실패했을 때
             override fun onFailure(call: Call<SendResultData>, t: Throwable) {
                 Log.e("SEND", "fail result :  ${t}")
-                moveParticipateAct()
+                moveMainAct()
             }
         })
     }
 
-    private fun moveParticipateAct(){
-        val intent = Intent(this@ParticipateActivity, Connect2KlaytnActivity::class.java) ///MainActivity
+    private fun moveMainAct(){
+        val intent = Intent(this@ParticipateActivity, MainActivity::class.java) ///MainActivity
         startActivity(intent)
         finish()
     }

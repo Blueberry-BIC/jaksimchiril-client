@@ -24,7 +24,7 @@ class ChallListAdapter(val challList: ArrayList<ChallData>, val onClick: (ChallD
                 var today = Calendar.getInstance()
                 var df = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
                 var dday = (today.time.time - df.parse(challData.startdate).time) / (60*60*24*1000)
-                if (dday > 0){
+                if (dday >= 0){
                     periodTextView.text = "D+" + dday
                 } else {
                     periodTextView.text = "D" + dday
