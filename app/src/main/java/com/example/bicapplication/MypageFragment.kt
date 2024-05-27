@@ -37,10 +37,10 @@ class MypageFragment : Fragment() {
             binding.name.text = userName
             userId = dataStoreModule.userIdData.first()
             Log.d("dataStore", "[Mypage] user_id: " + userId)
-            binding.id.text = userId
+            binding.id.text = "내 ID:"+userId
             val walletAddr = dataStoreModule.walletAddrData.first()
             Log.d("dataStore", "[Mypage] wallet addr: " + walletAddr)
-            binding.wallet.text = walletAddr
+            binding.wallet.text = "내 지갑:"+walletAddr
         }
 
         binding.logout.setOnClickListener {

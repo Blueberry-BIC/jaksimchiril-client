@@ -19,8 +19,9 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:autoSizeTextType="uniform"
-            android:textStyle="bold"
-            android:text="@string/mypage" />
+            android:text="@string/mypage"
+            android:textColor="#695B9F"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -48,7 +49,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:autoSizeTextType="uniform"
-            android:text="@string/user_name" />
+            android:text="@string/user_name"
+            android:textColor="@color/purple_title" />
 
         <TextView
             android:id="@+id/id"
@@ -58,7 +60,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:autoSizeTextType="uniform"
-            android:text="@string/user_id" />
+            android:text="@string/user_id"
+            android:textColor="@color/purple_200" />
 
         <TextView
             android:id="@+id/wallet"
@@ -68,7 +71,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
             android:autoSizeTextType="uniform"
-            android:text="@string/wallet_addr" />
+            android:text="@string/wallet_addr"
+            android:textColor="@color/purple_lifechall" />
 
     </RelativeLayout>
 

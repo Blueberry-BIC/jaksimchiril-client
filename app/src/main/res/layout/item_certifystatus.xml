@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_margin="20dp"
+    android:orientation="vertical"
+    app:barrierMargin="10dp">
 
     <TextView
         android:id="@+id/ItemTextView"
@@ -13,7 +15,7 @@
         android:gravity="center"
         android:text="name"
         android:textColor="#605399"
-        android:textSize="20dp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
@@ -23,7 +25,7 @@
         android:layout_marginTop="5dp"
         android:gravity="center"
         android:text="0회"
-        android:textColor="#EBC1EE"
+        android:textColor="#DD10EC"
         android:textSize="18sp" />
 
 

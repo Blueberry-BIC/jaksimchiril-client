@@ -19,11 +19,15 @@ tools:context=".certify.CameraCertifyActivity">
         app:layout_constraintVertical_bias="0.563"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/cameraButton"
         android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:text="다시찍기"
+        android:layout_height="80dp"
+        android:layout_marginStart="30dp"
+        android:background="@drawable/create_btn"
+        android:text="사진찍기"
+        android:textColor="#F8F8F8"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.176"
@@ -31,11 +35,15 @@ tools:context=".certify.CameraCertifyActivity">
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.163" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/completeButton"
         android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/create_btn"
         android:text="완료하기"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.819"

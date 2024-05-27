@@ -63,14 +63,13 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_row="0">
+
                         <TextView
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/chall_choose_open"
-                            android:layout_margin="5dp"
-                            android:gravity="center"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="center"
+                            android:gravity="start"
+                            android:text="@string/chall_choose_open" />
 
                         <Switch
                             android:id="@+id/btn_choose_open"
@@ -90,12 +89,13 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_row="1">
+
                         <TextView
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/chall_name"
-                            android:gravity="center"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="center"
+                            android:gravity="start"
+                            android:text="@string/chall_name" />
 
                         <EditText
                             android:id="@+id/edittext_newchall_name"
@@ -121,13 +121,13 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_row="2">
+
                         <TextView
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/chall_daterange"
-                            android:layout_margin="5dp"
-                            android:gravity="center"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="center"
+                            android:gravity="start"
+                            android:text="@string/chall_daterange" />
 
                         <TextView
                             android:id="@+id/textview_newchall_daterange"
@@ -160,12 +160,12 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_row="3">
+
                         <TextView
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:gravity="center"
                             android:layout_gravity="center"
+                            android:gravity="start"
                             android:text="@string/chall_category" />
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -236,12 +236,12 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_row="5">
+
                         <TextView
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:gravity="center"
                             android:layout_gravity="center"
+                            android:gravity="start"
                             android:text="@string/chall_grouppwd" />
 
                         <EditText
@@ -270,12 +270,12 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_row="6">
+
                         <TextView
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:gravity="center"
                             android:layout_gravity="center"
+                            android:gravity="start"
                             android:text="@string/deposit" />
 
                         <EditText
@@ -316,8 +316,7 @@
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:text="@string/chall_desc" />
 
                 <EditText
@@ -325,7 +324,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:gravity="start|top"
+                    android:gravity="start"
                     android:hint="@string/newchall_desc_limit"
                     android:inputType="textMultiLine"
                     android:maxLength="100"
@@ -335,31 +334,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="20dp">
-
-                <ImageView
-                    android:id="@+id/imageview_newchall_uploadimg"
-                    android:layout_width="160dp"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/bic_logo" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_newchall_uploadimg"
-                    android:layout_width="220dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    android:background="@drawable/create_btn"
-                    android:text="@string/newchall_upload_image"
-                    tools:ignore="TouchTargetSizeCheck" />
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
@@ -376,25 +350,25 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_newchall_exit"
             android:layout_width="130dp"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:textColor="@color/white"
             android:background="@drawable/exit_btn"
-            android:text="@string/exit" />
+            android:text="@string/exit"
+            android:textColor="@color/white" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_newchall_create"
             android:layout_width="130dp"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:textColor="@color/white"
+            android:layout_toEndOf="@id/btn_newchall_exit"
             android:background="@drawable/create_btn"
             android:text="@string/create"
-            android:layout_toEndOf="@id/btn_newchall_exit" />
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 

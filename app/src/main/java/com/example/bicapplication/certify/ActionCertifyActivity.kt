@@ -9,10 +9,15 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.lifecycleScope
 import com.example.bicapplication.GlobalVari
 import com.example.bicapplication.databinding.ActivityActionCertifyBinding
+import com.example.bicapplication.manager.DataStoreModule
 import com.example.bicapplication.responseObject.ListResponseData
 import com.example.bicapplication.retrofit.RetrofitInterface
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,10 +38,30 @@ class ActionCertifyActivity : AppCompatActivity() {
     private lateinit var category: String
     private lateinit var mCountDown:CountDownTimer
 
+    private lateinit var challId: String
+
+    //datastore에서 값 가져오기 위한 변수
+    private lateinit var userid: String
+    private lateinit var dataStoreModule: DataStoreModule
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityActionCertifyBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        dataStoreModule = DataStoreModule(this)
+        //datastore에서 값 가져오기
+        lifecycleScope.launch {
+            userid = dataStoreModule.userIdData.first()
+            if (userid.isNotBlank()) {
+                lifecycleScope.cancel()
+            }
+        }
+
+        //selectedchall액티비티로부터 전달 받은 챌id, 종료일
+        val intent = intent
+        challId = intent.getStringExtra("challId").toString()
 
         //서버에게 액션퀴즈 하나 랜덤으로 가져오기 요청 보내기
         getActionQuiz()
@@ -93,7 +118,7 @@ class ActionCertifyActivity : AppCompatActivity() {
             userAnswer = userAnswer.trim()
             if(userAnswer == answer){  //정답일 경우
                 Toast.makeText(this, "정답입니다!", Toast.LENGTH_SHORT).show()
-                moveActivity(true)
+                plusSuccessCount()  //성공횟수 1증가
             }else if(userAnswer==""){  //답안 미작성일 경우
                 Toast.makeText(this, "답안을 작성하세요.", Toast.LENGTH_SHORT).show()
             }else{//오답일 경우
@@ -121,12 +146,13 @@ class ActionCertifyActivity : AppCompatActivity() {
 
     //인증이 다 끝난후 성공여부 데이터를 인증현황 액티비티로 전달 및 이동을 위한 메소드
     private fun moveActivity(success:Boolean){
+        Log.e("@@태그", "액션에서 -> 인증현황으로 moveActivity이동")
         val intent = Intent(this@ActionCertifyActivity, CertifyStatusActivity::class.java)
         intent.putExtra("액션인증방문", true)
         intent.putExtra("성공여부", success)
+        finish()
         setResult(2,intent)
         mCountDown.cancel() //타이머 끝내주기
-        finish()
     }
 
     //퀴즈 틀렸거나 타이머 끝난 경우 로직
@@ -150,6 +176,38 @@ class ActionCertifyActivity : AppCompatActivity() {
         mCountDown.cancel() //타이머 끝내주기
         finish()
     }
+
+
+    //챌린지 인증 성공시 DB의 성공횟수 1증가 로직
+    private fun plusSuccessCount() {
+        val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
+        retrofitInterface.putSuccess(userid, challId).enqueue(object : Callback<String> {
+            override fun onFailure(
+                call: Call<String>,
+                t: Throwable
+            ) {
+                Log.e("태그", "통신 아예실패  ,t.message: " + t.message)
+            }
+
+            override fun onResponse(
+                call: Call<String>,
+                response: Response<String>
+            ) {
+                if (response.isSuccessful) {
+                    Log.e("태그", "성공횟수 증가 통신 성공: , response.body():" + response.body())
+                    moveActivity(true)
+                } else {
+                    Log.e(
+                        "태그",
+                        "서버접근했지만 실패: response.errorBody()?.string()" + response.errorBody()
+                            .toString()
+                    )
+                }
+            }
+        })
+    }
+
+
 
 
 
