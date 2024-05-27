@@ -205,12 +205,12 @@ class SelectedchallActivity : AppCompatActivity() {
                                 binding.btnChallCertifystatus.isEnabled = true
                                 //오늘 인증을 했는가?
                                 if (!data.certified){
-                                    binding.btnChallCertify.isEnabled = true
+                                   // binding.btnChallCertify.isEnabled = true
                                 }
                             }else{
                                 //진행중이지 않으니까 일단 버튼 다 비활성화
                                 binding.btnChallCertifystatus.isEnabled = false
-                                binding.btnChallCertify.isEnabled = false
+                               // binding.btnChallCertify.isEnabled = false
                                 Log.d("checkbtn", "참가자이지만 진행중은 아님")
                             }
                         } else{
@@ -236,35 +236,39 @@ class SelectedchallActivity : AppCompatActivity() {
                 var intent = Intent(this@SelectedchallActivity, CertifyStatusActivity::class.java)
                 intent.putExtra("challId", challId)
                 intent.putExtra("endDate", enddate)
-                Log.e("셀렉티드챌 태그@@@@@@@#########", "challId: " + challId)
                 startActivity(intent)
             }
 
-            btnChallCertify.setOnClickListener {
-                Log.d("selected", "auth=${challData?.authMethod}")
-                when (challData?.authMethod) {
-                    1 -> {
-                        var intent = Intent(this@SelectedchallActivity, CameraCertifyActivity::class.java)
-                        startActivity(intent)
-                    }
-                    2 -> {
-                        var intent = Intent(this@SelectedchallActivity, GithubCertifyActivity::class.java)
-                        startActivity(intent)
-                    }
-                    3 -> {
-                        var intent = Intent(this@SelectedchallActivity, ActionCertifyActivity::class.java)
-                        startActivity(intent)
-                    }
-                    4 -> {
-                        var intent = Intent(this@SelectedchallActivity, WalkingCertifyActivity::class.java)
-                        startActivity(intent)
-                    }
-                    5 -> {
-                        var intent = Intent(this@SelectedchallActivity, NewsCertifyActivity::class.java)
-                        startActivity(intent)
-                    }
-                }
-            }
+//            btnChallCertify.setOnClickListener {
+//                Log.d("selected", "auth=${challData?.authMethod}")
+//                when (challData?.authMethod) {
+//                    1 -> {
+//                        var intent = Intent(this@SelectedchallActivity, CameraCertifyActivity::class.java)
+//                        intent.putExtra("challId", challId)
+//                        startActivity(intent)
+//                    }
+//                    2 -> {
+//                        var intent = Intent(this@SelectedchallActivity, GithubCertifyActivity::class.java)
+//                        intent.putExtra("challId", challId)
+//                        startActivity(intent)
+//                    }
+//                    3 -> {
+//                        var intent = Intent(this@SelectedchallActivity, ActionCertifyActivity::class.java)
+//                        intent.putExtra("challId", challId)
+//                        startActivity(intent)
+//                    }
+//                    4 -> {
+//                        var intent = Intent(this@SelectedchallActivity, WalkingCertifyActivity::class.java)
+//                        intent.putExtra("challId", challId)
+//                        startActivity(intent)
+//                    }
+//                    5 -> {
+//                        var intent = Intent(this@SelectedchallActivity, NewsCertifyActivity::class.java)
+//                        intent.putExtra("challId", challId)
+//                        startActivity(intent)
+//                    }
+//                }
+//            }
         }
     }
 

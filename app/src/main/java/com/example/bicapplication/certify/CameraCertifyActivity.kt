@@ -85,23 +85,18 @@ class CameraCertifyActivity : AppCompatActivity() {
         }
         // 완료하기 버튼 클릭시
         binding.completeButton.setOnClickListener {
-            //Firebase에 사진 업로드
-            Log.d("encImg", "[completeButton] URI: " + imageUri)
-            uploadImage(imageUri,
-                mSuccessHandler = { uri ->
-                    Toast.makeText(this, "업로드에 성공했습니다", Toast.LENGTH_SHORT).show()
-                    saveImage(uri)
-                },
-                mErrorHandler = {
-                    Toast.makeText(this, "업로드에 실패했습니다", Toast.LENGTH_SHORT).show()
-                }
-            )
-            //bitmap 사진 데이터를 담아서 인증현황 액티비티로 이동
-            val intent = Intent(this, CertifyStatusActivity::class.java)
-            intent.putExtra("사진", bitmap)
-            intent.putExtra("이미지인증방문", true)
-            setResult(1,intent)
-            finish()
+//            //Firebase에 사진 업로드
+//            Log.d("encImg", "[completeButton] URI: " + imageUri)
+//            uploadImage(imageUri,
+//                mSuccessHandler = { uri ->
+//                    Toast.makeText(this, "업로드에 성공했습니다", Toast.LENGTH_SHORT).show()
+//                    saveImage(uri)
+//                },
+//                mErrorHandler = {
+//                    Toast.makeText(this, "업로드에 실패했습니다", Toast.LENGTH_SHORT).show()
+//                }
+//            )
+            plusSuccessCount()
         }
     }
 
@@ -156,7 +151,6 @@ class CameraCertifyActivity : AppCompatActivity() {
             activityResult.launch(intent)
         }
     }
-
 
     private fun getImageIntent(context: Context): Intent {
         imageUri = Uri.EMPTY
@@ -296,6 +290,46 @@ class CameraCertifyActivity : AppCompatActivity() {
 
     companion object {
         var groupKey: String? = null
+    }
+
+
+    //인증이 다 끝난후 성공여부 데이터를 인증현황 액티비티로 전달 및 이동을 위한 메소드
+    private fun moveActivity(){
+        //bitmap 사진 데이터를 담아서 인증현황 액티비티로 이동
+        val intent = Intent(this, CertifyStatusActivity::class.java)
+        intent.putExtra("사진", bitmap)
+        intent.putExtra("이미지인증방문", true)
+        setResult(1,intent)
+        finish()
+    }
+
+    //챌린지 인증 성공시 DB의 성공횟수 1증가 로직
+    private fun plusSuccessCount() {
+        val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
+        retrofitInterface.putSuccess(userId, challId).enqueue(object : Callback<String> {
+            override fun onFailure(
+                call: Call<String>,
+                t: Throwable
+            ) {
+                Log.e("태그", "통신 아예실패  ,t.message: " + t.message)
+            }
+
+            override fun onResponse(
+                call: Call<String>,
+                response: Response<String>
+            ) {
+                if (response.isSuccessful) {
+                    Log.e("태그", "성공횟수 증가 통신 성공: , response.body():" + response.body())
+                    moveActivity()
+                } else {
+                    Log.e(
+                        "태그",
+                        "서버접근했지만 실패: response.errorBody()?.string()" + response.errorBody()
+                            .toString()
+                    )
+                }
+            }
+        })
     }
 
 }

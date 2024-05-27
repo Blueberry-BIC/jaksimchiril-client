@@ -3,24 +3,24 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:icon="@drawable/add_btn"
             android:id="@+id/home"
             android:enabled="true"
+            android:icon="@drawable/ic_baseline_list_24"
             android:title="@string/home_btn" />
         <item
-            android:icon="@drawable/add_btn"
             android:id="@+id/chall"
             android:enabled="true"
+            android:icon="@drawable/ic_baseline_favorite_24"
             android:title="@string/mychall_btn" />
         <item
-            android:icon="@drawable/add_btn"
             android:id="@+id/stack"
             android:enabled="true"
+            android:icon="@drawable/ic_baseline_stacked_bar_chart_24"
             android:title="@string/mystack_btn" />
         <item
-            android:icon="@drawable/add_btn"
             android:id="@+id/mypage"
             android:enabled="true"
+            android:icon="@drawable/ic_baseline_contact_page_24"
             android:title="@string/mypage_btn" />
     </group>
 </menu>

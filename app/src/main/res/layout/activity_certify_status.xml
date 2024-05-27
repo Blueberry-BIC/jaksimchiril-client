@@ -7,17 +7,33 @@
     tools:context=".certify.CertifyStatusActivity">
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/certifyButton"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/btn_chall_certify"
+        android:layout_width="130dp"
+        android:layout_height="48dp"
         android:layout_marginBottom="50dp"
-        android:background="@drawable/circle_btn"
+        android:background="@drawable/create_btn"
         android:text="인증하기"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="@+id/nestedScrollView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/nestedScrollView" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/framelayout_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/ellipse" />
+
+    </FrameLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
@@ -40,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:text="챌린지 종료시간: 2024.xx.xx"
-                android:textColor="#605399"
+                android:textColor="#EBC1EE"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -76,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="내 인증횟수"
-                android:textColor="#EBC1EE"
+                android:textColor="#605399"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -99,8 +115,9 @@
                 android:id="@+id/gridView"
                 android:layout_width="0dp"
                 android:layout_height="500dp"
-                android:layout_marginTop="150dp"
+                android:layout_marginTop="100dp"
                 android:numColumns="2"
+                android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -112,8 +129,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="0회"
-                android:textColor="#EBC1EE"
-                android:textSize="20sp"
+                android:textColor="#DD10EC"
+                android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />

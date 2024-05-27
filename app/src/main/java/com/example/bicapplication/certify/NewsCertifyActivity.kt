@@ -5,14 +5,20 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.example.bicapplication.GlobalVari
 import com.example.bicapplication.R
 import com.example.bicapplication.databinding.ActivityGithubCertifyBinding
 import com.example.bicapplication.databinding.ActivityNewchallBinding
 import com.example.bicapplication.databinding.ActivityNewsCertifyBinding
+import com.example.bicapplication.manager.DataStoreModule
 import com.example.bicapplication.responseObject.BooleanResponse
 import com.example.bicapplication.responseObject.ItNewsResponse
 import com.example.bicapplication.retrofit.RetrofitInterface
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,11 +38,30 @@ class NewsCertifyActivity : AppCompatActivity() {
     private var problem:String = ""
     private var answer:String = ""
 
+    private lateinit var challId: String
+
+    //datastore에서 값 가져오기 위한 변수
+    private lateinit var userid: String
+    private lateinit var dataStoreModule: DataStoreModule
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNewsCertifyBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        dataStoreModule = DataStoreModule(this)
+        //datastore에서 값 가져오기
+        lifecycleScope.launch {
+            userid = dataStoreModule.userIdData.first()
+            if (userid.isNotBlank()) {
+                lifecycleScope.cancel()
+            }
+        }
+
+        //selectedchall액티비티로부터 전달 받은 챌id, 종료일
+        val intent = intent
+        challId = intent.getStringExtra("challId").toString()
 
         getNewsInfo()
 
@@ -44,8 +69,9 @@ class NewsCertifyActivity : AppCompatActivity() {
         binding.certifyButton.setOnClickListener {
             val userAnswer = binding.ActionEditText.text.toString() //유저가 입력한 답안
             if(userAnswer==answer) { //유저가 정답인 경우
-                moveActivity(true)
+                plusSuccessCount() //성공횟수 1증가
             }else{  //오답인 경우
+                Toast.makeText(this, "틀렸습니다.", Toast.LENGTH_SHORT).show()
                 moveActivity(false)
             }
         }
@@ -109,6 +135,37 @@ class NewsCertifyActivity : AppCompatActivity() {
         setResult(4,intent)
         finish()
     }
+
+    //챌린지 인증 성공시 DB의 성공횟수 1증가 로직
+    private fun plusSuccessCount() {
+        Toast.makeText(this, "정답입니다.", Toast.LENGTH_SHORT).show()
+        val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
+        retrofitInterface.putSuccess(userid, challId).enqueue(object : Callback<String> {
+            override fun onFailure(
+                call: Call<String>,
+                t: Throwable
+            ) {
+                Log.e("태그", "통신 아예실패  ,t.message: " + t.message)
+            }
+
+            override fun onResponse(
+                call: Call<String>,
+                response: Response<String>
+            ) {
+                if (response.isSuccessful) {
+                    Log.e("태그", "성공횟수 증가 통신 성공: , response.body():" + response.body())
+                    moveActivity(true)
+                } else {
+                    Log.e(
+                        "태그",
+                        "서버접근했지만 실패: response.errorBody()?.string()" + response.errorBody()
+                            .toString()
+                    )
+                }
+            }
+        })
+    }
+
 
 
 

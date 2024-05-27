@@ -51,14 +51,14 @@
 
         <ImageView
             android:id="@+id/Invitebutton"
-            android:layout_width="36dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="27dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="29dp"
             android:layout_marginEnd="23dp"
-            android:layout_marginBottom="31dp"
+            android:layout_marginBottom="44dp"
             app:srcCompat="@drawable/ic_baseline_person_add_24" />
     </RelativeLayout>
 
@@ -127,66 +127,66 @@
                 android:layout_height="wrap_content"
                 android:layout_row="0"
                 android:layout_column="0"
-                android:layout_marginBottom="15dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/nanumgothic_bold"
                 android:text="@string/chall_category"
-                android:textSize="17sp"
-                android:fontFamily="@font/nanumgothic_bold"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="1"
                 android:layout_column="0"
-                android:layout_marginBottom="15dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/nanumgothic_bold"
                 android:text="@string/chall_daterange"
-                android:textSize="17sp"
-                android:fontFamily="@font/nanumgothic_bold"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="2"
                 android:layout_column="0"
-                android:layout_marginBottom="15dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/nanumgothic_bold"
                 android:text="@string/chall_choose_open"
-                android:textSize="17sp"
-                android:fontFamily="@font/nanumgothic_bold"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="3"
                 android:layout_column="0"
-                android:layout_marginBottom="15dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/nanumgothic_bold"
                 android:text="인증 방법"
-                android:textSize="17sp"
-                android:fontFamily="@font/nanumgothic_bold"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="4"
                 android:layout_column="0"
-                android:layout_marginBottom="15dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/nanumgothic_bold"
                 android:text="@string/deposit"
-                android:textSize="17sp"
-                android:fontFamily="@font/nanumgothic_bold"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_row="5"
                 android:layout_column="0"
-                android:layout_marginBottom="15dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/nanumgothic_bold"
                 android:text="@string/participate_count"
-                android:textSize="17sp"
-                android:fontFamily="@font/nanumgothic_bold"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/text_category"
@@ -194,13 +194,11 @@
                 android:layout_height="wrap_content"
                 android:layout_row="0"
                 android:layout_column="1"
-                android:layout_marginBottom="15dp"
-                android:layout_marginEnd="10dp"
-                android:text="@string/chall_category"
                 android:layout_gravity="fill_horizontal"
+                android:fontFamily="@font/nanumgothic_regular"
                 android:gravity="right"
-                android:textSize="17sp"
-                android:fontFamily="@font/nanumgothic_regular"/>
+                android:text="@string/chall_category"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/text_period"
@@ -208,13 +206,11 @@
                 android:layout_height="wrap_content"
                 android:layout_row="1"
                 android:layout_column="1"
-                android:layout_marginBottom="15dp"
-                android:text="@string/chall_daterange"
                 android:layout_gravity="fill_horizontal"
-                android:layout_marginEnd="10dp"
+                android:fontFamily="@font/nanumgothic_regular"
                 android:gravity="right"
-                android:textSize="17sp"
-                android:fontFamily="@font/nanumgothic_regular"/>
+                android:text="@string/chall_daterange"
+                android:textSize="10sp" />
 
             <TextView
                 android:id="@+id/text_is_public"
@@ -223,12 +219,10 @@
                 android:layout_row="2"
                 android:layout_column="1"
                 android:layout_gravity="fill_horizontal"
+                android:fontFamily="@font/nanumgothic_regular"
                 android:gravity="right"
-                android:layout_marginBottom="15dp"
-                android:layout_marginEnd="10dp"
                 android:text="@string/chall_choose_open"
-                android:textSize="17sp"
-                android:fontFamily="@font/nanumgothic_regular"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/text_auth_method"
@@ -236,13 +230,11 @@
                 android:layout_height="wrap_content"
                 android:layout_row="3"
                 android:layout_column="1"
-                android:layout_marginBottom="15dp"
-                android:layout_marginEnd="10dp"
                 android:layout_gravity="fill_horizontal"
+                android:fontFamily="@font/nanumgothic_regular"
                 android:gravity="right"
                 android:text="이미지 인증"
-                android:textSize="17sp"
-                android:fontFamily="@font/nanumgothic_regular"/>
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/text_money"
@@ -250,13 +242,11 @@
                 android:layout_height="wrap_content"
                 android:layout_row="4"
                 android:layout_column="1"
-                android:layout_marginEnd="15dp"
                 android:layout_gravity="fill_horizontal"
+                android:fontFamily="@font/nanumgothic_regular"
                 android:gravity="right"
-                android:layout_marginBottom="10dp"
                 android:text="@string/deposit"
-                android:textSize="17sp"
-                android:fontFamily="@font/nanumgothic_regular" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/text_user_num"
@@ -264,13 +254,11 @@
                 android:layout_height="wrap_content"
                 android:layout_row="5"
                 android:layout_column="1"
-                android:layout_marginEnd="15dp"
                 android:layout_gravity="fill_horizontal"
+                android:fontFamily="@font/nanumgothic_regular"
                 android:gravity="right"
-                android:layout_marginBottom="10dp"
                 android:text="@string/participate_count"
-                android:textSize="17sp"
-                android:fontFamily="@font/nanumgothic_regular"/>
+                android:textSize="14sp" />
 
         </GridLayout>
 
@@ -298,18 +286,6 @@
             android:textColor="@color/white"
             android:background="@drawable/exit_btn"
             android:text="인증 현황 보기"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_chall_certify"
-            android:layout_width="130dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:textColor="@color/white"
-            android:background="@drawable/create_btn"
-            android:text="인증하기"
-            android:layout_toEndOf="@id/btn_chall_certifystatus" />
 
     </RelativeLayout>
     <RelativeLayout

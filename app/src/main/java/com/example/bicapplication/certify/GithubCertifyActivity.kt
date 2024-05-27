@@ -6,12 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.example.bicapplication.GlobalVari
 import com.example.bicapplication.R
 import com.example.bicapplication.databinding.ActivityActionCertifyBinding
 import com.example.bicapplication.databinding.ActivityGithubCertifyBinding
+import com.example.bicapplication.manager.DataStoreModule
 import com.example.bicapplication.responseObject.BooleanResponse
 import com.example.bicapplication.retrofit.RetrofitInterface
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,10 +32,35 @@ class GithubCertifyActivity : AppCompatActivity() {
     private var commitDate:String = "" //가장 최근 커밋날짜
     private var commitRepo:String = ""  //커밋한 repo이름
 
+    private lateinit var challId: String
+    //datastore에서 값 가져오기 위한 변수
+    private lateinit var userid: String
+    private lateinit var githubId: String
+    private lateinit var dataStoreModule: DataStoreModule
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGithubCertifyBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        dataStoreModule = DataStoreModule(this)
+        //datastore에서 값 가져오기
+        lifecycleScope.launch {
+            userid = dataStoreModule.userIdData.first()
+            githubId = dataStoreModule.githubIdData.first()
+            if (userid.isNotBlank()) {
+                lifecycleScope.cancel()
+            }
+            if (githubId.isNotBlank()) {
+                lifecycleScope.cancel()
+            }
+        }
+
+        //selectedchall액티비티로부터 전달 받은 챌id, 종료일
+        val intent = intent
+        challId = intent.getStringExtra("challId").toString()
+
+        binding.GithubEditText.setText(githubId)
 
         //인증하기버튼 클릭시
         binding.certifyButton.setOnClickListener {
@@ -68,9 +98,18 @@ class GithubCertifyActivity : AppCompatActivity() {
                     is_success = response.body()?.is_committed!!  //성공여부 저장
                     commitDate = response.body()?.lastcommitday!! //최신 커밋날짜 저장
                     commitRepo = response.body()?.commitRepo!! //커밋한 레포 저장
-                    moveActivity(is_success, commitDate, commitRepo)
+                    if(is_success){
+                        plusSuccessCount() //성공횟수 1증가
+                        Toast.makeText(this@GithubCertifyActivity, "성공입니다. 커밋값이 존재합니다.", Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(this@GithubCertifyActivity, "실패입니다. 커밋값이 없습니다..", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+
                 } else {
                     moveActivity(false, "받아오지못함", "받아오지못함")
+                    Toast.makeText(this@GithubCertifyActivity, "값을 받아오지 못했습니다.", Toast.LENGTH_SHORT).show()
+
                     Log.e(
                         "태그",
                         "깃허브커밋요청 서버접근했지만 실패: response.errorBody()?.string()" + response.errorBody().toString()
@@ -90,6 +129,38 @@ class GithubCertifyActivity : AppCompatActivity() {
         intent.putExtra("깃허브인증방문", true)
         setResult(3,intent)
         finish()
+
+        Log.e("태그", "깃허브 인증 move")
+    }
+
+
+    //챌린지 인증 성공시 DB의 성공횟수 1증가 로직
+    private fun plusSuccessCount() {
+        val retrofitInterface = RetrofitInterface.create(GlobalVari.getUrl())
+        retrofitInterface.putSuccess(userid, challId).enqueue(object : Callback<String> {
+            override fun onFailure(
+                call: Call<String>,
+                t: Throwable
+            ) {
+                Log.e("태그", "통신 아예실패  ,t.message: " + t.message)
+            }
+
+            override fun onResponse(
+                call: Call<String>,
+                response: Response<String>
+            ) {
+                if (response.isSuccessful) {
+                    Log.e("태그", "성공횟수 증가 통신 성공: , response.body():" + response.body())
+                    moveActivity(is_success, commitDate, commitRepo)
+                } else {
+                    Log.e(
+                        "태그",
+                        "서버접근했지만 실패: response.errorBody()?.string()" + response.errorBody()
+                            .toString()
+                    )
+                }
+            }
+        })
     }
 
 

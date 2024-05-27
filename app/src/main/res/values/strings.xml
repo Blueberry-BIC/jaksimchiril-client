@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">BIC Application</string>
-    <string name="home_btn">HOME</string>
-    <string name="mychall_btn">CHALL</string>
-    <string name="mystack_btn">STACK</string>
-    <string name="mypage_btn">MYPAGE</string>
+    <string name="home_btn">전체 챌린지</string>
+    <string name="mychall_btn">내 챌린지</string>
+    <string name="mystack_btn">내 스택</string>
+    <string name="mypage_btn">마이페이지</string>
     <string name="stack">스택</string>
     <string name="mypage">마이페이지</string>
     <string name="user_name">홍길동</string>

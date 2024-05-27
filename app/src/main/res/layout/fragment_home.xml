@@ -71,21 +71,21 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="3dp">
+                android:layout_height="40dp"
+                android:layout_margin="3dp"
+                android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/search_text"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:ems="10"
-                    android:layout_weight="5"
-                    android:inputType="textPersonName"
-                    android:hint="Search Bar"
-                    android:gravity="center"
                     android:layout_gravity="fill_horizontal"
-                    android:visibility="visible"/>
+                    android:layout_weight="5"
+                    android:ems="10"
+                    android:gravity="center"
+                    android:hint="Search Bar"
+                    android:inputType="textPersonName"
+                    android:visibility="visible" />
 
                 <!--        <SearchView-->
                 <!--            android:layout_width="wrap_content"-->
@@ -97,15 +97,15 @@
                 <ImageView
                     android:id="@+id/search_btn"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="30dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/search_btn" />
 
                 <ImageView
                     android:id="@+id/add_btn"
                     android:layout_width="0dp"
+                    android:layout_height="30dp"
                     android:layout_weight="1"
-                    android:layout_height="match_parent"
                     app:srcCompat="@drawable/add_btn" />
             </LinearLayout>
 
@@ -120,49 +120,57 @@
                     android:id="@+id/stack1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="신체 단련"
+                    android:layout_margin="7dp"
+                    android:layout_weight="1"
                     android:background="@drawable/purple_gradient"
                     android:fontFamily="@font/nanumgothic_bold"
-                    android:textColor="@color/purple_title"/>
+                    android:gravity="center"
+                    android:text="신체 단련"
+                    android:textColor="@color/purple_title"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/stack2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="코딩 스킬 향상"
+                    android:layout_margin="7dp"
+                    android:layout_weight="1"
                     android:background="@drawable/light_purple_gradient"
                     android:fontFamily="@font/nanumgothic_bold"
-                    android:textColor="@color/purple_title"/>
+                    android:gravity="center"
+                    android:text="코딩"
+                    android:textColor="@color/purple_title"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/stack3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="시사/교양"
+                    android:layout_margin="7dp"
+                    android:layout_weight="1"
                     android:background="@drawable/light_pink_gradient"
                     android:fontFamily="@font/nanumgothic_bold"
-                    android:textColor="@color/purple_title"/>
+                    android:gravity="center"
+                    android:text="IT 시사"
+                    android:textColor="@color/purple_title"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/stack4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="생활 습관"
+                    android:layout_margin="7dp"
+                    android:layout_weight="1"
                     android:background="@drawable/pink_gradient"
                     android:fontFamily="@font/nanumgothic_bold"
-                    android:textColor="@color/purple_title"/>
+                    android:gravity="center"
+                    android:text="생활 습관"
+                    android:textColor="@color/purple_title"
+                    android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
 
