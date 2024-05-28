@@ -60,6 +60,7 @@ class MystackFragment : Fragment() {
 
         getMyInformation() //서버로부터 내정보 가져오기
         configureChartAppearance() //BarChart의 기본적인 ui등 세팅
+        move2myhistory() // 마이히스토리로 넘어가기
 
         return binding.root
     }
@@ -201,7 +202,12 @@ class MystackFragment : Fragment() {
     }
 
 
-
+    private fun move2myhistory(){
+        binding.Card2.setOnClickListener {
+            val intent = Intent(requireActivity(), MyhistoryActivity::class.java)
+            startActivity(intent)
+        }
+    }
 
 
 
