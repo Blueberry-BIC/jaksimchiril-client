@@ -14,8 +14,8 @@
         app:cardElevation="4dp"
         android:id="@+id/item_chall_cardview"
         android:layout_gravity="center"
-        app:cardCornerRadius="15dp"
-        android:layout_margin="10dp"
+        app:cardCornerRadius="2dp"
+        android:layout_margin="5dp"
         app:contentPadding="25dp">
         <LinearLayout
             android:id="@+id/item_chall_layout"
