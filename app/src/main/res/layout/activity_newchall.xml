@@ -366,7 +366,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_toEndOf="@id/btn_newchall_exit"
-            android:background="@drawable/create_btn"
+            android:background="@drawable/pink_gradient"
             android:text="@string/create"
             android:textColor="@color/white" />
 

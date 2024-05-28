@@ -306,9 +306,9 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:textColor="@color/white"
-            android:background="@drawable/create_btn"
-            android:text="챌린지 참가" />
+            android:background="@drawable/pink_gradient"
+            android:text="챌린지 참가"
+            android:textColor="@color/white" />
     </RelativeLayout>
 
 

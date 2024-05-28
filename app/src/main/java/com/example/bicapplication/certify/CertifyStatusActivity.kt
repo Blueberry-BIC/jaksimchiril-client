@@ -43,7 +43,9 @@ class CertifyStatusActivity : AppCompatActivity() {
 
     //datastore에서 값 가져오기 위한 변수
     private lateinit var userid: String
+    private lateinit var githubid: String
     private lateinit var dataStoreModule: DataStoreModule
+
 
 
     //인증화면(이미지, 액션, 깃허브, 시사뉴스, 걸음수) 갔다올때 성공여부 등 데이터 전달받기위함
@@ -61,7 +63,8 @@ class CertifyStatusActivity : AppCompatActivity() {
             val visited = intent?.getBooleanExtra("이미지인증방문", false) //이미지인증을 갔다온건지 확인위함
             //이미지 인증을 갔다왔으면 진행
             if (visited == true) {
-                //Log.e("태그,", "bitmap:" + bitmap)
+
+                //본인 처리
                 if (bitmap != null) {  //올린 사진이 있을경우(인증 완료인 경우)
                     binding.imageView.visibility = View.VISIBLE
                     binding.imageView.setImageBitmap(bitmap)
@@ -90,12 +93,12 @@ class CertifyStatusActivity : AppCompatActivity() {
                // Log.e("태그,", "is_success:" + is_success)
                 var success = ""
                 if (is_success == true) {
-                    success = "성공"
+                    success = resources.getString(R.string.certify_success)
 ////                    //DB의 activiated_chall에 해당 유저의 is_sucesss필드에다가 성공횟수 +1 하기
 ////                    plusSuccessCount()
                     myCertifyCount++ //인증횟수 1증가(뷰 재랜더링을 위해)
                 } else {
-                    success = "실패"
+                    success = resources.getString(R.string.certify_fail)
                 }
                 binding.successTextView.text = success
             }
@@ -115,16 +118,16 @@ class CertifyStatusActivity : AppCompatActivity() {
             if (visited == true) {
                 var success = ""
                 if (is_success == true) {
-                    success = "성공"
+                    success = resources.getString(R.string.certify_success)
 ////                    //DB의 activiated_chall에 해당 유저의 is_sucesss필드에다가 성공횟수 +1 하기
 ////                    plusSuccessCount()
                     myCertifyCount++ //인증횟수 1증가(뷰 재랜더링을 위해)
                 } else {
-                    success = "실패"
+                    success = resources.getString(R.string.certify_fail)
                 }
                 //binding.imageView.visibility = View.GONE
                 binding.successTextView.text =
-                    "$success\n최신 커밋 날짜: $commitDate\n커밋한 레포: $commitRepo\n레포URL: https://github.com/로컬에 저장된 유저깃허브id값 넣기/$commitRepo "
+                    "$success\n최신 커밋 날짜: $commitDate\n커밋한 레포: $commitRepo\n레포URL: https://github.com/$githubid/$commitRepo "
             }
         }
 
@@ -140,12 +143,12 @@ class CertifyStatusActivity : AppCompatActivity() {
             if (visited == true) {
                 var success = ""
                 if (is_success == true) {
-                    success = "성공"
+                    success = resources.getString(R.string.certify_success)
 //                    //DB의 activiated_chall에 해당 유저의 is_sucesss필드에다가 성공횟수 +1 하기
 //                    plusSuccessCount()
                     myCertifyCount++ //인증횟수 1증가(뷰 재랜더링을 위해)
                 } else {
-                    success = "실패"
+                    success = resources.getString(R.string.certify_fail)
                 }
                 //binding.imageView.visibility = View.GONE
                 binding.successTextView.text = success
@@ -163,12 +166,12 @@ class CertifyStatusActivity : AppCompatActivity() {
             if (visited == true) {
                 var success = ""
                 if (is_success == true) {
-                    success = "성공"
+                    success = resources.getString(R.string.certify_success)
 //                    //DB의 activiated_chall에 해당 유저의 is_sucesss필드에다가 성공횟수 +1 하기
 //                    plusSuccessCount()
                     myCertifyCount++ //인증횟수 1증가(뷰 재랜더링을 위해)
                 } else {
-                    success = "실패"
+                    success = resources.getString(R.string.certify_fail)
                 }
                 //binding.imageView.visibility = View.GONE
                 binding.successTextView.text = success
@@ -179,8 +182,8 @@ class CertifyStatusActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onResume() {
         super.onResume()
-//        //인증화면에서 성공후 돌아왔을시 인증횟수 바로 재랜더링
-//        binding.textView9.text = myCertifyCount.toInt().toString() + "회"
+        //인증화면에서 성공후 돌아왔을시 인증횟수 바로 재랜더링
+        binding.textView9.text = myCertifyCount.toInt().toString() + "회"
     }
 
 
@@ -194,7 +197,11 @@ class CertifyStatusActivity : AppCompatActivity() {
         //datastore에서 값 가져오기
         lifecycleScope.launch {
             userid = dataStoreModule.userIdData.first()
+            githubid = dataStoreModule.githubIdData.first()
             if (userid.isNotBlank()) {
+                lifecycleScope.cancel()
+            }
+            if (githubid.isNotBlank()) {
                 lifecycleScope.cancel()
             }
         }
@@ -303,8 +310,14 @@ class CertifyStatusActivity : AppCompatActivity() {
                         }
                         num++
                     }
-                    adapter = CertifyStatusAdapter(this@CertifyStatusActivity, certifyDataList)
-                    binding.gridView.adapter = adapter
+                    if(auth_method ==1){
+                        adapter = CertifyStatusAdapter(this@CertifyStatusActivity, certifyDataList, true) //hardImage는 이미지 인증 거쳤을때 상대참가자들 하드이미지 넣기위함
+                        binding.gridView.adapter = adapter
+                    }else{
+                        adapter = CertifyStatusAdapter(this@CertifyStatusActivity, certifyDataList, false) //hardImage는 이미지 인증 거쳤을때 상대참가자들 하드이미지 넣기위함
+                        binding.gridView.adapter = adapter
+                    }
+
                 } else {
                     Log.e(
                         "태그",

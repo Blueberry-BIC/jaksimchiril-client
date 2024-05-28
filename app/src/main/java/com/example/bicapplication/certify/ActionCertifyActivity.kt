@@ -150,8 +150,8 @@ class ActionCertifyActivity : AppCompatActivity() {
         val intent = Intent(this@ActionCertifyActivity, CertifyStatusActivity::class.java)
         intent.putExtra("액션인증방문", true)
         intent.putExtra("성공여부", success)
-        finish()
         setResult(2,intent)
+        finish()
         mCountDown.cancel() //타이머 끝내주기
     }
 
