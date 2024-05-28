@@ -225,7 +225,6 @@ class SelectedchallActivity : AppCompatActivity() {
         }
     }
 
-
     private fun changeBtn(){
         binding.apply {
             relativelayoutBtnParticipate.visibility = View.GONE

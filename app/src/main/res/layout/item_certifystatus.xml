@@ -25,8 +25,16 @@
         android:layout_marginTop="5dp"
         android:gravity="center"
         android:text="0회"
-        android:textColor="#DD10EC"
+        android:textColor="#8378B6"
         android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/hardimageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:srcCompat="@drawable/img_20240526_210523" />
 
 
 </LinearLayout>

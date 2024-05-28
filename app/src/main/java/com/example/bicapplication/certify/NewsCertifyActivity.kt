@@ -8,9 +8,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.example.bicapplication.GlobalVari
-import com.example.bicapplication.R
-import com.example.bicapplication.databinding.ActivityGithubCertifyBinding
-import com.example.bicapplication.databinding.ActivityNewchallBinding
 import com.example.bicapplication.databinding.ActivityNewsCertifyBinding
 import com.example.bicapplication.manager.DataStoreModule
 import com.example.bicapplication.responseObject.BooleanResponse
@@ -112,8 +109,7 @@ class NewsCertifyActivity : AppCompatActivity() {
                                                 "-----------------------------\n(기사 내용중)\n\n" + problem
 
                     binding.InfoTextView.text = "- 기사는 네이버뉴스 [IT/과학]탭에서 확인할 수 있습니다." +
-                                                 "\n- 기사 url: ${url}"+
-                                                 "\n대답: ${answer}"
+                                                 "\n- 기사 url: ${url}"
 
                 } else {
                     moveActivity(false)
