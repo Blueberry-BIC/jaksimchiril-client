@@ -25,8 +25,7 @@ class MyhistoryAdapter(val completedChallList: ArrayList<ChallData>, val onClick
                     5 -> itemMyhistoryAuth.text = "시사뉴스 인증"
                 }
                 itemMyhistoryParticipant.text = "참가인원 " + completedData.userNum.toString() +"명"
-                //var df = SimpleDateFormat("yyyy-MM-dd", Locale.KOREAN)
-                // itemMyhistoryStartdate.text = df.parse(completedData.startdate).toString()
+                itemMyhistoryStartdate.text = "시작일 " + completedData.startdate
 
                 when(completedData.category){
                     "시사/교양" -> itemMyhistoryInnercardview.setBackgroundResource(R.drawable.light_pink_gradient)
