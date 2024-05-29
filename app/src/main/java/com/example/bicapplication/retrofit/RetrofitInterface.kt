@@ -64,6 +64,12 @@ interface RetrofitInterface {
         @Query("userId") userId: String
     ): Call<CheckUserData>
 
+    @GET("get/{userId}/completed")
+    fun getCompletedChall(
+        @Path("userId") userId: String
+    ): Call<ArrayList<Any>>
+
+
     //kaikas method
     //kaikas prepare-Auth step method
     @Headers("Content-Type: application/json;charset=utf-8")
